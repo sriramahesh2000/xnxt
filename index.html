@@ -2,404 +2,638 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience NXT - OCM</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experience NXT - OCM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">
-            <img src="assets/logo.png" alt="Experience NXT" class="logo-img">
-        </div>
-        <ul class="nav-links">
-            <li>Home</li>
-            <li>DEX</li>
-            <li class="active">SLA</li>
-            <li>OCM</li>
-            <li>UXM</li>
-            <li>ESG</li>
-        </ul>
-        <div class="user-profile">
-            <span>Welcome Adarsh</span>
-            <div class="avatar"></div>
-        </div>
-    </nav>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Experience NXT" class="logo-img">
+    </div>
+    <ul class="nav-links">
+      <li>Home</li>
+      <li>DEX</li>
+      <li class="active">SLA</li>
+      <li>OCM</li>
+      <li>UXM</li>
+      <li>ESG</li>
+    </ul>
+    <div class="user-profile">
+      <span>Welcome Adarsh</span>
+      <div class="avatar"></div>
+    </div>
+  </nav>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Top Row -->
-        <div class="top-section">
-            <!-- Score Card -->
-             <div class="topscroll"> 
-                    <div class="card score-card">
-                        <div class="score-content">
-                            <h2 class="score-title">SLA Score achieved 96% ! 🎉</h2>
-                            <p class="score-subtitle">🌟 Good Job! <strong>+4 points</strong>, surpassing previous year score of
-                                84%! 🚀</p>
-                            <div class="growth-label">+12 Point Growth</div>
-                        </div>
-                        <div class="score-visuals">
-                            <div class="gauge-wrapper">
-                                <svg viewBox="0 0 36 36" class="circular-chart">
-                                    <path class="circle-bg"
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="96, 100"
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.35" class="percentage">96%</text>
-                                </svg>
-                                <div class="gauge-ticks">
-                                    <span>00</span>
-                                    <span>100</span>
-                                </div>
-                            </div>
-                            <div class="illustration-wrapper">
-                                <img src="assets/illustration.png" alt="Working Person">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Horizontal Auto-Scrolling Insights Feed -->
-                <div class="insights-feed">
-                <div class="insights-track" id="insightsTrack">
-
-                    <div class="dash-card success">
-                    <div class="icon icon-check"></div>
-                    <div class="content">
-                        <h5>Total Issues with Confirmed Root Cause</h5>
-                        <p class="value">550</p>
-                    </div>
-                    </div>
-
-                    <div class="dash-card warning">
-                    <div class="icon icon-layers"></div>
-                    <div class="content">
-                        <h5>Issues with Identified Contributing Factor</h5>
-                        <p class="value">250</p>
-                    </div>
-                    </div>
-
-                    <div class="dash-card info">
-                    <div class="icon icon-chart"></div>
-                    <div class="content">
-                        <h5>High-Concentration Issue Sources</h5>
-                        <p>Top 10 issue drivers account for <b>~93%</b> of all reported issues</p>
-                    </div>
-                    </div>
-
-                    <div class="dash-card info">
-                    <div class="icon icon-tools"></div>
-                    <div class="content">
-                        <h5>Incident Type Distribution</h5>
-                        <p>
-                        <b>~25%</b> Inquiry-related incidents<br>
-                        <b>~41%</b> Installation & access-related incidents
-                        </p>
-                    </div>
-                    </div>
-
-                    <div class="dash-card info">
-                    <div class="icon icon-user"></div>
-                    <div class="content">
-                        <h5>Primary Resolution Categories</h5>
-                        <p>
-                        <b>39.66%</b> resolved via<br>
-                        User guidance, education & password support
-                        </p>
-                    </div>
-                    </div>
-
-                </div>
-                </div>
-
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Top Row -->
+    <div class="top-section">
+      <!-- Score Card -->
+      <div class="topscroll">
+        <div class="card score-card">
+          <div class="score-content">
+            <h2 class="score-title">SLA Score achieved 96% ! 🎉</h2>
+            <p class="score-subtitle">🌟 Good Job! <strong>+4 points</strong>, surpassing previous year score of
+              84%! 🚀</p>
+            <div class="growth-label">+12 Point Growth</div>
+          </div>
+          <div class="score-visuals">
+            <div class="gauge-wrapper">
+              <svg viewBox="0 0 36 36" class="circular-chart">
+                <path class="circle-bg"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle" stroke-dasharray="96, 100"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <text x="18" y="20.35" class="percentage">96%</text>
+              </svg>
+              <div class="gauge-ticks">
+                <span>00</span>
+                <span>100</span>
+              </div>
             </div>
-               <div class="kpi-highlight">
-<div class="kpi-box kpi-highlight">
+            <div class="illustration-wrapper">
+              <img src="assets/illustration.png" alt="Working Person">
+            </div>
+          </div>
+        </div>
+        <!-- Horizontal Auto-Scrolling Insights Feed -->
+        <div class="insights-feed">
+          <div class="insights-track" id="insightsTrack">
 
-  <div class="kpi-header">
-    <span class="view-btn" onclick="openModal()">Total Incidents</span>
-    <i class="fa-solid fa-triangle-exclamation kpi-icon kpi-warning"></i>
+            <div class="dash-card success">
+              <div class="icon icon-check"></div>
+              <div class="content">
+                <h5>Total Issues with Confirmed Root Cause</h5>
+                <p class="value">550</p>
+              </div>
+            </div>
+
+            <div class="dash-card warning">
+              <div class="icon icon-layers"></div>
+              <div class="content">
+                <h5>Issues with Identified Contributing Factor</h5>
+                <p class="value">250</p>
+              </div>
+            </div>
+
+            <div class="dash-card info">
+              <div class="icon icon-chart"></div>
+              <div class="content">
+                <h5>High-Concentration Issue Sources</h5>
+                <p>Top 10 issue drivers account for <b>~93%</b> of all reported issues</p>
+              </div>
+            </div>
+
+            <div class="dash-card info">
+              <div class="icon icon-tools"></div>
+              <div class="content">
+                <h5>Incident Type Distribution</h5>
+                <p>
+                  <b>~25%</b> Inquiry-related incidents<br>
+                  <b>~41%</b> Installation & access-related incidents
+                </p>
+              </div>
+            </div>
+
+            <div class="dash-card info">
+              <div class="icon icon-user"></div>
+              <div class="content">
+                <h5>Primary Resolution Categories</h5>
+                <p>
+                  <b>39.66%</b> resolved via<br>
+                  User guidance, education & password support
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="kpi-highlight">
+        <div class="kpi-box kpi-highlight">
+
+          <div class="kpi-header">
+            <span class="view-btn" onclick="openModal()">Total Incidents</span>
+            <i class="fa-solid fa-triangle-exclamation kpi-icon kpi-warning"></i>
+          </div>
+
+          <div class="kpi-value">345</div>
+
+          <div class="kpi-sub">This month</div>
+
+          <div class="kpi-trend kpi-down">
+            <i class="fa-solid fa-arrow-down"></i>
+            8.2% <span>vs last week</span>
+          </div>
+
+        </div>
+        <!-- AGENTS KPI -->
+        <div class="kpi-box kpi-agents">
+
+          <div class="kpi-header">
+            <span class="view-btn" onclick="openAgentsPage()">Agents</span>
+            <i class="fa-solid fa-users kpi-icon"></i>
+          </div>
+
+          <div class="kpi-value">120</div>
+
+          <div class="kpi-sub">Active Agents</div>
+
+          <div class="kpi-trend kpi-up">
+            <i class="fa-solid fa-arrow-up"></i>
+            4.1% <span>vs last week</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SLA Met -->
+
+
+      <!-- Customer Satisfaction -->
+
+
+    </div>
   </div>
 
-  <div class="kpi-value">345</div>
 
-  <div class="kpi-sub">This month</div>
-
-  <div class="kpi-trend kpi-down">
-    <i class="fa-solid fa-arrow-down"></i>
-    8.2% <span>vs last week</span>
   </div>
+  <div class="overlay" id="overlay"></div>
 
-</div>
-<!-- AGENTS KPI -->
-<div class="kpi-box kpi-agents">
-
-  <div class="kpi-header">
-    <span class="view-btn" onclick="openAgentsPage()">Agents</span>
-    <i class="fa-solid fa-users kpi-icon"></i>
-  </div>
-
-  <div class="kpi-value">120</div>
-
-  <div class="kpi-sub">Active Agents</div>
-
-  <div class="kpi-trend kpi-up">
-    <i class="fa-solid fa-arrow-up"></i>
-    4.1% <span>vs last week</span>
-  </div>
-
-</div>
-
-               </div> 
-
-
-
-    <!-- SLA Met -->
-    
-
-    <!-- Customer Satisfaction -->
-    
-
-                </div>
+  <div class="modal" id="slaModal">
+    <div class="modal-header">
+      <h3>Full SLA Report</h3>
+      <span class="close" onclick="closeModal()">×</span>
     </div>
 
-            
- </div>
- <div class="overlay" id="overlay"></div>
+    <div class="modal-content">
+      <table>
+        <thead>
+          <tr>
+            <th>Monitor Name</th>
+            <th>SLA Name</th>
+            <th>Group Name</th>
+            <th>Goal (%)</th>
+            <th>Achieved</th>
+            <th>Status</th>
+            <td>
+              <!-- <span class="view-btn" onclick="openIncidentModal()">View Incident</span> -->
+            </td>
 
-<div class="modal" id="slaModal">
-  <div class="modal-header">
-    <h3>Full SLA Report</h3>
-    <span class="close" onclick="closeModal()">×</span>
-  </div>
+          </tr>
+        </thead>
+        <tbody id="slaTableBody"></tbody>
 
-  <div class="modal-content">
-    <table>
-      <thead>
-        <tr>
-          <th>Monitor Name</th>
-          <th>SLA Name</th>
-          <th>Group Name</th>
-          <th>Goal (%)</th>
-          <th>Achieved</th>
-          <th>Status</th>
-          <td>
-  <!-- <span class="view-btn" onclick="openIncidentModal()">View Incident</span> -->
-</td>
-
-        </tr>
-      </thead>
-      <tbody id="slaTableBody"></tbody>
-      
-    </table>
-  </div>
-</div>
-<div class="modal" id="incidentModal">
-  <div class="modal-header">
-    <h3>Incident Report</h3>
-    <span class="close" onclick="closeIncidentModal()">×</span>
-  </div>
-
-  <div class="modal-content">
-    <div id="incidentDetails"></div>
-  </div>
-</div>
-
-        <div class="content-row">
-        <!-- content-grid -->
-        <div class="content-grid">
-            <!-- Left Card -->
-            <div class="card categories-card">
-                <div class="card-header">
-                    <div class="header-title-group">
-                        <div>
-                            <h3>Top Categories
-                              <span onclick="closeDetails()" style="float:right;cursor:pointer">✖</span>
-                            </h3>
-                            <span class="subtitle">7.2k Total incidents</span>
-                        </div>
-                        <div class="tooltip-container">
-                            <i class="fa-solid fa-circle-info info-icon"></i>
-                            <div class="tooltip-text">
-                                <span class="dot orange"></span> High (>5)<br>
-                                <span class="dot purple"></span> Low (≤5)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="header-icon"><i class="fa-solid fa-triangle-exclamation "></i></div>
-                </div>
-               
-                <div class="categories-list" id="categoriesList"></div>
-
-                 
-          
-            
-            </div>
-         
-            
-        </div>
-            <div id="detailsPanel" class="details-panel">
-              <div id="rc-container"></div>
-  <h3>Category Details 
-    
-  </h3>
-  <div id="detailsContent">
-   
-
-  </div>
-</div>
-            <div class="secdiv">
-<!-- Priority Wise Change -->
-                <div class="card priority-card">
-                <div class="chart-header-row">
-                    <h3>Priority Wise Incidents</h3>
-                </div>
-                <div class="canvas-container donut-container">
-                    <canvas id="priorityChart"></canvas>
-                </div>
-            </div>
-            <div class="card chart-card">
-                    <div class="chart-header-row">
-                        <h3>Location Impact</h3>
-                    </div>
-                    <div class="canvas-container">
-                        <canvas id="locationChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            </div>
-            
-
-            
-            
-
-                </div>
-
-                
-            </div>
-        </div>
-
-        <!-- Bottom Row -->
-         
-        
+      </table>
     </div>
-     <script>
+  </div>
+  <div class="modal" id="incidentModal">
+    <div class="modal-header">
+      <h3>Incident Report</h3>
+      <span class="close" onclick="closeIncidentModal()">×</span>
+    </div>
+
+    <div class="modal-content">
+      <div id="incidentDetails"></div>
+    </div>
+  </div>
+
+  <!-- Causal Factor Analysis Sankey Chart -->
+  <div class="sankey-section card">
+    <div class="sankey-header">
+      <div class="sankey-header-left">
+        <h3><i class="fa-solid fa-diagram-project" style="color:#4318FF;margin-right:8px"></i> Causal Factor Analysis
+        </h3>
+        <span class="sankey-subtitle">Incident flow from root causes → categories → issues → recommendations</span>
+      </div>
+      <div class="sankey-legend">
+        <span class="sankey-legend-item"><span class="sankey-dot" style="background:#6B8DE3"></span>Root Causes</span>
+        <span class="sankey-legend-item"><span class="sankey-dot" style="background:#6dc8a0"></span>Categories</span>
+        <span class="sankey-legend-item"><span class="sankey-dot" style="background:#F0A76E"></span>Issue Types</span>
+        <span class="sankey-legend-item"><span class="sankey-dot"
+            style="background:#b48ed6"></span>Recommendations</span>
+      </div>
+    </div>
+    <div id="sankeyChart" style="width:100%;min-height:520px;"></div>
+  </div>
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/sankey.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  <script>
+    (function () {
+      // Incident data counts
+      const incidentCounts = {
+        'Infra Issue': { count: 1000, total: 99999 },
+        'UI Issue': { count: 600, total: 2400 },
+        'Network Issue': { count: 30, total: 12890 },
+        'Application Related Issue': { count: 22, total: 32990 },
+        'API Issue': { count: 20, total: 8900 },
+        'Security Issue': { count: 4, total: 5600 },
+        'DB Issue': { count: 1, total: 1200 }
+      };
+
+      Highcharts.chart('sankeyChart', {
+        chart: {
+          backgroundColor: 'transparent',
+          style: { fontFamily: 'Poppins, sans-serif' },
+          spacing: [20, 20, 20, 20]
+        },
+        title: { text: null },
+        credits: { enabled: false },
+        tooltip: {
+          backgroundColor: 'rgba(255,255,255,0.97)',
+          borderColor: '#E0E5F2',
+          borderRadius: 10,
+          shadow: true,
+          style: { color: '#2B3674', fontSize: '13px' },
+          nodeFormatter: function () {
+            const ic = incidentCounts[this.name];
+            if (ic) {
+              return `<b>${this.name}</b><br>Break Count: <b style="color:#fb923c">${ic.count.toLocaleString()}</b><br>Total Incidents: <b style="color:#60a5fa">${ic.total.toLocaleString()}</b>`;
+            }
+            return `<b>${this.name}</b><br>Weight: ${this.sum}`;
+          },
+          pointFormat: '{point.fromNode.name} → {point.toNode.name}: <b>{point.weight}</b>'
+        },
+        plotOptions: {
+          sankey: {
+            curveFactor: 0.5,
+            linkOpacity: 0.45,
+            nodeWidth: 18,
+            nodePadding: 14,
+            borderRadius: 3,
+            dataLabels: {
+              enabled: true,
+              color: '#2B3674',
+              style: {
+                fontSize: '14px',
+                fontWeight: '100'
+                // textOutline: '2px white'
+              },
+              nodeFormatter: function () {
+                const ic = incidentCounts[this.point.name];
+                if (ic) {
+                  return `${this.point.name}  [${ic.count.toLocaleString()}]`;
+                }
+                return this.point.name;
+              }
+            }
+          }
+        },
+        series: [{
+          type: 'sankey',
+          name: 'Causal Factor Analysis',
+          nodes: [
+            // Root Causes (Premium Indigo / Blue)
+            { id: 'Human Error', color: '#4F46E5' },
+            { id: 'Hardware Failures', color: '#6366F1' },
+            { id: 'Software Bugs', color: '#818CF8' },
+            { id: 'Security Breaches', color: '#A78BFA' },
+            { id: 'Third-Party Services', color: '#60A5FA' },
+
+            // Categories (Emerald / Teal)
+            { id: 'Operational', color: '#059669' },
+            { id: 'Infrastructure', color: '#10B981' },
+            { id: 'Physical Damage', color: '#34D399' },
+            { id: 'Application', color: '#6EE7B7' },
+            { id: 'Coding Errors', color: '#5EEAD4' },
+            { id: 'Security', color: '#99F6E4' },
+            { id: 'Lack of Encryption', color: '#A7F3D0' },
+            { id: 'Vendor', color: '#2DD4BF' },
+
+            // Issue Types (Premium Amber / Orange)
+            { id: 'Infra Issue', color: '#F59E0B' },
+            { id: 'UI Issue', color: '#FBBF24' },
+            { id: 'Network Issue', color: '#FB923C' },
+            { id: 'Application Related Issue', color: '#F97316' },
+            { id: 'API Issue', color: '#EA580C' },
+            { id: 'Security Issue', color: '#EF4444' },
+            { id: 'DB Issue', color: '#E879F9' },
+
+            // Recommendations (Premium Purple)
+            { id: 'Regular training and awareness programs', color: '#8B5CF6' },
+            { id: 'Conduct regular capacity planning', color: '#A855F7' },
+            { id: 'Implement redundant infrastructure', color: '#C084FC' },
+            { id: 'Strengthen encryption standards', color: '#D946EF' },
+            { id: 'Improve vendor SLA management', color: '#E879F9' },
+            { id: 'Automated monitoring & alerting', color: '#7C3AED' }
+          ],
+          data: [
+            // Root Causes → Categories
+            ['Human Error', 'Operational', 420],
+            ['Human Error', 'Application', 180],
+            ['Hardware Failures', 'Infrastructure', 350],
+            ['Hardware Failures', 'Physical Damage', 120],
+            ['Software Bugs', 'Application', 280],
+            ['Software Bugs', 'Coding Errors', 200],
+            ['Security Breaches', 'Security', 180],
+            ['Security Breaches', 'Lack of Encryption', 90],
+            ['Third-Party Services', 'Vendor', 250],
+            ['Third-Party Services', 'Infrastructure', 100],
+
+            // Categories → Issue Types (using actual incident counts as weights)
+            ['Operational', 'Infra Issue', 300],
+            ['Operational', 'UI Issue', 120],
+            ['Infrastructure', 'Infra Issue', 400],
+            ['Infrastructure', 'Network Issue', 50],
+            ['Physical Damage', 'Infra Issue', 120],
+            ['Application', 'Application Related Issue', 250],
+            ['Application', 'UI Issue', 210],
+            ['Coding Errors', 'Application Related Issue', 100],
+            ['Coding Errors', 'API Issue', 100],
+            ['Security', 'Security Issue', 140],
+            ['Security', 'API Issue', 40],
+            ['Lack of Encryption', 'Security Issue', 60],
+            ['Lack of Encryption', 'DB Issue', 30],
+            ['Vendor', 'Network Issue', 130],
+            ['Vendor', 'Infra Issue', 120],
+
+            // Issue Types → Recommendations
+            ['Infra Issue', 'Conduct regular capacity planning', 450],
+            ['Infra Issue', 'Implement redundant infrastructure', 350],
+            ['Infra Issue', 'Automated monitoring & alerting', 140],
+            ['UI Issue', 'Regular training and awareness programs', 330],
+            ['Network Issue', 'Implement redundant infrastructure', 100],
+            ['Network Issue', 'Improve vendor SLA management', 80],
+            ['Application Related Issue', 'Regular training and awareness programs', 150],
+            ['Application Related Issue', 'Automated monitoring & alerting', 200],
+            ['API Issue', 'Automated monitoring & alerting', 80],
+            ['API Issue', 'Improve vendor SLA management', 60],
+            ['Security Issue', 'Strengthen encryption standards', 140],
+            ['Security Issue', 'Regular training and awareness programs', 60],
+            ['DB Issue', 'Conduct regular capacity planning', 10],
+            ['DB Issue', 'Strengthen encryption standards', 20]
+          ]
+        }]
+      });
+    })();
+  </script>
+
+  <div class="content-row">
+    <!-- content-grid -->
+    <div class="content-grid">
+      <!-- Left Card -->
+      <div class="card categories-card">
+        <div class="card-header">
+          <div class="header-title-group">
+            <div>
+              <h3>Top Categories
+                <span onclick="closeDetails()" style="float:right;cursor:pointer">✖</span>
+              </h3>
+              <span class="subtitle">7.2k Total incidents</span>
+            </div>
+            <div class="tooltip-container">
+              <i class="fa-solid fa-circle-info info-icon"></i>
+              <div class="tooltip-text">
+                <span class="dot orange"></span> High (>5)<br>
+                <span class="dot purple"></span> Low (≤5)
+              </div>
+            </div>
+          </div>
+          <div class="header-icon"><i class="fa-solid fa-triangle-exclamation "></i></div>
+        </div>
+
+        <div class="categories-list" id="categoriesList"></div>
+
+
+
+
+      </div>
+
+
+    </div>
+    <div id="detailsPanel" class="details-panel">
+      <div id="rc-container"></div>
+      <h3>Category Details
+
+      </h3>
+      <div id="detailsContent">
+
+
+      </div>
+    </div>
+    <div class="secdiv">
+      <!-- Priority Wise Change -->
+      <div class="card priority-card">
+        <div class="chart-header-row">
+          <h3>Priority Wise Incidents</h3>
+        </div>
+        <div class="canvas-container donut-container">
+          <canvas id="priorityChart"></canvas>
+        </div>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-header-row">
+          <h3>Location Impact</h3>
+        </div>
+        <div class="canvas-container">
+          <canvas id="locationChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  </div>
+
+
+  </div>
+  </div>
+
+  <!-- Bottom Row -->
+
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
     fetch("rc.html")
-      .then(response => response.text())
+      .then(res => res.text())
       .then(data => {
         document.getElementById("rc-container").innerHTML = data;
+
+        // 👉 chart create here
+        loadChart();
       });
   </script>
-    <script src="script.js"></script>
-    <script>
-async function loadCategories() {
-  // 🔁 Replace with your backend API
-  const response = await fetch('/api/categories');
-  const data = await response.json();
+  <script>
+    const dataStore = {
+      monthly: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        total: [12, 18, 9, 14, 20, 16],
+        breached: [3, 5, 2, 4, 6, 5]
+      },
+      daily: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        total: [5, 7, 3, 6, 8, 4, 5],
+        breached: [1, 2, 0, 2, 3, 1, 1]
+      }
+    };
 
-  renderCategories(data);
-}
+    function loadChart() {
 
-function getColorClass(count, min, max) {
-  if (count === 0) return 'grey';
+      const canvas = document.getElementById("rc-incidentChart");
 
-  const range = max - min;
-  const lowLimit = min + range / 3;
-  const midLimit = min + (2 * range) / 3;
+      if (!canvas) {
+        console.log("Canvas not found");
+        return;
+      }
 
-  if (count <= lowLimit) return 'green';
-  if (count <= midLimit) return 'yellow';
-  return 'orange';
-}
+      let currentView = "monthly";
 
-// function renderCategories(data) {
-//   const container = document.getElementById('categoriesList');
-//   container.innerHTML = '';
+      function build(view) {
+        const total = dataStore[view].total;
+        const breached = dataStore[view].breached;
+        const non = total.map((t, i) => t - breached[i]);
 
-//   // 🔥 SORT LOGIC
-//   const sortedData = [...data].sort((a, b) => {
-//     if (a.count === 0 && b.count === 0) return 0;
-//     if (a.count === 0) return 1;
-//     if (b.count === 0) return -1;
-//     return b.count - a.count;
-//   });
+        return {
+          labels: dataStore[view].labels,
+          datasets: [
+            { label: "Non Breached", data: non, backgroundColor: "#3b82f6", stack: "s" },
+            { label: "Breached", data: breached, backgroundColor: "#ef4444", stack: "s" }
+          ]
+        };
+      }
 
-//   const nonZeroCounts = sortedData
-//     .map(d => d.count)
-//     .filter(c => c > 0);
+      const chart = new Chart(canvas, {
+        type: "bar",
+        data: build(currentView),
+        options: { scales: { x: { stacked: true }, y: { stacked: true } } }
+      });
 
-//   const min = nonZeroCounts.length ? Math.min(...nonZeroCounts) : 0;
-//   const max = nonZeroCounts.length ? Math.max(...nonZeroCounts) : 0;
-  
-  
+      // dropdown change
+      document.getElementById("rc-viewSelector")
+        .addEventListener("change", function () {
+          currentView = this.value;
+          chart.data = build(currentView);
+          chart.update();
+        });
+    }
+  </script>
 
-//   sortedData.forEach(item => {
-//     const colorClass = getColorClass(item.count, min, max);
 
-//     const card = document.createElement('div');
-//     card.innerHTML = `
-//       <a href="category-details.html?category=${encodeURIComponent(item.category)}" class="cat-item-link">
-//         <div class="cat-item">
+  <script src="script.js"></script>
+  <script>
+    async function loadCategories() {
+      // 🔁 Replace with your backend API
+      const response = await fetch('/api/categories');
+      const data = await response.json();
 
-//           <span class="name-issue">${item.category}</span>
-//           <span class="badge ${colorClass}">${item.count}</span>
+      renderCategories(data);
+    }
 
-//           <div class="bar">
-//             <div class="bar-fill ${colorClass}"
-//                  style="width:${max === 0 ? 0 : (item.count / max) * 100}%">
-//             </div>
-//           </div>
+    function getColorClass(count, min, max) {
+      if (count === 0) return 'grey';
 
-//           <strong>${item.total}</strong>
-//         </div>
-//       </a>
-//     `;
-//     container.appendChild(card);
-//   });
-// }
+      const range = max - min;
+      const lowLimit = min + range / 3;
+      const midLimit = min + (2 * range) / 3;
 
-function renderCategories(data) {
-  const container = document.getElementById('categoriesList');
-  container.innerHTML = '';
+      if (count <= lowLimit) return 'green';
+      if (count <= midLimit) return 'yellow';
+      return 'orange';
+    }
 
-  // SORT
-  const sortedData = [...data].sort((a, b) => {
-    if (a.count === 0 && b.count === 0) return 0;
-    if (a.count === 0) return 1;
-    if (b.count === 0) return -1;
-    return b.count - a.count;
-  });
+    // function renderCategories(data) {
+    //   const container = document.getElementById('categoriesList');
+    //   container.innerHTML = '';
 
-  const nonZeroCounts = sortedData
-    .map(d => d.count)
-    .filter(c => c > 0);
+    //   // 🔥 SORT LOGIC
+    //   const sortedData = [...data].sort((a, b) => {
+    //     if (a.count === 0 && b.count === 0) return 0;
+    //     if (a.count === 0) return 1;
+    //     if (b.count === 0) return -1;
+    //     return b.count - a.count;
+    //   });
 
-  const min = nonZeroCounts.length ? Math.min(...nonZeroCounts) : 0;
-  const max = nonZeroCounts.length ? Math.max(...nonZeroCounts) : 0;
+    //   const nonZeroCounts = sortedData
+    //     .map(d => d.count)
+    //     .filter(c => c > 0);
 
-  // HEADER
-  const header = document.createElement('div');
-  header.className = 'cat-header';
-  header.innerHTML = `
+    //   const min = nonZeroCounts.length ? Math.min(...nonZeroCounts) : 0;
+    //   const max = nonZeroCounts.length ? Math.max(...nonZeroCounts) : 0;
+
+
+
+    //   sortedData.forEach(item => {
+    //     const colorClass = getColorClass(item.count, min, max);
+
+    //     const card = document.createElement('div');
+    //     card.innerHTML = `
+    //       <a href="category-details.html?category=${encodeURIComponent(item.category)}" class="cat-item-link">
+    //         <div class="cat-item">
+
+    //           <span class="name-issue">${item.category}</span>
+    //           <span class="badge ${colorClass}">${item.count}</span>
+
+    //           <div class="bar">
+    //             <div class="bar-fill ${colorClass}"
+    //                  style="width:${max === 0 ? 0 : (item.count / max) * 100}%">
+    //             </div>
+    //           </div>
+
+    //           <strong>${item.total}</strong>
+    //         </div>
+    //       </a>
+    //     `;
+    //     container.appendChild(card);
+    //   });
+    // }
+
+    function renderCategories(data) {
+      const container = document.getElementById('categoriesList');
+      container.innerHTML = '';
+
+      // SORT
+      const sortedData = [...data].sort((a, b) => {
+        if (a.count === 0 && b.count === 0) return 0;
+        if (a.count === 0) return 1;
+        if (b.count === 0) return -1;
+        return b.count - a.count;
+      });
+
+      const nonZeroCounts = sortedData
+        .map(d => d.count)
+        .filter(c => c > 0);
+
+      const min = nonZeroCounts.length ? Math.min(...nonZeroCounts) : 0;
+      const max = nonZeroCounts.length ? Math.max(...nonZeroCounts) : 0;
+
+      // HEADER
+      const header = document.createElement('div');
+      header.className = 'cat-header';
+      header.innerHTML = `
     <div class="cat-item header-row">
       <span class="name-issue">Category</span>
       <strong>Total Incidents</strong>
     </div>
   `;
-  container.appendChild(header);
+      container.appendChild(header);
 
-  // LOOP
-  sortedData.forEach(item => {
-    const colorClass = getColorClass(item.count, min, max);
+      // LOOP
+      sortedData.forEach(item => {
+        const colorClass = getColorClass(item.count, min, max);
 
-    const card = document.createElement('div');
-    card.innerHTML = `
+        const card = document.createElement('div');
+        card.innerHTML = `
       <a href="#" class="cat-item-link">
         <div class="cat-item">
 
@@ -417,81 +651,81 @@ function renderCategories(data) {
       </a>
     `;
 
-    const cardElement = card.querySelector(".cat-item");
+        const cardElement = card.querySelector(".cat-item");
 
-cardElement.addEventListener("click", (e) => {
-  e.preventDefault();
+        cardElement.addEventListener("click", (e) => {
+          e.preventDefault();
 
-  // shrink LEFT PANEL + hide right side
-  document.querySelector(".content-row")
-          .classList.add("expanded");
- // ✅ reduce grid width
-  // document.querySelector(".content-grid").classList.add("shrink");
-   document.querySelector(".content-grid").classList.add("shrink");
-  document.querySelector(".secdiv").classList.add("shrink");
-  // show details panel
-  document.getElementById("detailsPanel")
-          .classList.add("show");
+          // shrink LEFT PANEL + hide right side
+          document.querySelector(".content-row")
+            .classList.add("expanded");
+          // ✅ reduce grid width
+          // document.querySelector(".content-grid").classList.add("shrink");
+          document.querySelector(".content-grid").classList.add("shrink");
+          document.querySelector(".secdiv").classList.add("shrink");
+          // show details panel
+          document.getElementById("detailsPanel")
+            .classList.add("show");
 
-  // fill details content
-  document.getElementById("detailsContent").innerHTML = `
+          // fill details content
+          document.getElementById("detailsContent").innerHTML = `
     <p><b>Category:</b> ${item.category}</p>
     <p><b>Break Count:</b> ${item.count}</p>
     <p><b>Total Incidents:</b> ${item.total}</p>
   `;
-});
+        });
 
 
-    // append
-    container.appendChild(card);
-  });
-}
-function closeDetails() {
-  document.querySelector(".content-row").classList.remove("expanded");
-  document.querySelector(".content-grid").classList.remove("shrink");
-  document.getElementById("detailsPanel").classList.remove("show");
-  document.querySelectorAll(".cat-item").forEach(el=>el.classList.remove("active"));
-cardElement.classList.add("active");
-}
-// 🧪 Demo data (remove when backend is ready)
-renderCategories([
-  { category: "Application Related issue", count: 22, total: 32990 },
-  { category: "Network Issue", count: 30, total: 12890 },
-  { category: "DB Issue", count: 1, total: 1200 },
-  { category: "Security Issue", count: 4, total: 5600 },
-  { category: "UI Issue", count: 600, total: 2400 },
-  { category: "API Issue", count: 20, total: 8900 },
-  { category: "Infra Issue", count: 1000, total: 99999 },
-  { category: "Other", count: 0, total: 0 },
-  { category: "Unknown", count: 0, total: 0 }
-]);
+        // append
+        container.appendChild(card);
+      });
+    }
+    function closeDetails() {
+      document.querySelector(".content-row").classList.remove("expanded");
+      document.querySelector(".content-grid").classList.remove("shrink");
+      document.querySelector(".secdiv").classList.remove("shrink");
+      document.getElementById("detailsPanel").classList.remove("show");
+      document.querySelectorAll(".cat-item").forEach(el => el.classList.remove("active"));
+    }
+    // 🧪 Demo data (remove when backend is ready)
+    renderCategories([
+      { category: "Application Related issue", count: 22, total: 32990 },
+      { category: "Network Issue", count: 30, total: 12890 },
+      { category: "DB Issue", count: 1, total: 1200 },
+      { category: "Security Issue", count: 4, total: 5600 },
+      { category: "UI Issue", count: 600, total: 2400 },
+      { category: "API Issue", count: 20, total: 8900 },
+      { category: "Infra Issue", count: 1000, total: 99999 },
+      { category: "Other", count: 0, total: 0 },
+      { category: "Unknown", count: 0, total: 0 }
+    ]);
 
-// 👉 When backend is live, use:
-// loadCategories();
+    // 👉 When backend is live, use:
+    // loadCategories();
 
-</script>
-<script>
-  const track = document.getElementById('insightsTrack');
-  track.innerHTML += track.innerHTML; // duplicate cards
-</script>
+  </script>
+  <script>
+    const track = document.getElementById('insightsTrack');
+    track.innerHTML += track.innerHTML; // duplicate cards
+  </script>
 
-<script>
-const slaData = [
-  { monitor: "Prod_INC-CRITICAL-ResponseTime-900Sec", sla: "SLA 01", group: "2,testing_1,testing_2", goal: 99, achieved: 85, status: "Failed" },
-  { monitor: "Prod_INC-CRITICAL-ResolutionTime-15000Sec", sla: "SLA 02", group: "2,testing_1,testing_2", goal: 99, achieved: 100, status: "Success" },
-  { monitor: "Prod_INC-HIGH-ResponseTime-1800Sec", sla: "SLA 03", group: "2,testing_1,testing_2", goal: 98, achieved: 99, status: "Success" },
-  { monitor: "Prod_INC-HIGH-ResolutionTime-35000Sec", sla: "SLA 04", group: "2,testing_1,testing_2", goal: 98, achieved: 95, status: "Failed" },
-  { monitor: "Prod_INC-MEDIUM-ResponseTime-3200Sec", sla: "SLA 05", group: "-", goal: 96, achieved: 97, status: "Success" }
-];
+  <script>
+    const slaData = [
+      { monitor: "Prod_INC-CRITICAL-ResponseTime-900Sec", sla: "SLA 01", group: "2,testing_1,testing_2", goal: 99, achieved: 85, status: "Failed" },
+      { monitor: "Prod_INC-CRITICAL-ResolutionTime-15000Sec", sla: "SLA 02", group: "2,testing_1,testing_2", goal: 99, achieved: 100, status: "Success" },
+      { monitor: "Prod_INC-HIGH-ResponseTime-1800Sec", sla: "SLA 03", group: "2,testing_1,testing_2", goal: 98, achieved: 99, status: "Success" },
+      { monitor: "Prod_INC-HIGH-ResolutionTime-35000Sec", sla: "SLA 04", group: "2,testing_1,testing_2", goal: 98, achieved: 95, status: "Failed" },
+      { monitor: "Prod_INC-MEDIUM-ResponseTime-3200Sec", sla: "SLA 05", group: "-", goal: 96, achieved: 97, status: "Success" }
+    ];
 
-/* ===== OPEN MODAL + BUILD TABLE ===== */
-function openModal() {
-  const tbody = document.getElementById("slaTableBody");
-  tbody.innerHTML = "";
+    /* ===== OPEN MODAL + BUILD TABLE ===== */
+    function openModal() {
+      const tbody = document.getElementById("slaTableBody");
+      tbody.innerHTML = "";
 
-  slaData.forEach(item => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
+      slaData.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
   <td class="monitor clickable" onclick="openIncidentModal('${item.monitor}')">${item.monitor}</td>
   <td>${item.sla}</td>
   <td>${item.group}</td>
@@ -500,25 +734,25 @@ function openModal() {
   <td>${item.status}</td>
 `;
 
-    tbody.appendChild(row);
-  });
+        tbody.appendChild(row);
+      });
 
-  document.getElementById("overlay").style.display = "block";
-  document.getElementById("slaModal").style.display = "block";
-}
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("slaModal").style.display = "block";
+    }
 
-/* ===== CLOSE MODAL ===== */
-function closeModal() {
-  document.getElementById("overlay").style.display = "none";
-  document.getElementById("slaModal").style.display = "none";
-}
-function openIncidentModal(monitorName) {
+    /* ===== CLOSE MODAL ===== */
+    function closeModal() {
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("slaModal").style.display = "none";
+    }
+    function openIncidentModal(monitorName) {
 
-  const incident = slaData.find(i => i.monitor === monitorName);
+      const incident = slaData.find(i => i.monitor === monitorName);
 
-  if(!incident) return;
+      if (!incident) return;
 
-  document.getElementById("incidentDetails").innerHTML = `
+      document.getElementById("incidentDetails").innerHTML = `
     <p><b>Monitor:</b> ${incident.monitor}</p>
     <p><b>SLA:</b> ${incident.sla}</p>
     <p><b>Group:</b> ${incident.group}</p>
@@ -530,18 +764,18 @@ function openIncidentModal(monitorName) {
     <p>${incident.details || "No detailed incident report available."}</p>
   `;
 
-  document.getElementById("incidentModal").style.display = "block";
-  document.getElementById("overlay").style.display = "block";
-}
-function closeIncidentModal(){
-  document.getElementById("incidentModal").style.display="none";
-  document.getElementById("overlay").style.display="none";
-}
+      document.getElementById("incidentModal").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
+    function closeIncidentModal() {
+      document.getElementById("incidentModal").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
 
-</script>
+  </script>
 
 
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
 
 </body>

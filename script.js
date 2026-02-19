@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-      Chart.register(ChartDataLabels);
+  Chart.register(ChartDataLabels);
 
   /* ---------------- INCIDENT DATA ---------------- */
 
@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------------- COMMON LIST VIEW FUNCTION ---------------- */
 
   function showIncidentList(list, title, containerSelector, restoreFn) {
-  const container = document.querySelector(containerSelector);
+    const container = document.querySelector(containerSelector);
 
-  let html = `
+    let html = `
   <div class="incident-list">
 
     <div class="incident-header">
@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
 `;
 
 
-  if (list.length === 0) {
-    html += `<tr><td colspan="5">No incidents found</td></tr>`;
-  } else {
-    list.forEach(i => {
-      html += `
+    if (list.length === 0) {
+      html += `<tr><td colspan="5">No incidents found</td></tr>`;
+    } else {
+      list.forEach(i => {
+        html += `
         <tr>
           <td>${i.id}</td>
           <td>${i.title}</td>
@@ -56,15 +56,15 @@ document.addEventListener('DOMContentLoaded', function () {
           </td>
         </tr>
       `;
-    });
+      });
+    }
+
+    html += `</tbody></table></div>`;
+
+    container.innerHTML = html;
+
+    container.querySelector(".back-btn").onclick = restoreFn;
   }
-
-  html += `</tbody></table></div>`;
-
-  container.innerHTML = html;
-
-  container.querySelector(".back-btn").onclick = restoreFn;
-}
 
 
   /* ---------------- LOCATION BUBBLE CHART ---------------- */
@@ -143,65 +143,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderPriorityChart() {
 
-  const ctx3 = document.getElementById('priorityChart').getContext('2d');
+    const ctx3 = document.getElementById('priorityChart').getContext('2d');
 
-  return new Chart(ctx3, {
-    type: 'pie',
-    data: {
-      labels: ['P1', 'P2', 'P3', 'P4'],
-      datasets: [{
-        data: [28.4, 27.7, 34.7, 9.2],
-        backgroundColor: [
-          '#ff9900',
-          '#FFB547',
-          'rgb(115,139,216)',
-          '#4318FF'
-        ],
-        borderWidth: 2,
-        borderColor: '#fff'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-
-      plugins: {
-        legend: { display: false },
-
-        datalabels: {
-          color: '#fff',
-          font: {
-            weight: 'bold',
-            size: 14
-          },
-          formatter: (value, ctx) => {
-            return ctx.chart.data.labels[ctx.dataIndex];
-          }
-        }
+    return new Chart(ctx3, {
+      type: 'pie',
+      data: {
+        labels: ['P1', 'P2', 'P3', 'P4'],
+        datasets: [{
+          data: [28.4, 27.7, 34.7, 9.2],
+          backgroundColor: [
+            '#ff9900',
+            '#FFB547',
+            'rgb(115,139,216)',
+            '#4318FF'
+          ],
+          borderWidth: 2,
+          borderColor: '#fff'
+        }]
       },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
 
-      onClick: (evt, elements) => {
-        if (!elements.length) return;
+        plugins: {
+          legend: { display: false },
 
-        const index = elements[0].index;
-        const priority = ['P1','P2','P3','P4'][index];
-
-        showIncidentList(
-          incidents
-            .filter(i => i.priority === priority)
-            .sort((a,b)=> a.id - b.id),
-          `Incidents for ${priority}`,
-          ".priority-card .donut-container",
-          () => {
-            document.querySelector(".priority-card .donut-container").innerHTML =
-              `<canvas id="priorityChart"></canvas>`;
-            priorityChart = renderPriorityChart();
+          datalabels: {
+            color: '#fff',
+            font: {
+              weight: 'bold',
+              size: 14
+            },
+            formatter: (value, ctx) => {
+              return ctx.chart.data.labels[ctx.dataIndex];
+            }
           }
-        );
+        },
+
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+
+          const index = elements[0].index;
+          const priority = ['P1', 'P2', 'P3', 'P4'][index];
+
+          showIncidentList(
+            incidents
+              .filter(i => i.priority === priority)
+              .sort((a, b) => a.id - b.id),
+            `Incidents for ${priority}`,
+            ".priority-card .donut-container",
+            () => {
+              document.querySelector(".priority-card .donut-container").innerHTML =
+                `<canvas id="priorityChart"></canvas>`;
+              priorityChart = renderPriorityChart();
+            }
+          );
+        }
       }
-    }
-  });
-}
+    });
+  }
 
   let priorityChart = renderPriorityChart();
 
@@ -213,35 +213,35 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderTimeline() {
 
     const container = document.getElementById('projectsTimeline');
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const projects = [
-      { name:'Project A', start:1, changes:[1,3,7], breach:8 },
-      { name:'Project B', start:0.5, changes:[0.5,3,6], breach:8.5 },
-      { name:'Project C', start:1, changes:[1,3,6], breach:7.5 },
-      { name:'Project D', start:1, changes:[1,2.5,5], breach:7 },
-      { name:'Project E', start:1, changes:[1,4], breach:5.5 }
+      { name: 'Project A', start: 1, changes: [1, 3, 7], breach: 8 },
+      { name: 'Project B', start: 0.5, changes: [0.5, 3, 6], breach: 8.5 },
+      { name: 'Project C', start: 1, changes: [1, 3, 6], breach: 7.5 },
+      { name: 'Project D', start: 1, changes: [1, 2.5, 5], breach: 7 },
+      { name: 'Project E', start: 1, changes: [1, 4], breach: 5.5 }
     ];
 
-    let html='';
+    let html = '';
 
-    projects.forEach(p=>{
+    projects.forEach(p => {
 
-      const min=Math.min(p.start,...p.changes);
-      const max=p.breach;
-      const getLeft=v=>(v/11)*100;
+      const min = Math.min(p.start, ...p.changes);
+      const max = p.breach;
+      const getLeft = v => (v / 11) * 100;
 
-      const lineLeft=getLeft(min);
-      const lineWidth=getLeft(max)-lineLeft;
+      const lineLeft = getLeft(min);
+      const lineWidth = getLeft(max) - lineLeft;
 
-      let dots='';
-      p.changes.forEach(v=>{
-        dots+=`<div class="timeline-dot" style="left:${getLeft(v)}%"></div>`;
+      let dots = '';
+      p.changes.forEach(v => {
+        dots += `<div class="timeline-dot" style="left:${getLeft(v)}%"></div>`;
       });
 
-      const breach=`<div class="timeline-dot alert" style="left:${getLeft(p.breach)}%"></div>`;
+      const breach = `<div class="timeline-dot alert" style="left:${getLeft(p.breach)}%"></div>`;
 
-      html+=`
+      html += `
         <div class="timeline-row">
           <div class="timeline-label">${p.name}</div>
           <div class="timeline-track">
@@ -253,18 +253,18 @@ document.addEventListener('DOMContentLoaded', function () {
       `;
     });
 
-    let axis='<div class="timeline-axis">';
-    months.forEach(m=>axis+=`<span>${m}</span>`);
-    axis+='</div>';
+    let axis = '<div class="timeline-axis">';
+    months.forEach(m => axis += `<span>${m}</span>`);
+    axis += '</div>';
 
-    container.innerHTML=html+axis;
+    container.innerHTML = html + axis;
   }
 
 
   /* ---------------- SLA PROGRESS CIRCLE ---------------- */
 
   const canvas = document.getElementById("slaProgress");
-  if(canvas){
+  if (canvas) {
     const ctx = canvas.getContext("2d");
 
     const percent = 96;
@@ -275,27 +275,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     ctx.strokeStyle = "#eee";
     ctx.beginPath();
-    ctx.arc(center, center, radius, 0, Math.PI*2);
+    ctx.arc(center, center, radius, 0, Math.PI * 2);
     ctx.stroke();
 
     ctx.strokeStyle = "#4c6ef5";
     ctx.beginPath();
-    ctx.arc(center, center, radius, -Math.PI/2,
-      -Math.PI/2 + (Math.PI*2*percent)/100);
+    ctx.arc(center, center, radius, -Math.PI / 2,
+      -Math.PI / 2 + (Math.PI * 2 * percent) / 100);
     ctx.stroke();
 
-    ctx.font="24px Arial";
-    ctx.textAlign="center";
-    ctx.textBaseline="middle";
-    ctx.fillText(percent+"%",center,center);
+    ctx.font = "24px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(percent + "%", center, center);
   }
 
 });
-function viewIncident(id){
-  const incident = incidents.find(i=>i.id===id);
+function viewIncident(id) {
+  const incident = incidents.find(i => i.id === id);
 
   alert(
-`Incident Details
+    `Incident Details
 
 ID: ${incident.id}
 Title: ${incident.title}
@@ -303,107 +303,8 @@ Priority: ${incident.priority}
 Location: ${incident.location}`
   );
 }
-function openAgentsPage(){
-   window.location.href = "agent.html";
+function openAgentsPage() {
+  window.location.href = "agent.html";
 }
 
-
-const rcDataStore = {
-  monthly: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    total: [12, 18, 9, 14, 20, 16],
-    breached: [3, 5, 2, 4, 6, 5]
-  },
-  daily: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    total: [5, 7, 3, 6, 8, 4, 5],
-    breached: [1, 2, 0, 2, 3, 1, 1]
-  }
-};
-
-const rcCtx = document.getElementById('rc-incidentChart').getContext('2d');
-
-let rcCurrentView = 'monthly';
-
-function rcBuildChart(view) {
-  const total = rcDataStore[view].total;
-  const breached = rcDataStore[view].breached;
-  const nonBreached = total.map((t, i) => t - breached[i]);
-
-  return {
-    labels: rcDataStore[view].labels,
-    datasets: [
-      {
-        label: 'Non-Breached Incidents',
-        data: nonBreached,
-        backgroundColor: '#3b82f6',
-        stack: 'combined',
-        borderRadius: { bottomLeft: 6, bottomRight: 6 }
-      },
-      {
-        label: 'Breached Incidents',
-        data: breached,
-        backgroundColor: '#ef4444',
-        stack: 'combined',
-        borderRadius: { topLeft: 6, topRight: 6 }
-      }
-    ]
-  };
-}
-
-const rcChart = new Chart(rcCtx, {
-  type: 'bar',
-  data: rcBuildChart(rcCurrentView),
-  options: {
-    responsive: true,
-    maintainAspectRatio: true,
-    aspectRatio: 1.5,
-    plugins: {
-      legend: {
-        position: 'top'
-      },
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            const index = context.dataIndex;
-            const total = rcDataStore[rcCurrentView].total[index];
-            const breached = rcDataStore[rcCurrentView].breached[index];
-            const nonBreached = total - breached;
-
-            return [
-              'Total Incidents: ' + total,
-              'Breached: ' + breached,
-              'Non-Breached: ' + nonBreached
-            ];
-          }
-        }
-      }
-    },
-    scales: {
-      x: {
-        stacked: true,
-        grid: { display: false }
-      },
-      y: {
-        stacked: true,
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Number of Incidents'
-        },
-        grid: {
-          color: '#e2e8f0'
-        }
-      }
-    }
-  }
-});
-
-
-// Controller
-document.getElementById('rc-viewSelector').addEventListener('change', function () {
-  rcCurrentView = this.value;
-  rcChart.data = rcBuildChart(rcCurrentView);
-  rcChart.update();
-});
 
