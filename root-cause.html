@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>Root Cause Component</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+
+body{
+background:#f4f6fa;
+font-family:Arial;
+padding:30px;
+}
+
+.root-card{
+max-width:900px;
+background:white;
+border-radius:30px;
+padding:30px;
+margin:auto;
+box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+/* TAG */
+
+.tag{
+background:#ff8248;
+color:white;
+padding:8px 20px;
+border-radius:30px;
+display:inline-flex;
+gap:8px;
+font-weight:600;
+align-items:center;
+}
+
+h1{
+margin-top:20px;
+font-size:32px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+/* CENTER */
+
+.center{
+display:flex;
+justify-content:center;
+align-items:center;
+margin:40px 0;
+gap:25px;
+}
+
+.shield{
+width:80px;
+height:80px;
+border-radius:50%;
+background:#ff5252;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+}
+
+.server{
+font-size:60px;
+color:#4a6cff;
+}
+
+.pipe{
+width:90px;
+height:12px;
+background:#ddd;
+border-radius:20px;
+}
+
+.brick{
+width:140px;
+height:70px;
+background:#ff9f43;
+border-radius:12px;
+}
+
+/* FLOW */
+
+.flow{
+width:100%;
+margin-top:10px;
+}
+
+/* STEPS */
+
+.steps{
+display:flex;
+justify-content:space-around;
+margin-top:30px;
+}
+
+.step{
+text-align:center;
+}
+
+.circle{
+width:70px;
+height:70px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+margin:auto;
+margin-bottom:10px;
+color:white;
+}
+
+.orange{background:#f39c12;}
+.amber{background:#ffb142;}
+.blue{background:#3498db;}
+
+p{
+font-weight:600;
+line-height:1.3;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="root-card">
+
+<div class="tag">
+<i class="fa fa-magnifying-glass"></i> Root Cause
+</div>
+
+<h1>
+<i class="fa-solid fa-triangle-exclamation" style="color:#ff5252"></i>
+Misconfigured Firewall Rules
+</h1>
+
+<div class="center">
+
+<div class="shield">
+<i class="fa fa-shield"></i>
+</div>
+
+<div class="server">
+<i class="fa fa-server"></i>
+</div>
+
+<div class="pipe"></div>
+
+<div class="brick"></div>
+
+</div>
+
+<!-- dotted arrow -->
+
+<svg class="flow" viewBox="0 0 800 60">
+<path d="M50 30 L750 30" stroke="#bbb" stroke-dasharray="6 10" fill="none"/>
+<circle cx="400" cy="30" r="6" fill="#ff5252"/>
+</svg>
+
+<div class="steps">
+
+<div class="step">
+<div class="circle orange">
+<i class="fa fa-network-wired"></i>
+</div>
+<p>Recent Network<br>Changes</p>
+</div>
+
+<div class="step">
+<div class="circle amber">
+<i class="fa fa-file-lines"></i>
+</div>
+<p>Lack of firewall<br>review</p>
+</div>
+
+<div class="step">
+<div class="circle blue">
+<i class="fa fa-folder-open"></i>
+</div>
+<p>Poor change<br>documentation</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

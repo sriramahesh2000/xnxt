@@ -1,0 +1,273 @@
+/* ===============================
+   GLOBAL RESET + BASE
+================================*/
+body{
+  background:#f5f7fb;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+h1,h2,h3,h4,h5{
+  font-weight:600;
+  color:#1e293b;
+}
+
+.card{
+  border:none;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+.table{
+  margin-bottom:0;
+}
+
+/* ===============================
+   TABLE IMPROVEMENTS
+================================*/
+.table th{
+  background:#eef2ff;
+  color:#1e293b;
+  font-size:13px;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.table td{
+  font-size:13px;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+
+.table-hover tbody tr:hover{
+  background:#f1f5ff;
+  transition:.2s;
+}
+
+.table-responsive{
+  overflow:auto;
+  border-radius:12px;
+}
+
+/* Sticky header for large tables */
+.table thead th{
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+/* ===============================
+   BADGE COLOR FIXES
+================================*/
+.bg-secondary{ background:#64748b !important; color:#fff;}
+.bg-warning{ background:#facc15 !important;}
+.bg-danger{ background:#ef4444 !important; color:#fff;}
+.bg-info{ background:#38bdf8 !important; color:#fff;}
+
+/* ===============================
+   NAV TABS (MODAL)
+================================*/
+.nav-tabs{
+  border:none;
+  padding:10px 15px;
+  background:#f8fafc;
+}
+
+.nav-tabs .nav-link{
+  border:none;
+  color:#475569;
+  font-weight:500;
+}
+
+.nav-tabs .nav-link.active{
+  background:#4f46e5;
+  color:white;
+  border-radius:8px;
+}
+
+/* ===============================
+   MODAL GLOBAL FIX
+================================*/
+.modal-content{
+  border-radius:16px;
+  border:none;
+  box-shadow:0 10px 35px rgba(0,0,0,.2);
+}
+
+.modal-body{
+  max-height:75vh;
+  overflow:auto;
+  padding:20px;
+}
+
+/* custom modal container */
+.modal-container{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.modal-container.active{
+  display:flex;
+}
+
+.modal-container .modal-content{
+  width:95%;
+  max-width:1400px;
+  max-height:90vh;
+  overflow:auto;
+  padding:20px;
+}
+
+/* Close button */
+.close-button{
+  font-size:22px;
+  cursor:pointer;
+  color:#64748b;
+}
+
+.close-button:hover{
+  color:#ef4444;
+}
+
+/* ===============================
+   CARD HEADER
+================================*/
+.card-header{
+  padding:16px 18px !important;
+  border-bottom:1px solid #e2e8f0;
+  background:white;
+}
+
+.card-title h5{
+  margin:0;
+  font-size:16px;
+}
+
+.card-title small{
+  color:#64748b;
+}
+
+/* ===============================
+   STATUS PROGRESS BAR BOX
+================================*/
+.spbox{
+  display:block;
+  background:#e2e8f0;
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.spbox span{
+  display:block;
+  padding:3px 6px;
+  font-size:12px;
+  font-weight:600;
+}
+
+/* ===============================
+   VIEW REPORT BUTTON
+================================*/
+.modalbtn1{
+  cursor:pointer;
+  font-weight:600;
+}
+
+.modalbtn1:hover{
+  text-decoration:underline;
+  color:#4f46e5 !important;
+}
+
+/* ===============================
+   GRAPH MODAL TABS CONTENT
+================================*/
+#areaChart,
+#areaChart2,
+#barChart{
+  width:100%;
+  height:350px;
+}
+
+/* ===============================
+   INCIDENT ANALYSIS TABLE FIX
+================================*/
+.modal3 table{
+  font-size:12px;
+}
+
+.modal3 th{
+  font-size:12px;
+}
+
+.modal3 td{
+  padding:6px 8px;
+}
+
+/* highlight failed rows */
+.modal3 tr.bg-danger{
+  background:#fee2e2 !important;
+  color:#7f1d1d;
+  font-weight:500;
+}
+
+/* ===============================
+   RESPONSIVE FIXES
+================================*/
+@media(max-width:1200px){
+
+  .modal-container .modal-content{
+    width:98%;
+    padding:12px;
+  }
+
+  .table th,
+  .table td{
+    font-size:12px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .nav-tabs{
+    overflow-x:auto;
+    flex-wrap:nowrap;
+  }
+
+  .nav-tabs .nav-link{
+    white-space:nowrap;
+  }
+
+}
+
+/* ===============================
+   SCROLLBAR STYLING
+================================*/
+::-webkit-scrollbar{
+  height:8px;
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#c7d2fe;
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+/* ===============================
+   ANIMATION
+================================*/
+.modal-container{
+  animation:fadeIn .2s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.98)}
+  to{opacity:1; transform:scale(1)}
+}

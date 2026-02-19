@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Top Root Causes</title>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 40px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    select {
+      padding: 8px 12px;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .root-cause-container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .root-cause-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .root-cause-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .root-cause-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #0522dd;
+    }
+
+    .root-cause-title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Top 3 Root Causes</h2>
+
+  <select id="issueSelect">
+  <option value="network">Network Issue</option>
+  <option value="application">Application Issue</option>
+  <option value="database">Database Issue</option>
+  <option value="server">Server Issue</option>
+  <option value="cloud">Cloud Issue</option>
+  <option value="security">Security Issue</option>
+  <option value="integration">Integration Issue</option>
+  <option value="storage">Storage Issue</option>
+  <option value="userAccess">User Access Issue</option>
+  <option value="performance">Performance Issue</option>
+</select>
+
+
+  <div class="root-cause-container" id="rootCauseContainer"></div>
+
+  <script>
+    // Root cause mapping
+    const rootCauseMap = {
+  network: [
+    { name: "DNS Failure", icon: "fa-globe" },
+    { name: "Router Failure", icon: "fa-network-wired" },
+    { name: "High Latency", icon: "fa-hourglass-half" }
+  ],
+
+  application: [
+    { name: "Application Crash", icon: "fa-bug" },
+    { name: "Timeout Error", icon: "fa-clock" },
+    { name: "Configuration Error", icon: "fa-gear" }
+  ],
+
+  database: [
+    { name: "Slow Query", icon: "fa-magnifying-glass-chart" },
+    { name: "Connection Exhausted", icon: "fa-users-slash" },
+    { name: "Replication Lag", icon: "fa-arrows-left-right" }
+  ],
+
+  server: [
+    { name: "Server Down", icon: "fa-server" },
+    { name: "High CPU Usage", icon: "fa-microchip" },
+    { name: "Disk Full", icon: "fa-hard-drive" }
+  ],
+
+  cloud: [
+    { name: "Cloud Service Outage", icon: "fa-cloud" },
+    { name: "Load Balancer Failure", icon: "fa-random" },
+    { name: "Auto Scaling Failure", icon: "fa-up-right-and-down-left-from-center" }
+  ],
+
+  security: [
+    { name: "Unauthorized Access", icon: "fa-user-secret" },
+    { name: "Certificate Expired", icon: "fa-certificate" },
+    { name: "Firewall Blocked", icon: "fa-shield-halved" }
+  ],
+
+  integration: [
+    { name: "Third Party Down", icon: "fa-building-circle-xmark" },
+    { name: "API Timeout", icon: "fa-clock-rotate-left" },
+    { name: "Invalid Payload", icon: "fa-file-circle-xmark" }
+  ],
+
+  storage: [
+    { name: "Disk I/O Bottleneck", icon: "fa-database" },
+    { name: "Storage Unavailable", icon: "fa-box-open" },
+    { name: "Backup Failure", icon: "fa-box-archive" }
+  ],
+
+  userAccess: [
+    { name: "Login Failure", icon: "fa-right-to-bracket" },
+    { name: "Account Locked", icon: "fa-user-lock" },
+    { name: "SSO Failure", icon: "fa-id-badge" }
+  ],
+
+  performance: [
+    { name: "Performance Degradation", icon: "fa-chart-line-down" },
+    { name: "High Memory Usage", icon: "fa-memory" },
+    { name: "Capacity Exhausted", icon: "fa-gauge-high" }
+  ]
+};
+
+
+    const container = document.getElementById("rootCauseContainer");
+    const select = document.getElementById("issueSelect");
+
+    function renderRootCauses(issueType) {
+      container.innerHTML = "";
+
+      rootCauseMap[issueType].forEach(cause => {
+        const card = document.createElement("div");
+        card.className = "root-cause-card";
+
+        card.innerHTML = `
+          <div class="root-cause-icon">
+            <i class="fa-solid ${cause.icon}"></i>
+          </div>
+          <div class="root-cause-title">${cause.name}</div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Initial load
+    renderRootCauses(select.value);
+
+    // Change handler
+    select.addEventListener("change", (e) => {
+      renderRootCauses(e.target.value);
+    });
+  </script>
+
+</body>
+</html>

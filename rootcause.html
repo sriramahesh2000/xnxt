@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Root Cause Analysis</title>
+  <link rel="stylesheet" href="rstyle.css" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="breach-chart.css">
+</head>
+<body>
+
+<div class="canvas">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">
+      <div class="alert-icon">!</div>
+      <h1>Root Cause Analysis</h1>
+    </div>
+
+    <div class="incident-pill">
+      <span class="pill-tag">P1 Incident:</span>
+      Critical outage impacting all internal users
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="layout">
+
+    <!-- Root Cause Card -->
+    <div class="card root-card">
+      <div class="card-tag card-head">🔍 Root Cause</div>
+      <h2>Misconfigured Firewall Rules</h2>
+      <!-- /Users/sr20449082/Downloads/EXPNXt/assets/rootcauseimg.png -->
+       <div class="rtcause">
+            <img src="assets/rootcauseimg.png" alt="Experience NXT" class="rtcause-img">
+        </div>
+<!-- <iframe src="root-cause.html" width="100%" height="520"></iframe> -->
+
+      <!-- Dummy illustration -->
+      <!-- <div class="illustration-placeholder"></div> -->
+
+      <div class="cause-row">
+        <div class="cause">
+          <div class="cause-icon yellow"></div>
+          <p>Recent Network<br>Changes</p>
+        </div>
+        <div class="cause">
+          <div class="cause-icon orange"></div>
+          <p>Lack of firewall<br>review</p>
+        </div>
+        <div class="cause">
+          <div class="cause-icon blue"></div>
+          <p>Poor change<br>documentation</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline + Impact -->
+    <div class="card side-card card-head">
+      <h3 class="card-head"> 🕒 Timeline</h3>
+<div class="card">
+  <h2>Detailed Breach Timeline Analysis</h2>
+  <canvas id="breachChart"></canvas>
+</div>
+
+
+      <div class="breach-time">
+        Breach Time: <strong>2.1h</strong>
+      </div>
+
+      <h3 class="impact-title card-head">👥 Impact</h3>
+      <ul class="impact-list">
+        <li>All internal users unable to access critical systems</li>
+        <li>Tested access and confirmed issue resolution</li>
+      </ul>
+    </div>
+
+    <!-- Bottom Impact -->
+    <div class="card impact-card ">
+      <div class="impact-header card-head">🔴 Impact</div>
+      <div class="impact-content">
+      <ul style="max-width: 80%;">
+        <li>All internal users unable to access critical systems</li>
+        <li>Tested access and confirmed issue resolution</li>
+      </ul>
+      </div>
+      
+    </div>
+
+    <!-- Action Items -->
+    <div class="card action-card">
+      <div class="action-header card-head">📋 Action Items</div>
+      <div class="cardrow">
+  
+    <ul style="max-width: 80%;">
+      <li>Enhance firewall change management process</li>
+      <li>Conduct regular firewall rule audits</li>
+    </ul>
+  
+</div>
+      
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="purple-dot"></span>
+    <strong>SLA Insight.</strong>
+    Initial misdiagnosis caused breach in SLA
+  </div>
+
+</div>
+
+
+  <script src="breach-chart.js"></script>
+
+</body>
+</html>

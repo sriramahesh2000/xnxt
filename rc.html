@@ -1,0 +1,129 @@
+
+<div class="rc-canvas">
+
+  <!-- HEADER -->
+  <div class="rc-header">
+    <div class="rc-header-title">
+      <div class="rc-alert-icon">!</div>
+      <h1>Root Cause Analysis</h1>
+    </div>
+
+    <div class="rc-incident-pill">
+      <span class="rc-pill-tag">P1 Incident:</span>
+      Critical outage impacting all internal users
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="rc-layout">
+
+    <!-- ROOT CAUSE -->
+    <div class="rc-card">
+      <div class="rc-card-header">
+       
+      <div class="rc-card-tag">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Root Cause
+      </div>
+
+      <h2>Misconfigured Firewall Rules</h2>
+</div>
+      <div class="rc-root-image-wrapper">
+        <img src="assets/rtbgs.png" alt="Root Cause" class="rc-root-image">
+      </div>
+
+      <div class="rc-cause-row">
+        <div class="rc-intersection-dot"></div>
+        <div class="rc-cause">
+          <div class="rc-cause-icon rc-yellow"></div>
+          Recent Network Changes
+        </div>
+        <div class="rc-cause">
+          <div class="rc-cause-icon rc-orange"></div>
+          Lack of firewall review
+        </div>
+        <div class="rc-cause">
+          <div class="rc-cause-icon rc-blue"></div>
+          Poor change documentation
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="rc-card rc-side-card">
+      <h3>
+        <i class="fa-regular fa-clock"></i>
+        Detailed Breach Timeline Analysis
+      </h3>
+
+      <div class="rc-incident-chart-card">
+
+        <div class="rc-chart-header">
+          <h3>Incident Count View</h3>
+
+          <select id="rc-viewSelector">
+            <option value="monthly">Monthly View</option>
+            <option value="daily">Daily View</option>
+          </select>
+        </div>
+
+        <canvas id="rc-incidentChart"></canvas>
+
+      </div>
+
+      <div class="rc-breach-time">
+        Breach Time: <strong>2.1h</strong>
+      </div>
+
+      <div class="rc-breach-impact-header">
+        <i class="fa-solid fa-user-group"></i>
+        Impact
+      </div>
+      <ul>
+        <li>All internal users unable to access critical systems</li>
+        <li>Tested access and confirmed issue resolution</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM SECTION -->
+  <div class="rc-layout" style="margin-top:20px; grid-template-columns:1fr 1fr;">
+
+    <div class="rc-card rc-impact-card">
+      <div class="rc-impact-header">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Impact
+      </div>
+
+      <div class="rc-impact-content">
+        <ul>
+          <li>All internal users unable to access critical systems</li>
+          <li>Tested access and confirmed issue resolution</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rc-card rc-action-card">
+      <div class="rc-action-header">
+        <i class="fa-solid fa-check-double"></i>
+        Action Items
+      </div>
+      <div class="rc-cardrow">
+        <ul>
+          <li>Enhance firewall change management process</li>
+          <li>Conduct regular firewall rule audits</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="rc-footer">
+    <span class="rc-purple-dot"></span>
+    <strong>SLA Insight.</strong>
+    Initial misdiagnosis caused breach in SLA
+  </div>
+
+</div>

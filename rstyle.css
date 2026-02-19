@@ -1,0 +1,309 @@
+* {
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  background: #f5f7fc;
+}
+
+/* Canvas */
+.canvas {
+  max-width: 1220px;
+  margin: auto;
+}
+
+/* Header */
+.header {
+  margin-bottom: 18px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.alert-icon {
+  width: 26px;
+  height: 26px;
+  background: #ffedd5;
+  color: #ea580c;
+  border-radius: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.incident-pill {
+  margin-top: 10px;
+  background: #eef2ff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.pill-tag {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-auto-rows: auto;
+  gap: 18px;
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  width: 100%;
+}
+
+/* Root card */
+.root-card {
+  /* grid-row: span 2; */
+}
+
+.card-tag {
+  width: 100%;
+  display: inline-block;
+  background: #ffedd5;
+  color: #ea580c;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.illustration-placeholder {
+  height: 190px;
+  background: linear-gradient(135deg, #e5e7eb, #f8fafc);
+  border-radius: 16px;
+  margin: 14px 0 18px;
+}
+
+/* Causes */
+.cause-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cause {
+  text-align: center;
+  font-size: 13px;
+}
+
+.cause-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  margin: 0 auto 6px;
+}
+
+.yellow { background: #fde68a; }
+.orange { background: #fdba74; }
+.blue { background: #93c5fd; }
+
+/* Timeline */
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+
+.dot {
+  flex: 1;
+  margin: 0 4px;
+  padding: 12px;
+  text-align: center;
+  border-radius: 14px;
+  background: #f1f5f9;
+}
+
+.dot span {
+  font-weight: 600;
+}
+
+.dot small {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.active { background: #e0f2fe; }
+.breach { background: #fee2e2; }
+.resolved { background: #dcfce7; }
+
+.breach-time {
+  background: #fff1f2;
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: #be123c;
+  font-size: 14px;
+}
+
+/* Impact & Action */
+ul {
+  padding-left: 18px;
+}
+
+li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.small-image {
+  /* height: 90px; */
+  /* width: 30%;       smaller percentage */
+  /* max-width: 150px; prevents it getting big */
+  /* height: auto; */
+  /* margin-top: 10px; */
+  /* border-radius: 14px; */
+  /* background: linear-gradient(135deg, #e5e7eb, #f8fafc); */
+
+  /* width: 40px; */
+}
+
+.small-image img{
+  /* width: 100%; */
+  /* height: auto; */
+}
+
+
+/* Footer */
+.footer {
+  margin-top: 18px;
+  background: #f3e8ff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.purple-dot {
+  width: 10px;
+  height: 10px;
+  background: #8b5cf6;
+  border-radius: 50%;
+}
+.rtcause-img{
+  width: 90%;
+    height: 50%;
+}
+/* ========================================= */
+/* SHARED PATTERNED CARD HEADER STYLE */
+/* ========================================= */
+
+.card-tag,
+.side-card > h3,
+.impact-header,
+.action-header {
+  position: relative;
+  padding: 12px 18px;
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 600;
+  overflow: hidden;
+  display: inline-block;
+
+  /* base gradient */
+  background: linear-gradient(90deg, #ff5a5a, #ff8b5c);
+}
+
+/* IMAGE + GRADIENT PATTERN (RIGHT SIDE ONLY) */
+.card-tag::after,
+.side-card > h3::after,
+.impact-header::after,
+.action-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 90, 90, 0.85),
+      rgba(255, 139, 92, 0.85)
+    ),
+    url("assets/bghead.png") center / cover no-repeat;
+
+  background-blend-mode: multiply;
+
+  /* right-side visibility */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 55%,
+    black 75%,
+    black 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 55%,
+    black 75%,
+    black 100%
+  );
+
+  pointer-events: none;
+}
+
+/* ========================================= */
+/* OPTIONAL: size tuning per header type */
+/* ========================================= */
+
+.card-tag {
+  font-size: 13px;
+  
+  
+}
+
+.side-card > h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.impact-header,
+.action-header {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.card-head{
+  width: 100%;
+  
+}
+.cardrow{
+  display: flex;
+  justify-content: space-between; /* pushes items to ends */
+  align-items: center;            /* vertical alignment */
+  gap: 20px;
+
+  background-image: url("assets/actionitem.png");
+  background-size: contain;        /* fills div */
+  background-position: right center;   /* center image */
+  background-repeat: no-repeat;  /* no repeat */
+  padding: 20px;
+  border-radius: 12px;
+  /* color: #fff; optional if bg is dark */
+}
+.impact-content{
+  padding:15px;
+  border-radius:10px;
+
+  background-image:url("assets/imptbgs.png");
+  background-size:contain;      /* keeps full image visible */
+  background-position:right center; /* place image nicely */
+  background-repeat:no-repeat;
+
+  /* background-color:#fff; fallback if image doesn't load */
+}

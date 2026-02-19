@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Root Cause Analysis</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+/* ============================= */
+/* GLOBAL */
+/* ============================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #f5f7fc;
+  padding: 30px;
+  color: #1f2937;
+}
+
+.canvas {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+
+.header {
+  margin-bottom: 24px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-icon {
+  width: 28px;
+  height: 28px;
+  background: #fff7ed;
+  color: #ea580c;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.incident-pill {
+  margin-top: 12px;
+  background: #eef2ff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.pill-tag {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* ============================= */
+/* LAYOUT */
+/* ============================= */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* ============================= */
+/* CARDS */
+/* ============================= */
+
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+  border: 1px solid #f1f5f9;
+  min-height: 100%;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* ============================= */
+/* ROOT CAUSE CARD */
+/* ============================= */
+
+.card-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #fff7ed;
+  color: #ea580c;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+/* ============================= */
+/* ROOT IMAGE */
+/* ============================= */
+
+.root-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.root-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.08));
+}
+
+/* ============================= */
+/* CAUSE ROW */
+/* ============================= */
+
+.cause-row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;   /* distance from image */
+  padding-top: 40px;
+}
+
+/* Horizontal line */
+.cause-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(
+  to right,
+  transparent 0%,
+  #cbd5e1 15%,
+  #cbd5e1 85%,
+  transparent 100%
+);
+}
+
+/* Vertical line to image */
+.cause-row::after {
+  content: "";
+  position: absolute;
+  top: -50px;   /* must match margin-top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 50px;
+  background: linear-gradient(
+  to bottom,
+  transparent 0%,
+  #cbd5e1 20%,
+  #cbd5e1 80%,
+  transparent 100%
+);
+}
+
+/* Center intersection dot */
+.intersection-dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: #64748b;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* ============================= */
+/* INDIVIDUAL CAUSES */
+/* ============================= */
+
+.cause {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  color: #475569;
+}
+
+/* Vertical connector from horizontal line */
+.cause::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 40px;
+  background: #e2e8f0;
+}
+
+/* Dot above each cause */
+.cause::after {
+  content: "";
+  position: absolute;
+  top: -44px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: #94a3b8;
+  border-radius: 50%;
+}
+
+.cause-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  margin: 0 auto 8px;
+}
+
+.yellow { background: #fde68a; }
+.orange { background: #fdba74; }
+.blue { background: #93c5fd; }
+
+/* ============================= */
+/* SIDE CARD */
+/* ============================= */
+
+.side-card canvas {
+  margin-bottom: 12px;
+}
+
+.breach-time {
+  background: #fef2f2;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: #b91c1c;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ============================= */
+/* IMPACT & ACTION */
+/* ============================= */
+
+.impact-card,
+.action-card {
+  margin-top: 10px;
+}
+
+.impact-header,
+.action-header {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+ul {
+  padding-left: 18px;
+}
+
+li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #475569;
+}
+
+.impact-content {
+  background: url("assets/imptbgs.png") no-repeat right 20px center;
+  background-size: 240px;
+  padding-right: 220px;
+}
+
+.cardrow {
+  background: url("assets/actionitem.png") no-repeat right 20px center;
+  background-size: 240px;
+  padding-right: 220px;
+}
+
+/* ============================= */
+/* FOOTER */
+/* ============================= */
+
+.footer {
+  margin-top: 24px;
+  background: #f3e8ff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.purple-dot {
+  width: 10px;
+  height: 10px;
+  background: #8b5cf6;
+  border-radius: 50%;
+}
+
+.card-tag i,
+h3 i,
+.impact-header i,
+.action-header i {
+  margin-right: 8px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* Optional — nicer icon colors */
+.card-tag i {
+  color: #ea580c;
+}
+
+h3 i {
+  color: #6366f1;
+}
+
+.impact-header i {
+  color: #dc2626;
+}
+
+.action-header i {
+  color: #2563eb;
+}
+.breach-impact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  color: #b91c1c;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 60%, #fecaca 100%);
+
+  border-left: 4px solid #dc2626;
+  border-radius: 12px 12px 0 0;
+}
+
+.breach-impact-header i {
+  background: white;
+  color: #dc2626;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+
+
+.impact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #b45309;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 60%, #fde68a 100%);
+
+  border-left: 4px solid #f59e0b;
+  border-radius: 12px 12px 0 0;
+}
+.impact-header i {
+  background: white;
+  color: #f59e0b;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 13px;
+  /* box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25); */
+}
+
+.action-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  color: #1d4ed8;                 /* darker blue text */
+  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 50%, #dbeafe 100%);
+/* soft blue background */
+  border-left: 4px solid #2563eb; /* strong accent line */
+  border-radius: 12px 12px 0 0;
+}
+
+
+
+.action-header i {
+  background: white;
+  color: #2563eb;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+
+.impact-card,
+.action-card {
+  padding: 0;
+  overflow: hidden;
+  
+}
+
+.impact-content,
+.cardrow {
+  padding: 18px;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+
+  .cause-row {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    padding-top: 0;
+  }
+
+  /* Remove horizontal line */
+  .cause-row::before {
+    display: none;
+  }
+
+  /* Adjust vertical line from image */
+  .cause-row::after {
+    top: -60px;
+    height: 60px;
+  }
+
+  /* Remove individual connectors */
+  .cause::before,
+  .cause::after {
+    display: none;
+  }
+
+  .cause {
+    margin-top: 30px;
+  }
+}
+
+.breach-chart-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  width: 100%;
+  height: 500px;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #334155;
+}
+
+.incident-chart-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  width: 100%;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.chart-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.chart-header select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="canvas">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title">
+      <div class="alert-icon">!</div>
+      <h1>Root Cause Analysis</h1>
+    </div>
+
+    <div class="incident-pill">
+      <span class="pill-tag">P1 Incident:</span>
+      Critical outage impacting all internal users
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- ROOT CAUSE -->
+    <div class="card">
+      <div class="card-tag">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  Root Cause
+  </div>
+
+      <h2>Misconfigured Firewall Rules</h2>
+
+      <div class="root-image-wrapper">
+    <img src="assets/rtbgs.png" alt="Root Cause" class="root-image">
+</div>
+
+      <div class="cause-row">
+        <div class="intersection-dot"></div>
+        <div class="cause">
+          <div class="cause-icon yellow"></div>
+          Recent Network Changes
+        </div>
+        <div class="cause">
+          <div class="cause-icon orange"></div>
+          Lack of firewall review
+        </div>
+        <div class="cause">
+          <div class="cause-icon blue"></div>
+          Poor change documentation
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="card side-card"><h3>
+  <i class="fa-regular fa-clock"></i>
+  Detailed Breach Timeline Analysis
+</h3>
+
+     <div class="incident-chart-card">
+
+  <div class="chart-header">
+    <h3>Incident Count View</h3>
+
+    <select id="viewSelector">
+      <option value="monthly">Monthly View</option>
+      <option value="daily">Daily View</option>
+    </select>
+  </div>
+
+  <canvas id="incidentChart"></canvas>
+
+</div>
+
+
+      <div class="breach-time">
+        Breach Time: <strong>2.1h</strong>
+      </div>
+
+      <div class="breach-impact-header">
+  <i class="fa-solid fa-user-group"></i>
+  Impact
+</div>
+      <ul>
+        <li>All internal users unable to access critical systems</li>
+        <li>Tested access and confirmed issue resolution</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM SECTION -->
+  <div class="layout" style="margin-top:20px; grid-template-columns:1fr 1fr;">
+
+    <div class="card impact-card">
+     <div class="impact-header">
+  <i class="fa-solid fa-triangle-exclamation"></i>
+  Impact
+</div>
+
+      <div class="impact-content">
+        <ul>
+          <li>All internal users unable to access critical systems</li>
+          <li>Tested access and confirmed issue resolution</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card action-card">
+      <div class="action-header">
+  <i class="fa-solid fa-check-double"></i>
+  Action Items
+</div>
+      <div class="cardrow">
+        <ul>
+          <li>Enhance firewall change management process</li>
+          <li>Conduct regular firewall rule audits</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="purple-dot"></span>
+    <strong>SLA Insight.</strong>
+    Initial misdiagnosis caused breach in SLA
+  </div>
+
+</div>
+<script>
+const dataStore = {
+  monthly: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    total: [12, 18, 9, 14, 20, 16],
+    breached: [3, 5, 2, 4, 6, 5]
+  },
+  daily: {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    total: [5, 7, 3, 6, 8, 4, 5],
+    breached: [1, 2, 0, 2, 3, 1, 1]
+  }
+};
+
+const ctx = document.getElementById('incidentChart').getContext('2d');
+
+let currentView = 'monthly';
+
+function buildChart(view) {
+  const total = dataStore[view].total;
+  const breached = dataStore[view].breached;
+  const nonBreached = total.map((t, i) => t - breached[i]);
+
+  return {
+    labels: dataStore[view].labels,
+    datasets: [
+      {
+        label: 'Non-Breached Incidents',
+        data: nonBreached,
+        backgroundColor: '#3b82f6',
+        stack: 'combined',
+        borderRadius: { bottomLeft: 6, bottomRight: 6 }
+      },
+      {
+        label: 'Breached Incidents',
+        data: breached,
+        backgroundColor: '#ef4444',
+        stack: 'combined',
+        borderRadius: { topLeft: 6, topRight: 6 }
+      }
+    ]
+  };
+}
+
+const chart = new Chart(ctx, {
+  type: 'bar',
+  data: buildChart(currentView),
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 1.5,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const index = context.dataIndex;
+            const total = dataStore[currentView].total[index];
+            const breached = dataStore[currentView].breached[index];
+            const nonBreached = total - breached;
+
+            return [
+              'Total Incidents: ' + total,
+              'Breached: ' + breached,
+              'Non-Breached: ' + nonBreached
+            ];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        grid: { display: false }
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Number of Incidents'
+        },
+        grid: {
+          color: '#e2e8f0'
+        }
+      }
+    }
+  }
+});
+
+
+// Controller
+document.getElementById('viewSelector').addEventListener('change', function () {
+  currentView = this.value;
+  chart.data = buildChart(currentView);
+  chart.update();
+});
+</script>
+
+
+</body>
+</html>
