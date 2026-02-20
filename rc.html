@@ -27,25 +27,21 @@
 
         <h2>Misconfigured Firewall Rules</h2>
       </div>
-      <div class="rc-root-image-wrapper">
+      <!-- <div class="rc-root-image-wrapper">
         <img src="assets/rtbgs.png" alt="Root Cause" class="rc-root-image">
-      </div>
+      </div> -->
+        <!-- Deep Dive Sankey -->
+<div id="deepDivePanel" class="card" style="display:none;margin-top:20px;">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3 id="deepDiveTitle">Deep Dive</h3>
+    <button onclick="closeDeepDive()" style="border:none;background:#eee;padding:6px 12px;border-radius:6px;cursor:pointer">Close</button>
+  </div>
 
-      <div class="rc-cause-row">
-        <div class="rc-intersection-dot"></div>
-        <div class="rc-cause">
-          <div class="rc-cause-icon rc-yellow"></div>
-          Recent Network Changes
-        </div>
-        <div class="rc-cause">
-          <div class="rc-cause-icon rc-orange"></div>
-          Lack of firewall review
-        </div>
-        <div class="rc-cause">
-          <div class="rc-cause-icon rc-blue"></div>
-          Poor change documentation
-        </div>
-      </div>
+  <div id="deepDiveSankey" style="height:420px;margin-top:10px"></div>
+</div>
+
+
+ 
     </div>
 
     <!-- TIMELINE -->

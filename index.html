@@ -235,6 +235,53 @@
   <script src="https://code.highcharts.com/modules/sankey.js"></script>
   <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   <script>
+     const sankeyLinks = [
+  // Root → Category
+  ['Human Error', 'Operational', 420],
+  ['Human Error', 'Application', 180],
+  ['Hardware Failures', 'Infrastructure', 350],
+  ['Hardware Failures', 'Physical Damage', 120],
+  ['Software Bugs', 'Application', 280],
+  ['Software Bugs', 'Coding Errors', 200],
+  ['Security Breaches', 'Security', 180],
+  ['Security Breaches', 'Lack of Encryption', 90],
+  ['Third-Party Services', 'Vendor', 250],
+  ['Third-Party Services', 'Infrastructure', 100],
+
+  // Category → Issue
+  ['Operational', 'Infra Issue', 300],
+  ['Operational', 'UI Issue', 120],
+  ['Infrastructure', 'Infra Issue', 400],
+  ['Infrastructure', 'Network Issue', 50],
+  ['Physical Damage', 'Infra Issue', 120],
+  ['Application', 'Application Related Issue', 250],
+  ['Application', 'UI Issue', 210],
+  ['Coding Errors', 'Application Related Issue', 100],
+  ['Coding Errors', 'API Issue', 100],
+  ['Security', 'Security Issue', 140],
+  ['Security', 'API Issue', 40],
+  ['Lack of Encryption', 'Security Issue', 60],
+  ['Lack of Encryption', 'DB Issue', 30],
+  ['Vendor', 'Network Issue', 130],
+  ['Vendor', 'Infra Issue', 120],
+
+  // Issue → Recommendation
+  ['Infra Issue', 'Conduct regular capacity planning', 450],
+  ['Infra Issue', 'Implement redundant infrastructure', 350],
+  ['Infra Issue', 'Automated monitoring & alerting', 140],
+  ['UI Issue', 'Regular training and awareness programs', 330],
+  ['Network Issue', 'Implement redundant infrastructure', 100],
+  ['Network Issue', 'Improve vendor SLA management', 80],
+  ['Application Related Issue', 'Regular training and awareness programs', 150],
+  ['Application Related Issue', 'Automated monitoring & alerting', 200],
+  ['API Issue', 'Automated monitoring & alerting', 80],
+  ['API Issue', 'Improve vendor SLA management', 60],
+  ['Security Issue', 'Strengthen encryption standards', 140],
+  ['Security Issue', 'Regular training and awareness programs', 60],
+  ['DB Issue', 'Conduct regular capacity planning', 10],
+  ['DB Issue', 'Strengthen encryption standards', 20]
+];
+
     (function () {
       // Incident data counts
       const incidentCounts = {
@@ -246,13 +293,24 @@
         'Security Issue': { count: 4, total: 5600 },
         'DB Issue': { count: 1, total: 1200 }
       };
-
+     
       Highcharts.chart('sankeyChart', {
         chart: {
-          backgroundColor: 'transparent',
-          style: { fontFamily: 'Poppins, sans-serif' },
-          spacing: [20, 20, 20, 20]
-        },
+  backgroundColor: 'transparent',
+  style: { fontFamily: 'Poppins, sans-serif' },
+  spacing: [20, 20, 20, 20],
+
+  events: {
+    load: function () {
+      this.series[0].points.forEach(p => {
+        if (p.graphic) {
+          p.graphic.css({ transition: 'all 0.2s ease' });
+        }
+      });
+    }
+  }
+  
+},
         title: { text: null },
         credits: { enabled: false },
         tooltip: {
@@ -272,11 +330,35 @@
         },
         plotOptions: {
           sankey: {
-            curveFactor: 0.5,
-            linkOpacity: 0.45,
-            nodeWidth: 18,
-            nodePadding: 14,
+            curveFactor: 0.6,
+            linkOpacity: 0.4,
+            nodeWidth: 7,
+            nodePadding: 15,
             borderRadius: 3,
+            point: {
+              events: {
+                click: function () {
+                  if (!this.isNode) return;
+                  const nodeName = this.name;
+                  const ic = incidentCounts[nodeName];
+
+                  // Only for Issue Types
+                  if (ic) {
+                    // 1️⃣ Open details panel (reuse your logic)
+                    openDetailsPanel({
+                      category: nodeName,
+                      count: ic.count,
+                      total: ic.total
+                    });
+
+                    // 2️⃣ Show deep dive sankey
+                    showDeepDive(nodeName);
+                        }         
+                    }   
+
+              }
+            },
+              
             dataLabels: {
               enabled: true,
               color: '#2B3674',
@@ -333,55 +415,74 @@
             { id: 'Improve vendor SLA management', color: '#E879F9' },
             { id: 'Automated monitoring & alerting', color: '#7C3AED' }
           ],
-          data: [
-            // Root Causes → Categories
-            ['Human Error', 'Operational', 420],
-            ['Human Error', 'Application', 180],
-            ['Hardware Failures', 'Infrastructure', 350],
-            ['Hardware Failures', 'Physical Damage', 120],
-            ['Software Bugs', 'Application', 280],
-            ['Software Bugs', 'Coding Errors', 200],
-            ['Security Breaches', 'Security', 180],
-            ['Security Breaches', 'Lack of Encryption', 90],
-            ['Third-Party Services', 'Vendor', 250],
-            ['Third-Party Services', 'Infrastructure', 100],
-
-            // Categories → Issue Types (using actual incident counts as weights)
-            ['Operational', 'Infra Issue', 300],
-            ['Operational', 'UI Issue', 120],
-            ['Infrastructure', 'Infra Issue', 400],
-            ['Infrastructure', 'Network Issue', 50],
-            ['Physical Damage', 'Infra Issue', 120],
-            ['Application', 'Application Related Issue', 250],
-            ['Application', 'UI Issue', 210],
-            ['Coding Errors', 'Application Related Issue', 100],
-            ['Coding Errors', 'API Issue', 100],
-            ['Security', 'Security Issue', 140],
-            ['Security', 'API Issue', 40],
-            ['Lack of Encryption', 'Security Issue', 60],
-            ['Lack of Encryption', 'DB Issue', 30],
-            ['Vendor', 'Network Issue', 130],
-            ['Vendor', 'Infra Issue', 120],
-
-            // Issue Types → Recommendations
-            ['Infra Issue', 'Conduct regular capacity planning', 450],
-            ['Infra Issue', 'Implement redundant infrastructure', 350],
-            ['Infra Issue', 'Automated monitoring & alerting', 140],
-            ['UI Issue', 'Regular training and awareness programs', 330],
-            ['Network Issue', 'Implement redundant infrastructure', 100],
-            ['Network Issue', 'Improve vendor SLA management', 80],
-            ['Application Related Issue', 'Regular training and awareness programs', 150],
-            ['Application Related Issue', 'Automated monitoring & alerting', 200],
-            ['API Issue', 'Automated monitoring & alerting', 80],
-            ['API Issue', 'Improve vendor SLA management', 60],
-            ['Security Issue', 'Strengthen encryption standards', 140],
-            ['Security Issue', 'Regular training and awareness programs', 60],
-            ['DB Issue', 'Conduct regular capacity planning', 10],
-            ['DB Issue', 'Strengthen encryption standards', 20]
-          ]
+          data: sankeyLinks,
         }]
       });
     })();
+
+   function showDeepDive(issueName) {
+  const panel = document.getElementById("deepDivePanel");
+  const title = document.getElementById("deepDiveTitle");
+
+  panel.style.display = "block";
+  title.innerHTML = `Deep Dive → ${issueName}`;
+
+  // 1️⃣ Category → Issue
+  const categoryLinks = sankeyLinks.filter(l => l[1] === issueName);
+
+  // 2️⃣ Root → Category
+  const categories = categoryLinks.map(l => l[0]);
+  const rootLinks = sankeyLinks.filter(l => categories.includes(l[1]));
+
+  const deepDiveData = [];
+
+  categoryLinks.forEach(l => deepDiveData.push([issueName, l[0], l[2]]));
+  rootLinks.forEach(l => deepDiveData.push([l[1], l[0], l[2]]));
+
+  Highcharts.chart("deepDiveSankey", {
+    chart: { backgroundColor: "transparent" },
+    title: { text: null },
+    credits: { enabled: false },
+     
+        plotOptions: {
+          sankey: {
+            curveFactor: 0.65,
+            linkOpacity: 0.4,
+            nodeWidth: 4,
+            nodePadding: 80,
+            borderRadius: 3,
+            
+            },
+              
+            dataLabels: {
+              enabled: true,
+              color: '#2B3674',
+              style: {
+                fontSize: '14px',
+                fontWeight: '100'
+                // textOutline: '2px white'
+              },
+              nodeFormatter: function () {
+                const ic = incidentCounts[this.point.name];
+                if (ic) {
+                  return `${this.point.name}  [${ic.count.toLocaleString()}]`;
+                }
+                return this.point.name;
+              }
+            
+          }
+        },
+    series: [{
+      type: "sankey",
+      data: deepDiveData,
+      dataLabels: { enabled: true }
+    }]
+  });
+}
+function closeDeepDive() {
+  document.getElementById("deepDivePanel").style.display = "none";
+}
+    
   </script>
 
   <div class="content-row">
@@ -673,6 +774,9 @@
     <p><b>Break Count:</b> ${item.count}</p>
     <p><b>Total Incidents:</b> ${item.total}</p>
   `;
+
+  // ⭐ NEW → open issue deep dive sankey
+  showDeepDive(item.category);
         });
 
 
@@ -705,6 +809,22 @@
 
   </script>
   <script>
+    function openDetailsPanel(item) {
+  // shrink layout
+  document.querySelector(".content-row")?.classList.add("expanded");
+  document.querySelector(".content-grid")?.classList.add("shrink");
+  document.querySelector(".secdiv")?.classList.add("shrink");
+
+  // show panel
+  document.getElementById("detailsPanel")?.classList.add("show");
+
+  // fill content
+  document.getElementById("detailsContent").innerHTML = `
+    <p><b>Category:</b> ${item.category}</p>
+    <p><b>Break Count:</b> ${item.count}</p>
+    <p><b>Total Incidents:</b> ${item.total}</p>
+  `;
+}
     const track = document.getElementById('insightsTrack');
     track.innerHTML += track.innerHTML; // duplicate cards
   </script>
