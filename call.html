@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience NXT | Enterprise Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus Jakarta Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="call.css">
+</head>
+<body>
+
+    <!-- Floating Side Navbar -->
+    <div class="floating-nav" id="floatingNav">
+        <div class="fnav-toggle" id="fnavToggle" title="Apps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+        </div>
+
+        <div class="fnav-panel" id="fnavPanel">
+            <p class="fnav-label">APPS</p>
+            <ul class="fnav-list">
+                <li class="fnav-item" data-app="sentiment" onclick="window.location.href='index.html'">
+                    <span class="fnav-icon sentiment">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Sentiment</span>
+                </li>
+                <li class="fnav-item active" data-app="call">
+                    <span class="fnav-icon call">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.07 6.07l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Call</span>
+                </li>
+                <li class="fnav-item" data-app="agent">
+                    <span class="fnav-icon agent">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Agent</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/logo.png" alt="Experience NXT" class="logo-img">
+        </div>
+        <ul class="nav-links">
+            <li>Home</li>
+            <li>DEX</li>
+            <li class="active">SLA</li>
+            <li>OCM</li>
+            <li>UXM</li>
+            <li>ESG</li>
+        </ul>
+        <div class="user-profile">
+            <span>Welcome Adarsh</span>
+            <div class="avatar"></div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+
+        <section class="panel map-panel">
+            <div class="panel-header">
+              <h4>Global Distribution</h4>
+            </div>
+            <div style="width:100%; height:420px;"></div>
+        </section>
+
+        <!-- KPI Grid -->
+        <section class="kpi-grid">
+            <!-- SLA -->
+            <div class="grid-card color-blue">
+                <div class="card-header">SLA <span class="info-icon" style="font-size:0.8rem;opacity:0.8;">ⓘ</span></div>
+                <div class="card-value">96.4%</div>
+                <svg class="mountain-bg" viewBox="0 0 200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 75 L0 55 Q10 50 20 40 Q30 30 40 45 Q50 55 60 35 Q70 15 80 30 Q90 45 100 38 Q115 28 125 50 Q135 65 145 55 Q155 45 165 60 Q175 70 185 58 Q195 50 200 55 L200 75 Z" fill="rgba(255,255,255,0.25)"/>
+                    <path d="M0 75 L0 65 Q15 55 30 62 Q45 68 55 52 Q65 38 75 48 Q85 58 100 50 Q115 42 130 60 Q142 72 155 64 Q168 56 180 65 Q190 72 200 68 L200 75 Z" fill="rgba(255,255,255,0.18)"/>
+                </svg>
+            </div>
+
+            <!-- Incidents -->
+            <div class="grid-card color-purple">
+                <div class="card-header">Incidents</div>
+                <div class="card-value">32000</div>
+                <svg class="mountain-bg" viewBox="0 0 200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 75 L0 60 Q12 48 25 55 Q38 62 50 40 Q62 20 72 35 Q82 50 95 42 Q110 30 122 48 Q132 62 145 52 Q158 42 170 56 Q182 68 200 58 L200 75 Z" fill="rgba(255,255,255,0.22)"/>
+                    <path d="M0 75 L0 70 Q20 60 38 66 Q55 72 68 58 Q80 46 92 58 Q105 70 120 64 Q135 58 150 68 Q165 76 180 70 L200 68 L200 75 Z" fill="rgba(255,255,255,0.15)"/>
+                </svg>
+            </div>
+
+            <!-- CSAT -->
+            <div class="grid-card color-red">
+                <div class="card-header">CSAT</div>
+                <div class="card-value">82%</div>
+                <svg class="mountain-bg" viewBox="0 0 200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 75 L0 50 Q8 35 18 42 Q28 50 35 30 Q42 12 52 25 Q62 38 70 28 Q80 16 90 22 Q100 28 110 18 Q122 8 132 20 Q142 32 152 22 Q162 12 172 28 Q182 42 192 35 L200 38 L200 75 Z" fill="rgba(255,255,255,0.2)"/>
+                    <path d="M0 75 L0 65 Q18 58 32 64 Q48 70 60 55 Q72 42 85 52 Q98 62 112 56 Q126 50 140 62 Q154 72 168 65 Q182 58 200 64 L200 75 Z" fill="rgba(255,255,255,0.14)"/>
+                </svg>
+            </div>
+
+            <!-- FCR -->
+            <div class="grid-card color-orange">
+                <div class="card-header">FCR</div>
+                <div class="card-value">54%</div>
+                <svg class="mountain-bg" viewBox="0 0 200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 75 L0 55 Q10 42 22 50 Q35 58 45 38 Q55 20 65 32 Q75 44 88 28 Q100 14 112 24 Q124 34 135 20 Q146 8 158 18 Q170 28 182 22 Q192 18 200 28 L200 75 Z" fill="rgba(255,255,255,0.22)"/>
+                    <path d="M0 75 L0 68 Q22 60 38 66 Q55 72 70 60 Q85 48 100 58 Q115 68 132 62 Q148 56 165 65 Q180 73 200 68 L200 75 Z" fill="rgba(255,255,255,0.15)"/>
+                </svg>
+            </div>
+
+            <!-- FRT -->
+            <div class="grid-card color-teal">
+                <div class="card-header">FRT(Hr)</div>
+                <div class="card-value">1.4</div>
+                <svg class="mountain-bg" viewBox="0 0 200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 75 L0 58 Q14 45 28 52 Q42 60 55 42 Q68 24 80 36 Q92 48 105 38 Q118 28 130 44 Q142 58 155 48 Q168 38 180 50 Q192 60 200 55 L200 75 Z" fill="rgba(255,255,255,0.22)"/>
+                    <path d="M0 75 L0 68 Q20 62 38 67 Q56 72 72 62 Q88 52 104 62 Q120 72 138 65 Q155 58 172 67 Q186 74 200 70 L200 75 Z" fill="rgba(255,255,255,0.15)"/>
+                </svg>
+            </div>
+
+            <!-- MTTR -->
+            <div class="grid-card color-indigo">
+                <div class="card-header">MTTR(Hr)</div>
+                <div class="card-value">8.5</div>
+                <svg class="mountain-bg" viewBox="0 0 200 75" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 75 L0 60 Q12 48 26 55 Q40 62 52 44 Q64 26 76 38 Q88 50 100 40 Q114 28 126 42 Q138 56 150 46 Q162 36 174 50 Q186 62 200 56 L200 75 Z" fill="rgba(255,255,255,0.22)"/>
+                    <path d="M0 75 L0 70 Q22 62 40 68 Q58 74 74 63 Q90 52 106 63 Q122 73 140 66 Q158 59 176 68 Q190 75 200 71 L200 75 Z" fill="rgba(255,255,255,0.15)"/>
+                </svg>
+            </div>
+
+            <!-- Auto-scrolling News Panel -->
+            <div class="news-panel">
+                <div class="news-scroll-wrapper">
+                    <div class="news-scroll-inner" id="newsScroll">
+                        <!-- Items duplicated for seamless loop -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <div class="content-grid">
+
+            <!-- Weekday Wise Incidents Treemap -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h4>Weekday Wise Incidents</h4>
+                    <span class="menu-dots">⋮</span>
+                </div>
+                <div class="treemap-mock">
+                    <div class="treemap-item blue-1" style="grid-area: mon;">Monday</div>
+                    <div class="treemap-item blue-2" style="grid-area: wed;">Wednesday</div>
+                    <div class="treemap-item blue-3" style="grid-area: fri;">Friday</div>
+                    <div class="treemap-item blue-4" style="grid-area: tue;">Tuesday</div>
+                    <div class="treemap-item blue-5" style="grid-area: thu;">Thursday</div>
+                    <div class="treemap-item blue-6" style="grid-area: sat;">Saturday</div>
+                </div>
+            </div>
+
+            <!-- Incident Resolution Time - SVG Donut -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h4>Incident Resolution Time</h4>
+                    <span class="menu-dots">⋮</span>
+                </div>
+                <div class="donut-wrapper">
+                    <svg viewBox="0 0 200 200" class="donut-svg">
+                        <!-- Blue: Within 8 Hours 29.1% -->
+                        <circle class="donut-seg" cx="100" cy="100" r="70"
+                            stroke="#4A90D9"
+                            stroke-dasharray="127.99 311.83"
+                            stroke-dashoffset="0"/>
+                        <!-- Green: Within a Day 21.5% -->
+                        <circle class="donut-seg" cx="100" cy="100" r="70"
+                            stroke="#4CAF8A"
+                            stroke-dasharray="94.56 345.26"
+                            stroke-dashoffset="-127.99"/>
+                        <!-- Orange: Within 3 Days 25.1% -->
+                        <circle class="donut-seg" cx="100" cy="100" r="70"
+                            stroke="#F5A623"
+                            stroke-dasharray="110.40 329.42"
+                            stroke-dashoffset="-222.55"/>
+                        <!-- Red: Within a Week 16.2% -->
+                        <circle class="donut-seg" cx="100" cy="100" r="70"
+                            stroke="#E05C5C"
+                            stroke-dasharray="71.25 368.57"
+                            stroke-dashoffset="-332.95"/>
+                        <!-- Purple: More than a week 8.1% -->
+                        <circle class="donut-seg" cx="100" cy="100" r="70"
+                            stroke="#8B6CC8"
+                            stroke-dasharray="35.62 404.20"
+                            stroke-dashoffset="-404.20"/>
+
+                        <text x="142" y="70" class="donut-label" transform="rotate(90,100,100)">29.1%</text>
+                        <text x="126" y="158" class="donut-label" transform="rotate(90,100,100)">21.5%</text>
+                        <text x="44" y="144" class="donut-label" transform="rotate(90,100,100)">25.1%</text>
+                        <text x="38" y="82" class="donut-label" transform="rotate(90,100,100)">16.2%</text>
+                        <text x="86" y="32" class="donut-label" transform="rotate(90,100,100)">8.1%</text>
+                    </svg>
+
+                    <div class="donut-legend">
+                        <div class="legend-item"><span class="dot" style="background:#4A90D9"></span> Within 8 Hours</div>
+                        <div class="legend-item"><span class="dot" style="background:#4CAF8A"></span> Within a Day</div>
+                        <div class="legend-item"><span class="dot" style="background:#F5A623"></span> within 3 Days</div>
+                        <div class="legend-item"><span class="dot" style="background:#E05C5C"></span> within a Week</div>
+                        <div class="legend-item"><span class="dot" style="background:#8B6CC8"></span> More than a week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Agents -->
+            <div class="panel agents-panel">
+                <div class="panel-header">
+                    <h4>Top Agents</h4>
+                    <!-- Gauge SVG matching the image -->
+                    <svg width="70" height="44" viewBox="0 0 70 44">
+                        <path d="M 9 40 A 26 26 0 0 1 61 40" fill="none" stroke="#eee" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M 9 40 A 26 26 0 0 1 22 16" fill="none" stroke="#E05C5C" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M 22 16 A 26 26 0 0 1 48 16" fill="none" stroke="#F5A623" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M 48 16 A 26 26 0 0 1 61 40" fill="none" stroke="#4CAF8A" stroke-width="8" stroke-linecap="round"/>
+                        <!-- needle pointing to yellow zone -->
+                        <line x1="35" y1="40" x2="23" y2="18" stroke="#444" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="35" cy="40" r="3.5" fill="#444"/>
+                        <!-- emoji faces -->
+                        <text x="2" y="44" font-size="9">😟</text>
+                        <text x="57" y="44" font-size="9">😊</text>
+                    </svg>
+                </div>
+                <div class="agents-scroll">
+                    <table class="agents-table">
+                        <thead>
+                            <tr>
+                                <th>AGENT NAME</th>
+                                <th>RESPONSE TIME</th>
+                                <th>RESOLUTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Adarsh T R</td>
+                                <td><span class="badge red">42MINS</span></td>
+                                <td><span class="badge red">184MINS</span></td>
+                            </tr>
+                            <tr>
+                                <td>Rajiv</td>
+                                <td><span class="badge red">44MINS</span></td>
+                                <td><span class="badge red">288MINS</span></td>
+                            </tr>
+                            <tr>
+                                <td>Sai</td>
+                                <td><span class="badge teal">60MINS</span></td>
+                                <td><span class="badge teal">348MINS</span></td>
+                            </tr>
+                            <tr>
+                                <td>Naveen</td>
+                                <td><span class="badge teal">62MINS</span></td>
+                                <td><span class="badge teal">404MINS</span></td>
+                            </tr>
+                            <tr>
+                                <td>Aravind</td>
+                                <td><span class="badge purple">84MINS</span></td>
+                                <td><span class="badge purple">508MINS</span></td>
+                            </tr>
+                            <tr>
+                                <td>Chandrakanth</td>
+                                <td><span class="badge purple">90MINS</span></td>
+                                <td><span class="badge purple">600MINS</span></td>
+                            </tr>
+                            <tr>
+                                <td>Priya</td>
+                                <td><span class="badge purple">98MINS</span></td>
+                                <td><span class="badge purple">650MINS</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heatmap Section -->
+        <section class="panel heatmap-panel">
+            <div class="panel-header">
+                <h4>Incident Trend</h4>
+                <span class="menu-dots">⋮</span>
+            </div>
+
+            <div class="toggle-group">
+                <button class="toggle-btn active">Daily call data</button>
+                <button class="toggle-btn">Weekly call data</button>
+                <button class="toggle-btn">Monthly call data</button>
+                <button class="toggle-btn">Hourly call data</button>
+            </div>
+
+            <div class="heatmap-container">
+                <div class="heatmap-grid">
+                    <div class="month-labels">
+                        <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+                        <span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+                        <span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+                    </div>
+                    <div class="heatmap-cells" id="heatmapCells"></div>
+                </div>
+                <div class="days" id="dayLabels"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* ── Floating Nav Toggle ── */
+        (function() {
+            const nav = document.getElementById('floatingNav');
+            const toggle = document.getElementById('fnavToggle');
+            const panel = document.getElementById('fnavPanel');
+
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                nav.classList.toggle('expanded');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!nav.contains(e.target)) {
+                    nav.classList.remove('expanded');
+                }
+            });
+
+            document.querySelectorAll('.fnav-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    // Only update active state for non-navigation items
+                    if (item.dataset.app !== 'sentiment') {
+                        document.querySelectorAll('.fnav-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                    }
+                });
+            });
+        })();
+
+        /* ── News Ticker ── */
+        (function() {
+            const newsItems = [
+                { icon: 'purple', iconText: '📋', title: 'Teams audio driver patch updated', sub: 'impact: -3% new incident' },
+                { icon: 'red',    iconText: '🔄', title: 'Force windows update',             sub: 'impact: -8% new incident' },
+                { icon: 'teal',   iconText: '✅', title: '30% Incidents resolved < 1 Days',  sub: 'SLA compliance improving' },
+                { icon: 'yellow', iconText: '⚠️', title: 'VPN connectivity issues detected', sub: 'impact: +5% new incident' },
+                { icon: 'blue',   iconText: '📊', title: 'Monthly SLA report published',     sub: 'score: 96.4% achieved' },
+                { icon: 'orange', iconText: '🔧', title: 'Printer driver rollout complete',  sub: 'impact: -4% new incident' },
+                { icon: 'purple', iconText: '🛡️', title: 'Security patch KB5032278 applied', sub: 'impact: -6% new incident' },
+                { icon: 'red',    iconText: '📡', title: 'Network switch firmware updated',  sub: 'impact: -2% new incident' },
+                { icon: 'teal',   iconText: '💡', title: 'MTTR improved by 12% this week',  sub: 'avg resolution: 8.5 hrs' },
+                { icon: 'blue',   iconText: '👥', title: 'Agent onboarding completed x4',   sub: 'total active agents: 120' },
+            ];
+
+            const container = document.getElementById('newsScroll');
+            const doubled = [...newsItems, ...newsItems];
+            doubled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'news-item';
+                div.innerHTML = `
+                    <div class="news-icon ${item.icon}">${item.iconText}</div>
+                    <div class="news-text">
+                        <p>${item.title}</p>
+                        <strong>${item.sub}</strong>
+                    </div>`;
+                container.appendChild(div);
+            });
+
+            const itemH = 52;
+            const totalH = newsItems.length * itemH;
+            container.style.animationDuration = (newsItems.length * 2.2) + 's';
+            container.style.setProperty('--scroll-h', `-${totalH}px`);
+        })();
+
+        (function () {
+            function seededRandom(seed) {
+                let s = seed;
+                return function () {
+                    s = (s * 1664525 + 1013904223) & 0xffffffff;
+                    return (s >>> 0) / 0xffffffff;
+                };
+            }
+            const rand = seededRandom(42);
+            const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            const cellsContainer = document.getElementById('heatmapCells');
+            const dayLabelsContainer = document.getElementById('dayLabels');
+
+            for (let month = 0; month < 12; month++) {
+                for (let day = 0; day < 31; day++) {
+                    const div = document.createElement('div');
+                    div.className = 'cell';
+                    if (day >= daysInMonth[month]) {
+                        div.classList.add('v0');
+                    } else {
+                        const r = rand();
+                        let v;
+                        if      (r < 0.08) v = 0;
+                        else if (r < 0.25) v = 1;
+                        else if (r < 0.50) v = 2;
+                        else if (r < 0.75) v = 3;
+                        else if (r < 0.92) v = 4;
+                        else               v = 5;
+                        div.classList.add('v' + v);
+                    }
+                    cellsContainer.appendChild(div);
+                }
+            }
+
+            for (let d = 1; d <= 31; d++) {
+                const span = document.createElement('span');
+                span.textContent = 'Day' + d;
+                dayLabelsContainer.appendChild(span);
+            }
+
+            document.querySelectorAll('.toggle-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        })();
+    </script>
+
+<!-- ══════════════════════════════════════
+     MODAL 1: SLA Target
+══════════════════════════════════════ -->
+<div id="slaModal" class="modal-overlay" onclick="closeSLAModal(event)">
+    <div class="modal-box modal-sla">
+        <div class="modal-header">
+            <h3>SLA Target</h3>
+            <button class="modal-close" onclick="document.getElementById('slaModal').style.display='none'">×</button>
+        </div>
+        <div class="modal-body">
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th>MONITOR NAME</th>
+                        <th>SLA NAME</th>
+                        <th>GROUP NAME</th>
+                        <th>GOAL(%)</th>
+                        <th>ACHIEVED</th>
+                        <th>STATUS</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="slaTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL 2: SLA Analysis
+══════════════════════════════════════ -->
+<div id="analysisModal" class="modal-overlay" onclick="closeAnalysisModal(event)">
+    <div class="modal-box modal-analysis">
+        <button class="modal-close analysis-close" onclick="document.getElementById('analysisModal').style.display='none'">×</button>
+        <h3 class="analysis-title">SLA Analysis</h3>
+        <p class="analysis-sub" id="analysisSub"></p>
+        <div class="modal-body">
+            <table class="modal-table analysis-table">
+                <thead>
+                    <tr>
+                        <th>CLOSE DATE</th>
+                        <th>YR-MONTH</th>
+                        <th>DAY</th>
+                        <th>QUE TYPE</th>
+                        <th>TEAM</th>
+                        <th>TOWER</th>
+                        <th>REGION</th>
+                        <th>FINAL CLASSIFICATION</th>
+                        <th>RESOURCE</th>
+                        <th>SHIFT</th>
+                        <th>RESSLA TARGET</th>
+                        <th>RES SLA MET</th>
+                        <th>COUNT</th>
+                        <th>TICKETS W.O.BL</th>
+                        <th>MET W.O.BL</th>
+                        <th>CLOSE WEEK START DATE</th>
+                        <th>PRIORITY</th>
+                        <th>SLA TYPE</th>
+                        <th>TICKET#</th>
+                        <th>BACKLOG</th>
+                    </tr>
+                </thead>
+                <tbody id="analysisTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ── Modal Overlay ── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    animation: modalIn 0.22s ease;
+}
+@keyframes modalIn {
+    from { opacity:0; transform: scale(0.96) translateY(10px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+}
+
+.modal-sla      { width: 95vw; max-width: 95vw; }
+.modal-analysis { width: 95vw; max-width: 95vw; }
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+.modal-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #94a3b8;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    transition: color 0.2s;
+}
+.modal-close:hover { color: #ef4444; }
+
+.analysis-close {
+    position: sticky;
+    top: 0;
+    align-self: flex-end;
+    margin: 1rem 1.5rem 0;
+    z-index: 10;
+}
+.analysis-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    padding: 0 1.5rem 0.2rem;
+}
+.analysis-sub {
+    font-size: 0.82rem;
+    color: #64748b;
+    padding: 0 1.5rem 0.8rem;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 0;
+}
+
+.modal-body {
+    overflow: auto;
+    padding: 0 1.5rem 1.5rem;
+    flex: 1;
+}
+
+/* ── Modal Tables ── */
+.modal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-top: 1rem;
+}
+.modal-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.04em;
+    padding: 8px 10px;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    background: #fff;
+}
+.modal-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.modal-table tr:hover td { background: #f8fafc; }
+
+/* Row highlight for failed / night rows */
+.modal-table tr.row-highlight td {
+    background: #f87171;
+    color: #fff;
+}
+.modal-table tr.row-highlight:hover td { background: #ef4444; }
+
+/* Monitor name link style */
+.monitor-link {
+    color: #4F46E5;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+.monitor-link:hover { text-decoration: underline; }
+
+/* Progress bar */
+.progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.progress-bar {
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #fff;
+    min-width: 60px;
+}
+.progress-bar.green { background: #22c55e; }
+.progress-bar.red   { background: #ef4444; }
+
+.status-success { color: #22c55e; font-weight: 600; }
+.status-failed  { color: #ef4444; font-weight: 600; }
+
+.view-report-btn {
+    color: #4F46E5;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    white-space: nowrap;
+}
+.view-report-btn:hover { text-decoration: underline; }
+</style>
+
+<script>
+/* ══════════════════════════════════════
+   SLA Modal Data & Logic
+══════════════════════════════════════ */
+const slaData = [
+    { monitor: 'Prod_INC-CRITICAL-ResponseTime-900Sec',   sla:'SLA 01', group:'2,testing_1,testing_2', goal:99, achieved:85,  status:'Failed'  },
+    { monitor: 'Prod_INC-CRITICAL-ResolutionTime-15000Sec', sla:'SLA 02', group:'2,testing_1,testing_2', goal:99, achieved:100, status:'Success' },
+    { monitor: 'Prod_INC-HIGH-ResponseTime-1800Sec',       sla:'SLA 03', group:'2,testing_1,testing_2', goal:98, achieved:99,  status:'Success' },
+    { monitor: 'Prod_INC-HIGH-ResolutionTime-35000Sec',    sla:'SLA 04', group:'2,testing_1,testing_2', goal:98, achieved:95,  status:'Failed'  },
+    { monitor: 'Prod_INC-MEDIUM-ResponseTime-3200Sec',     sla:'SLA 05', group:'-',                      goal:96, achieved:97,  status:'Success' },
+    { monitor: 'Prod_INC-MEDIUM-ResolutionTime-65000Sec',  sla:'SLA 06', group:'testing_1,testing_2',   goal:96, achieved:95,  status:'Failed'  },
+    { monitor: 'Prod_INC-LOW-ResponseTime-3200Sec',        sla:'SLA 07', group:'testing_1,testing_2',   goal:95, achieved:98,  status:'Success' },
+    { monitor: 'Prod_INC-LOW-ResolutionTime-65000Sec',     sla:'SLA 08', group:'-',                      goal:95, achieved:95,  status:'Success' },
+    { monitor: 'Prod_SR-CRITICAL-ResolutionTime-15000Sec', sla:'SLA 09', group:'-',                      goal:98, achieved:100, status:'Success' },
+    { monitor: 'Prod_SR-CRITICAL-ResolutionTime-15000Sec', sla:'SLA 10', group:'-',                      goal:98, achieved:100, status:'Success' },
+];
+
+/* SLA Analysis rows – combined data from image 2 & 3 */
+const analysisRows = [
+    { closeDate:'2025-02-10', yrMonth:'2025-02', day:'Monday',    queType:'Incident',        team:'Support',    tower:'Cloud',   region:'US-East',      finalClass:'Resolved', resource:'John Doe',      shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:5,  ticketsWO:2, metWO:2, closeWeek:'2025-02-08', priority:'High',     slaType:'Standard', ticket:'INC0012345', backlog:0, highlight:false },
+    { closeDate:'2025-02-11', yrMonth:'2025-02', day:'Tuesday',   queType:'Service Request', team:'Operations', tower:'Network', region:'Europe',       finalClass:'Closed',   resource:'Jane Smith',    shift:'Night', resslaTarget:'8 hours', resSLAMet:'No',  count:3,  ticketsWO:1, metWO:1, closeWeek:'2025-02-09', priority:'Medium',   slaType:'Premium',  ticket:'SR0012346',  backlog:1, highlight:true  },
+    { closeDate:'2025-02-12', yrMonth:'2025-02', day:'Wednesday', queType:'Incident',        team:'Support',    tower:'Cloud',   region:'APAC',         finalClass:'Resolved', resource:'Michael Lee',  shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:7,  ticketsWO:3, metWO:3, closeWeek:'2025-02-10', priority:'Critical', slaType:'Standard', ticket:'INC0012347', backlog:0, highlight:false },
+    { closeDate:'2025-02-13', yrMonth:'2025-02', day:'Thursday',  queType:'Service Request', team:'Support',    tower:'Security',region:'EMEA',         finalClass:'Closed',   resource:'Emma Williams',shift:'Night', resslaTarget:'12 hours',resSLAMet:'No',  count:10, ticketsWO:4, metWO:3, closeWeek:'2025-02-10', priority:'Low',      slaType:'Premium',  ticket:'SR0012348',  backlog:2, highlight:true  },
+    { closeDate:'2025-02-14', yrMonth:'2025-02', day:'Friday',    queType:'Incident',        team:'Support',    tower:'Cloud',   region:'US-West',      finalClass:'Resolved', resource:'Lucas Brown',  shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:4,  ticketsWO:1, metWO:2, closeWeek:'2025-02-11', priority:'Medium',   slaType:'Standard', ticket:'INC0012349', backlog:0, highlight:false },
+    { closeDate:'2025-02-15', yrMonth:'2025-02', day:'Saturday',  queType:'Service Request', team:'Operations', tower:'Network', region:'South America',finalClass:'Closed',   resource:'Olivia Green', shift:'Night', resslaTarget:'6 hours', resSLAMet:'Yes', count:2,  ticketsWO:1, metWO:1, closeWeek:'2025-02-14', priority:'High',     slaType:'Premium',  ticket:'SR0012350',  backlog:0, highlight:false },
+    { closeDate:'2025-02-16', yrMonth:'2025-02', day:'Sunday',    queType:'Incident',        team:'Support',    tower:'Cloud',   region:'Europe',       finalClass:'Resolved', resource:'James Black',  shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:3,  ticketsWO:1, metWO:1, closeWeek:'2025-02-15', priority:'Low',      slaType:'Standard', ticket:'INC0012351', backlog:0, highlight:false },
+    { closeDate:'2025-02-17', yrMonth:'2025-02', day:'Monday',    queType:'Service Request', team:'Support',    tower:'Cloud',   region:'US-East',      finalClass:'Closed',   resource:'Sophia Harris',shift:'Night', resslaTarget:'6 hours', resSLAMet:'No',  count:5,  ticketsWO:2, metWO:3, closeWeek:'2025-02-16', priority:'Critical', slaType:'Standard', ticket:'SR0012352',  backlog:1, highlight:true  },
+    { closeDate:'2025-02-18', yrMonth:'2025-02', day:'Tuesday',   queType:'Incident',        team:'Support',    tower:'Network', region:'EMEA',         finalClass:'Resolved', resource:'John Doe',     shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:2,  ticketsWO:1, metWO:1, closeWeek:'2025-02-17', priority:'Medium',   slaType:'Standard', ticket:'INC0012353', backlog:0, highlight:false },
+    { closeDate:'2025-02-19', yrMonth:'2025-02', day:'Wednesday', queType:'Service Request', team:'Operations', tower:'Network', region:'South America',finalClass:'Closed',   resource:'Olivia Green', shift:'Night', resslaTarget:'6 hours', resSLAMet:'Yes', count:4,  ticketsWO:2, metWO:2, closeWeek:'2025-02-18', priority:'High',     slaType:'Premium',  ticket:'SR0012354',  backlog:0, highlight:false },
+    { closeDate:'2025-02-20', yrMonth:'2025-02', day:'Thursday',  queType:'Incident',        team:'Support',    tower:'Cloud',   region:'US-West',      finalClass:'Resolved', resource:'Emma Williams',shift:'Day',   resslaTarget:'6 hours', resSLAMet:'No',  count:6,  ticketsWO:3, metWO:1, closeWeek:'2025-02-19', priority:'Low',      slaType:'Premium',  ticket:'SR0012355',  backlog:2, highlight:true  },
+    { closeDate:'2025-02-21', yrMonth:'2025-02', day:'Friday',    queType:'Service Request', team:'Support',    tower:'Security',region:'APAC',         finalClass:'Closed',   resource:'James Black',  shift:'Night', resslaTarget:'4 hours', resSLAMet:'Yes', count:7,  ticketsWO:3, metWO:4, closeWeek:'2025-02-20', priority:'High',     slaType:'Standard', ticket:'SR0012356',  backlog:0, highlight:false },
+    { closeDate:'2025-02-22', yrMonth:'2025-02', day:'Saturday',  queType:'Incident',        team:'Support',    tower:'Cloud',   region:'Europe',       finalClass:'Resolved', resource:'Michael Lee',  shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:8,  ticketsWO:4, metWO:4, closeWeek:'2025-02-21', priority:'Critical', slaType:'Standard', ticket:'INC0012357', backlog:0, highlight:false },
+    { closeDate:'2025-02-23', yrMonth:'2025-02', day:'Monday',    queType:'Service Request', team:'Support',    tower:'Cloud',   region:'US-East',      finalClass:'Closed',   resource:'Olivia Green', shift:'Night', resslaTarget:'6 hours', resSLAMet:'No',  count:3,  ticketsWO:2, metWO:2, closeWeek:'2025-02-22', priority:'Medium',   slaType:'Premium',  ticket:'SR0012358',  backlog:2, highlight:true  },
+    { closeDate:'2025-02-24', yrMonth:'2025-02', day:'Monday',    queType:'Incident',        team:'Support',    tower:'Network', region:'EMEA',         finalClass:'Resolved', resource:'James Black',  shift:'Day',   resslaTarget:'4 hours', resSLAMet:'Yes', count:6,  ticketsWO:3, metWO:3, closeWeek:'2025-02-23', priority:'Low',      slaType:'Standard', ticket:'INC0012359', backlog:0, highlight:false },
+];
+
+function buildSLATable() {
+    const tbody = document.getElementById('slaTableBody');
+    tbody.innerHTML = '';
+    slaData.forEach((row, idx) => {
+        const isGreen = row.status === 'Success';
+        const barWidth = Math.round((row.achieved / 100) * 180);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><span class="monitor-link">${row.monitor}</span></td>
+            <td>${row.sla}</td>
+            <td>${row.group}</td>
+            <td>${row.goal}</td>
+            <td>
+                <div class="progress-wrap">
+                    <div class="progress-bar ${isGreen ? 'green' : 'red'}" style="width:${barWidth}px;">${row.achieved}%</div>
+                </div>
+            </td>
+            <td class="${isGreen ? 'status-success' : 'status-failed'}">${row.status}</td>
+            <td><button class="view-report-btn" onclick="openAnalysis('${row.sla}','${row.monitor}')">View Report</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function openSLAModal() {
+    buildSLATable();
+    document.getElementById('slaModal').style.display = 'flex';
+}
+
+function closeSLAModal(e) {
+    if (e.target === document.getElementById('slaModal')) {
+        document.getElementById('slaModal').style.display = 'none';
+    }
+}
+
+function openAnalysis(slaName, monitorName) {
+    document.getElementById('analysisSub').textContent = slaName + ' : ' + monitorName;
+    const tbody = document.getElementById('analysisTableBody');
+    tbody.innerHTML = '';
+    analysisRows.forEach(row => {
+        const tr = document.createElement('tr');
+        if (row.highlight) tr.classList.add('row-highlight');
+        tr.innerHTML = `
+            <td>${row.closeDate}</td>
+            <td>${row.yrMonth}</td>
+            <td>${row.day}</td>
+            <td>${row.queType}</td>
+            <td>${row.team}</td>
+            <td>${row.tower}</td>
+            <td>${row.region}</td>
+            <td>${row.finalClass}</td>
+            <td>${row.resource}</td>
+            <td>${row.shift}</td>
+            <td>${row.resslaTarget}</td>
+            <td>${row.resSLAMet}</td>
+            <td>${row.count}</td>
+            <td>${row.ticketsWO}</td>
+            <td>${row.metWO}</td>
+            <td>${row.closeWeek}</td>
+            <td>${row.priority}</td>
+            <td>${row.slaType}</td>
+            <td>${row.ticket}</td>
+            <td>${row.backlog}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    document.getElementById('analysisModal').style.display = 'flex';
+}
+
+function closeAnalysisModal(e) {
+    if (e.target === document.getElementById('analysisModal')) {
+        document.getElementById('analysisModal').style.display = 'none';
+    }
+}
+
+/* Hook SLA KPI card click */
+document.addEventListener('DOMContentLoaded', function() {
+    const slaCard = document.querySelector('.grid-card.color-blue');
+    if (slaCard) {
+        slaCard.style.cursor = 'pointer';
+        slaCard.addEventListener('click', openSLAModal);
+    }
+});
+
+/* Close on Escape */
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.getElementById('slaModal').style.display = 'none';
+        document.getElementById('analysisModal').style.display = 'none';
+    }
+});
+</script>
+
+</body>
+</html>
