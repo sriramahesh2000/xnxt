@@ -11,10 +11,76 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- Highcharts Core -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <!-- Drilldown Module (IMPORTANT) -->
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 
 </head>
 
 <body>
+   <!-- Floating Side Navbar -->
+    <div class="floating-nav" id="floatingNav">
+        <div class="fnav-toggle" id="fnavToggle" title="Apps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+        </div>
+
+        <div class="fnav-panel" id="fnavPanel">
+            <p class="fnav-label">APPS</p>
+            <ul class="fnav-list">
+                <li class="fnav-item" data-app="sentiment" onclick="window.location.href='sentiment.html'">
+                    <span class="fnav-icon sentiment">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Sentiment</span>
+                </li>
+                <li class="fnav-item active" data-app="call" onclick="window.location.href='call.html'">
+                    <span class="fnav-icon call">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.07 6.07l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Call</span>
+                </li>
+                <li class="fnav-item" data-app="agent" onclick="window.location.href='agent.html'">
+                    <span class="fnav-icon agent">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Agent</span>
+                </li>
+               <li class="fnav-item" data-app="causal" onclick="window.location.href='index.html'">
+    
+    <span class="fnav-icon causal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
+             stroke="currentColor" stroke-width="2" 
+             stroke-linecap="round" stroke-linejoin="round">
+             
+            <!-- Flow / cause-effect style icon -->
+            <circle cx="6" cy="12" r="2"/>
+            <circle cx="18" cy="6" r="2"/>
+            <circle cx="18" cy="18" r="2"/>
+            <line x1="8" y1="12" x2="16" y2="6"/>
+            <line x1="8" y1="12" x2="16" y2="18"/>
+        </svg>
+    </span>
+
+    <span class="fnav-text">Causal Analysis</span>
+
+</li>
+            </ul>
+        </div>
+    </div>
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
@@ -34,6 +100,7 @@
     </div>
   </nav>
 
+  
   <!-- Main Content -->
   <div class="main-container">
     <!-- Top Row -->
@@ -494,7 +561,7 @@ function closeDeepDive() {
           <div class="header-title-group">
             <div>
               <h3>Top Categories
-                <span onclick="closeDetails()" style="float:right;cursor:pointer">✖</span>
+                
               </h3>
               <span class="subtitle">7.2k Total incidents</span>
             </div>
@@ -516,6 +583,116 @@ function closeDeepDive() {
 
       </div>
 
+     <div class="card all-incidents-card">
+  <div class="card-header">
+    <div class="header-title-group">
+      <div>
+        <h3>All Incidents</h3>
+        <span class="subtitle">7.2k Total Incidents</span>
+      </div>
+
+      <div class="tooltip-container">
+        <i class="fa-solid fa-circle-info info-icon"></i>
+        <div class="tooltip-text">
+          <span class="dot red"></span> Critical<br>
+          <span class="dot orange"></span> High<br>
+          <span class="dot yellow"></span> Medium<br>
+          <span class="dot green"></span> Low
+        </div>
+      </div>
+    </div>
+
+    <div class="header-icon">
+      <i class="fa-solid fa-list-check"></i>
+    </div>
+  </div>
+
+  <div class="all-incidents-list" id="allIncidentsList"></div>
+</div>
+      <script>
+        
+       document.addEventListener("DOMContentLoaded", function () {
+
+  const incidents = [
+    {
+      id: "INC001234",
+      priority: "Critical",
+      status: "Resolved",
+      sla: "Met",
+      response: "0.5h",
+      resolution: "2.3h",
+      assignee: "John D."
+    },
+    {
+      id: "INC001235",
+      priority: "High",
+      status: "In Progress",
+      sla: "At Risk",
+      response: "1.2h",
+      resolution: "-",
+      assignee: "Sarah M."
+    },
+    {
+      id: "INC001236",
+      priority: "Medium",
+      status: "Open",
+      sla: "Breached",
+      response: "2.1h",
+      resolution: "-",
+      assignee: "Mike R."
+    },
+    {
+      id: "INC001237",
+      priority: "Low",
+      status: "Resolved",
+      sla: "Met",
+      response: "0.8h",
+      resolution: "1.4h",
+      assignee: "Emily K."
+    }
+  ];
+
+  const container = document.getElementById("allIncidentsList");
+
+  function formatClass(value) {
+    return value.toLowerCase().replace(/\s+/g, "-");
+  }
+
+  incidents.forEach(incident => {
+
+    const card = document.createElement("div");
+    card.className = "incident-card";
+
+    card.innerHTML = `
+      <div class="incident-header">
+        <span class="incident-id">${incident.id}</span>
+        <span class="badge priority ${formatClass(incident.priority)}">
+          ${incident.priority}
+        </span>
+      </div>
+
+      <div class="incident-middle">
+        <span class="badge status ${formatClass(incident.status)}">
+          ${incident.status}
+        </span>
+        <span class="badge sla ${formatClass(incident.sla)}">
+          SLA: ${incident.sla}
+        </span>
+      </div>
+
+      <div class="incident-footer">
+        <span>Response: ${incident.response}</span>
+        <span>Resolution: ${incident.resolution}</span>
+        <span>${incident.assignee}</span>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+       });
+      </script>
+
 
     </div>
     <div id="detailsPanel" class="details-panel">
@@ -528,6 +705,19 @@ function closeDeepDive() {
 
       </div>
     </div>
+    <!-- Bottom Row -->
+     <div class="row dashboard-layout">
+   <div class="col-lg-4 mb-lg-0 mb-1 causalfactor">
+    <div class="card z-index-2" >
+        <div class="row mt-4 arow">
+            <h5>&nbsp;&nbsp; Root Causes, Causal Factor vs No of Incidents</h5>
+            <div class="card-body pt-0" >
+                <div id="container01" style="height: 81vh;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
     <div class="secdiv">
       <!-- Priority Wise Change -->
       <div class="card priority-card">
@@ -559,10 +749,184 @@ function closeDeepDive() {
   </div>
   </div>
 
-  <!-- Bottom Row -->
+  
 
 
   </div>
+  <script>
+  Highcharts.chart('container01', {
+            chart: {
+                type: 'pie',
+                backgroundColor: 'transparent',
+                styledMode: false 
+            },
+            colors: [
+    '#1E3A8A', // deep blue
+    '#2563EB', // royal blue
+    '#3B82F6',
+    '#60A5FA',
+    '#93C5FD',
+    '#0EA5E9',
+    '#0284C7',
+    '#0369A1',
+    '#38BDF8',
+    '#22D3EE',
+    '#06B6D4',
+    '#0891B2'
+],
+            accessibility: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            title: {
+                text: ''
+            },
+            plotOptions: {
+                pie: {
+            innerSize: '60%', // Makes it a donut chart
+            depth: 45,
+            dataLabels: {
+    enabled: true,
+    distance: -25,
+    formatter: function () {
+        return '<span style="color:#FFFFFF; font-weight:600; font-size:12px;">' +
+            Highcharts.numberFormat(this.percentage, 1) + ' %</span>';
+    },
+    useHTML: true
+},
+showInLegend: true
+        }
+            },
+            series: [{
+                name: 'Incidents',
+                colorByPoint: true,
+                data: [
+                    { name: 'Human Error', y: 100, drilldown: 'Human Error' },
+                    { name: 'Hardware Failures', y: 80, drilldown: 'Hardware Failures' },
+                    { name: 'Software Bugs', y: 70, drilldown: 'Software Bugs' },
+                    { name: 'Network Issues', y: 90, drilldown: 'Network Issues' },
+                    { name: 'Security Breaches', y: 80, drilldown: 'Security Breaches' },
+                    { name: 'Configuration Changes', y: 70, drilldown: 'Configuration Changes' },
+                    { name: 'Capacity Issues', y: 90, drilldown: 'Capacity Issues' },
+                    { name: 'Third-Party Services', y: 80, drilldown: 'Third-Party Services' },
+                    { name: 'Environmental Factors', y: 70, drilldown: 'Environmental Factors' },
+                    { name: 'Process Failures', y: 90, drilldown: 'Process Failures' },
+                    { name: 'Outdated Technology', y: 80, drilldown: 'Outdated Technology' },
+                    { name: 'Lack of Training', y: 60, drilldown: 'Lack of Training' }
+                ]
+            }],
+            drilldown: {
+              activeDataLabelStyle: {
+                      color: '#FFFFFF',        // or whatever color you want
+                      textDecoration: 'none'   // removes underline
+                  },
+                  series: [
+                    {
+                        id: 'Human Error',
+                        data: [
+                            ['Incorrect data entry', 50, 100],
+                            ['Misconfiguration', 30, 60],
+                            ['Failure to follow procedures', 20, 40]
+                        ]
+                    },
+                    {
+                        id: 'Hardware Failures',
+                        data: [
+                            ['Aging hardware', 40, 80],
+                            ['Physical damage', 25, 50],
+                            ['Manufacturing defects', 15, 30]
+                        ]
+                    },
+                    {
+                        id: 'Software Bugs',
+                        data: [
+                            ['Inadequate testing', 35, 70],
+                            ['Coding errors', 20, 40],
+                            ['Unpatched vulnerabilities', 10, 20]
+                        ]
+                    },
+                    {
+                        id: 'Network Issues',
+                        data: [
+                            ['Bandwidth limitations', 45, 90],
+                            ['Outages', 30, 60],
+                            ['Misconfigured devices', 25, 50]
+                        ]
+                    },
+                    {
+                        id: 'Security Breaches',
+                        data: [
+                            ['Weak passwords', 40, 80],
+                            ['Lack of encryption', 30, 60],
+                            ['Unpatched systems', 20, 40]
+                        ]
+                    },
+                    {
+                        id: 'Configuration Changes',
+                        data: [
+                            ['Unplanned changes', 35, 70],
+                            ['Poor change management', 25, 50],
+                            ['Lack of documentation', 15, 30]
+                        ]
+                    },
+                    {
+                        id: 'Capacity Issues',
+                        data: [
+                            ['Insufficient CPU resources', 45, 90],
+                            ['Insufficient memory resources', 30, 60],
+                            ['Insufficient storage resources', 25, 50]
+                        ]
+                    },
+                    {
+                        id: 'Third-Party Services',
+                        data: [
+                            ['Vendor outages', 40, 80],
+                            ['Service disruptions', 30, 60],
+                            ['Poor SLA adherence', 20, 40]
+                        ]
+                    },
+                    {
+                        id: 'Environmental Factors',
+                        data: [
+                            ['Power outages', 35, 70],
+                            ['Overheating', 25, 50],
+                            ['Natural disasters', 15, 30]
+                        ]
+                    },
+                    {
+                        id: 'Process Failures',
+                        data: [
+                            ['Inefficient processes', 45, 90],
+                            ['Lack of standardization', 30, 60],
+                            ['Inadequate incident management', 25, 50]
+                        ]
+                    },
+                    {
+                        id: 'Outdated Technology',
+                        data: [
+                            ['Obsolete hardware', 40, 80],
+                            ['Obsolete software', 30, 60],
+                            ['Lack of vendor support', 20, 40]
+                        ]
+                    },
+                    {
+                        id: 'Lack of Training',
+                        data: [
+                            ['Insufficient training on new systems', 35, 70],
+                            ['Insufficient training on new procedures', 25, 50]
+                        ]
+                    }
+                ]
+            }
+        });
+</script>
+ <style>
+        #container01 {
+            height: 400px;
+        }
+    </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
@@ -764,6 +1128,13 @@ function closeDeepDive() {
           // document.querySelector(".content-grid").classList.add("shrink");
           document.querySelector(".content-grid").classList.add("shrink");
           document.querySelector(".secdiv").classList.add("shrink");
+          // document.querySelector(".dashboard-layout").classList.add("expanded");
+          document.querySelector(".dashboard-layout")?.classList.add("d-none");
+          document.querySelector(".categories-card")?.classList.add("categories-card-shrink");
+          document.querySelector(".all-incidents-card")?.classList.add("all-incidents-card-shrink");
+
+
+          
           // show details panel
           document.getElementById("detailsPanel")
             .classList.add("show");
@@ -789,6 +1160,12 @@ function closeDeepDive() {
       document.querySelector(".content-grid").classList.remove("shrink");
       document.querySelector(".secdiv").classList.remove("shrink");
       document.getElementById("detailsPanel").classList.remove("show");
+        document.querySelector(".dashboard-layout")?.classList.remove("d-none");
+        document.querySelector(".categories-card")?.classList.remove("categories-card-shrink");
+          document.querySelector(".all-incidents-card")?.classList.remove("all-incidents-card-shrink");
+
+      
+
       document.querySelectorAll(".cat-item").forEach(el => el.classList.remove("active"));
     }
     // 🧪 Demo data (remove when backend is ready)
