@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sentiment Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<style>
+body{
+  margin:0;
+  /* background:linear-gradient(180deg,#111318 0%, #eef2f7 350px);
+   */
+   background:#F4F7FE;
+  font-family:'Segoe UI',sans-serif;
+}
+
+.dashboard{
+  padding:40px 60px;
+}
+
+/* ===== TOP ROW ===== */
+.top-row{
+  display:grid;
+  grid-template-columns: 220px 220px 220px 1fr;
+  gap:30px;
+  margin-bottom:35px;
+}
+
+.kpi-card{
+  background:#F8FAFC;
+  border-radius:35px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,0.05);
+}
+
+.kpi-card h4{
+  margin-top:10px;
+  font-weight:600;
+  color:#334155;
+}
+
+.trend-card{
+  background:#ffffff;
+  border-radius:30px;
+  padding:25px 30px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.08);
+}
+
+.trend-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.trend-buttons button{
+  margin-left:10px;
+  padding:6px 14px;
+  border:1px solid #2F80ED;
+  background:#fff;
+  color:#2F80ED;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.trend-buttons button.active{
+  background:#2F80ED;
+  color:#fff;
+}
+
+/* ===== BOTTOM ROW ===== */
+.bottom-row{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:30px;
+}
+
+.graph-card{
+  background:#ffffff;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 15px 30px rgba(0,0,0,0.06);
+}
+
+.graph-card h3{
+  margin-bottom:15px;
+  font-weight:600;
+  color:#5c6b80;
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- TOP ROW -->
+  <div class="top-row">
+
+      <div class="kpi-card">
+        <div id="kpi1"></div>
+        <h4>Positive</h4>
+      </div>
+
+      <div class="kpi-card">
+        <div id="kpi2"></div>
+        <h4>Negative</h4>
+      </div>
+
+      <div class="kpi-card">
+        <div id="kpi3"></div>
+        <h4>Neutral</h4>
+      </div>
+
+      <div class="trend-card">
+        <div class="trend-header">
+          <h3>Sentiment Trend</h3>
+          <div class="trend-buttons">
+            <button onclick="changeTrend('yearly')" class="active" id="btnYear">Yearly</button>
+            <button onclick="changeTrend('monthly')" id="btnMonth">Monthly</button>
+            <button onclick="changeTrend('daily')" id="btnDay">Daily</button>
+          </div>
+        </div>
+        <div id="trendChart"></div>
+      </div>
+
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-row">
+      <div class="graph-card">
+          <h3>Weekday Wise Sentiment</h3>
+          <div id="weekdayChart"></div>
+      </div>
+
+      <div class="graph-card">
+          <h3>Category Wise Sentiment</h3>
+          <div id="categoryChart"></div>
+      </div>
+
+      <div class="graph-card">
+          <h3>Priority Wise Sentiment</h3>
+          <div id="priorityChart"></div>
+      </div>
+  </div>
+
+</div>
+
+<script>
+
+// ===== Simulated API Data =====
+async function fetchDashboardData(){
+return {
+
+  kpi:{positive:70, negative:22, neutral:8},
+
+  trend:{
+    yearly:{
+      categories:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+      positive:[40,50,30,60,55,45,48,52,49,60,58,65],
+      negative:[20,35,25,40,32,38,30,28,34,39,42,37],
+      neutral:[60,45,55,50,48,52,54,50,53,49,46,44]
+    },
+    monthly:{
+      categories:["Week 1","Week 2","Week 3","Week 4"],
+      positive:[20,30,28,35],
+      negative:[15,22,18,20],
+      neutral:[25,27,26,29]
+    },
+    daily:{
+      categories:["1","2","3","4","5","6","7","8","9","10"],
+      positive:[5,6,7,8,6,7,9,10,8,6],
+      negative:[2,3,4,3,2,3,4,5,3,2],
+      neutral:[6,5,7,6,8,7,6,5,7,6]
+    }
+  },
+
+  weekday:{
+    categories:["Mon","Tue","Wed","Thu","Fri"],
+    positive:[200,350,400,380,420],
+    negative:[150,180,220,210,240],
+    neutral:[300,280,320,310,330]
+  },
+
+  category:{
+    categories:["Application","End User","Access","Connectivity"],
+    positive:[44,55,41,37],
+    negative:[53,32,33,52],
+    neutral:[12,17,11,9]
+  },
+
+  priority:{
+    categories:["High","Moderate","Low"],
+    positive:[40,50,55],
+    negative:[70,80,100],
+    neutral:[90,85,200]
+  }
+};
+}
+
+let trendChart;
+let trendData;
+
+// ===== KPI =====
+function renderKPI(id,value,color){
+  new ApexCharts(document.querySelector(id),{
+    chart:{type:"radialBar",height:200,sparkline:{enabled:true}},
+    series:[value],
+    colors:[color],
+    plotOptions:{
+      radialBar:{
+        hollow:{size:"70%"},
+        track:{background:"#E5E7EB"},
+        dataLabels:{
+          name:{show:false},
+          value:{fontSize:"28px",fontWeight:600,color:"#334155"}
+        }
+      }
+    }
+  }).render();
+}
+
+// ===== TREND =====
+function renderTrend(data){
+  trendData = data;
+
+  trendChart = new ApexCharts(document.querySelector("#trendChart"),{
+    chart:{type:"area",height:300},
+    stroke:{curve:"smooth"},
+    colors:["#2F80ED","#F2994A","#C4C4C4"],
+    series:[
+      {name:"Positive",data:data.yearly.positive},
+      {name:"Negative",data:data.yearly.negative},
+      {name:"Neutral",data:data.yearly.neutral}
+    ],
+    xaxis:{categories:data.yearly.categories}
+  });
+
+  trendChart.render();
+}
+
+function changeTrend(type){
+  document.querySelectorAll(".trend-buttons button").forEach(btn=>btn.classList.remove("active"));
+  if(type==="yearly") document.getElementById("btnYear").classList.add("active");
+  if(type==="monthly") document.getElementById("btnMonth").classList.add("active");
+  if(type==="daily") document.getElementById("btnDay").classList.add("active");
+
+  const selected = trendData[type];
+
+  trendChart.updateOptions({
+    series:[
+      {name:"Positive",data:selected.positive},
+      {name:"Negative",data:selected.negative},
+      {name:"Neutral",data:selected.neutral}
+    ],
+    xaxis:{categories:selected.categories}
+  });
+}
+
+// ===== BAR =====
+function renderBar(id,data,stacked=false,horizontal=false){
+  new ApexCharts(document.querySelector(id),{
+    chart:{type:"bar",height:260,stacked:stacked},
+    plotOptions:{bar:{horizontal:horizontal}},
+    series:[
+      {name:"Positive",data:data.positive},
+      {name:"Negative",data:data.negative},
+      {name:"Neutral",data:data.neutral}
+    ],
+    colors:["#2F80ED","#F2994A","#C4C4C4"],
+    states: {
+      hover: {
+        filter: {
+          type: "none"
+        }
+      },
+      active: {
+        filter: {
+          type: "none"
+        }
+      }
+    },
+    xaxis:{categories:data.categories}
+  }).render();
+}
+
+// ===== INIT =====
+async function init(){
+  const data = await fetchDashboardData();
+
+  renderKPI("#kpi1",data.kpi.positive,"#2563EB");
+  renderKPI("#kpi2",data.kpi.negative,"#F97316");
+  renderKPI("#kpi3",data.kpi.neutral,"#94A3B8");
+
+  renderTrend(data.trend);
+  renderBar("#weekdayChart",data.weekday);
+  renderBar("#categoryChart",data.category,true,true);
+  renderBar("#priorityChart",data.priority);
+}
+
+init();
+
+</script>
+
+</body>
+</html>
