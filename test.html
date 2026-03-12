@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>incident-pie-connected-dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<style>
+body{
+  margin:0;
+  background:#F4F7FE;
+  font-family:'Segoe UI',sans-serif;
+}
+
+.wrapper{
+  padding:40px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:25px;
+  margin-bottom:30px;
+}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+h3{
+  margin-bottom:15px;
+  color:#334155;
+}
+
+#incidentList{
+  max-height:250px;
+  overflow:auto;
+  font-size:14px;
+}
+
+.incident-item{
+  padding:8px;
+  border-bottom:1px solid #eee;
+}
+.clear-btn{
+  margin-bottom:15px;
+  padding:6px 12px;
+  background:#2F80ED;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<button class="clear-btn" onclick="clearFilters()">Clear Filters</button>
+
+<div class="grid">
+  <div class="card">
+    <h3>Source Wise Incidents</h3>
+    <div id="sourceChart"></div>
+  </div>
+
+  <div class="card">
+    <h3>Priority Wise Incidents</h3>
+    <div id="priorityChart"></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Root Causes vs Incidents</h3>
+    <div id="rootChart"></div>
+  </div>
+
+  <div class="card">
+    <h3>Location Impact</h3>
+    <div id="locationChart"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Incident List</h3>
+  <div id="incidentList"></div>
+</div>
+
+</div>
+
+<script>
+
+/* ========= SINGLE DATA SOURCE ========= */
+
+const incidents = [
+{id:1, source:"Email", priority:"P1", root:"Server Down", location:"India"},
+{id:2, source:"Portal", priority:"P2", root:"Access Issue", location:"US"},
+{id:3, source:"Monitoring", priority:"P1", root:"Database Crash", location:"India"},
+{id:4, source:"Email", priority:"P3", root:"Access Issue", location:"UK"},
+{id:5, source:"Portal", priority:"P2", root:"Server Down", location:"US"},
+{id:6, source:"Monitoring", priority:"P1", root:"Server Down", location:"India"},
+{id:7, source:"Email", priority:"P2", root:"Network Failure", location:"UK"},
+{id:8, source:"Portal", priority:"P3", root:"Database Crash", location:"US"}
+];
+
+let activeFilters = {};
+
+/* ========= HELPER ========= */
+
+function groupBy(key,data){
+  const result={};
+  data.forEach(item=>{
+    result[item[key]] = (result[item[key]]||0)+1;
+  });
+  return result;
+}
+
+function applyFilters(){
+  let filtered = incidents;
+
+  Object.keys(activeFilters).forEach(key=>{
+    filtered = filtered.filter(i=>i[key]===activeFilters[key]);
+  });
+
+  updateCharts(filtered);
+  renderIncidentList(filtered);
+}
+
+function clearFilters(){
+  activeFilters = {};
+  updateCharts(incidents);
+  renderIncidentList(incidents);
+}
+
+function renderIncidentList(data){
+  const list = document.getElementById("incidentList");
+  list.innerHTML="";
+  data.forEach(i=>{
+    list.innerHTML += `
+      <div class="incident-item">
+        #${i.id} | ${i.source} | ${i.priority} | ${i.root} | ${i.location}
+      </div>`;
+  });
+}
+
+/* ========= PIE CHART CREATOR ========= */
+
+function createPieChart(id,key,data){
+  const grouped = groupBy(key,data);
+  const labels = Object.keys(grouped);
+  const values = Object.values(grouped);
+
+  return new ApexCharts(document.querySelector(id),{
+    chart:{
+      type:"pie",
+      height:280,
+      events:{
+        dataPointSelection:(e,ctx,config)=>{
+          const selected = labels[config.dataPointIndex];
+          activeFilters[key] = selected;
+          applyFilters();
+        }
+      }
+    },
+    labels:labels,
+    series:values,
+    colors:["#2F80ED","#F2994A","#56CCF2","#6FCF97","#BB6BD9"],
+    states:{
+      hover:{filter:{type:"none"}}
+    },
+    legend:{position:"bottom"}
+  });
+}
+
+/* ========= INIT CHARTS ========= */
+
+let sourceChart = createPieChart("#sourceChart","source",incidents);
+let priorityChart = createPieChart("#priorityChart","priority",incidents);
+let rootChart = createPieChart("#rootChart","root",incidents);
+let locationChart = createPieChart("#locationChart","location",incidents);
+
+sourceChart.render();
+priorityChart.render();
+rootChart.render();
+locationChart.render();
+
+renderIncidentList(incidents);
+
+/* ========= UPDATE ========= */
+
+function updateCharts(data){
+
+  sourceChart.updateOptions({
+    labels:Object.keys(groupBy("source",data)),
+    series:Object.values(groupBy("source",data))
+  });
+
+  priorityChart.updateOptions({
+    labels:Object.keys(groupBy("priority",data)),
+    series:Object.values(groupBy("priority",data))
+  });
+
+  rootChart.updateOptions({
+    labels:Object.keys(groupBy("root",data)),
+    series:Object.values(groupBy("root",data))
+  });
+
+  locationChart.updateOptions({
+    labels:Object.keys(groupBy("location",data)),
+    series:Object.values(groupBy("location",data))
+  });
+}
+
+</script>
+
+</body>
+</html>

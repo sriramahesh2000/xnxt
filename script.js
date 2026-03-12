@@ -1,4 +1,32 @@
-document.addEventListener('DOMContentLoaded', function () {
+ /* ── Floating Nav Toggle ── */
+        (function() {
+            const nav = document.getElementById('floatingNav');
+            const toggle = document.getElementById('fnavToggle');
+            const panel = document.getElementById('fnavPanel');
+
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                nav.classList.toggle('expanded');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!nav.contains(e.target)) {
+                    nav.classList.remove('expanded');
+                }
+            });
+
+            document.querySelectorAll('.fnav-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    // Only update active state for non-navigation items
+                    if (item.dataset.app !== 'sentiment') {
+                        document.querySelectorAll('.fnav-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                    }
+                });
+            });
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
   Chart.register(ChartDataLabels);
 
   /* ---------------- INCIDENT DATA ---------------- */
@@ -73,68 +101,117 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderLocationChart() {
 
-    const ctx2 = document.getElementById('locationChart').getContext('2d');
+  const ctx2 = document.getElementById('locationChart').getContext('2d');
 
-    return new Chart(ctx2, {
-      type: 'bubble',
-      data: {
-        datasets: [{
-          data: [
-            { x: 1, y: 45, r: 15 },
-            { x: 2, y: 30, r: 10 },
-            { x: 3, y: 25, r: 12 },
-            { x: 4, y: 15, r: 8 },
-            { x: 5, y: 20, r: 10 }
-          ],
-          backgroundColor: '#4318FF'
-        }]
+ const gradient = ctx2.createLinearGradient(0, 0, 400, 0);
+
+gradient.addColorStop(0.3, "#1E88E5");   // Soft Orange
+gradient.addColorStop(0.4, "#eca961"); // Deep Orange
+gradient.addColorStop(1, "#f9683c");   // Rich Blue
+
+  // Calculate counts
+  let locationData = locationLabels.map(location => ({
+    location,
+    count: incidents.filter(i => i.location === location).length
+  }));
+
+  // Sort descending
+  locationData.sort((a, b) => b.count - a.count);
+
+  const sortedLabels = locationData.map(l => l.location);
+  const sortedCounts = locationData.map(l => l.count);
+
+  return new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: sortedLabels,
+      datasets: [{
+        data: sortedCounts,
+        backgroundColor: gradient,
+        borderRadius: 14,
+        barPercentage: 0.6,
+        categoryPercentage: 0.6,
+        hoverBackgroundColor: (context) => {
+  const chart = context.chart;
+  const ctx = chart.ctx;
+  const gradientHover = ctx.createLinearGradient(0, 0, 400, 0);
+  gradientHover.addColorStop(0, "#ffc670");  // brighter orange
+  gradientHover.addColorStop(1, "#FF7043");  // brighter blue
+  return gradientHover;
+}
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+
+      animation: {
+        duration: 900,
+        easing: 'easeOutQuart'
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
 
-        onClick: (evt, elements) => {
-          if (!elements.length) return;
+      onClick: (evt, elements) => {
+        if (!elements.length) return;
 
-          const index = elements[0].index;
-          const location = locationLabels[index];
+        const index = elements[0].index;
+        const location = sortedLabels[index];
 
-          showIncidentList(
-            incidents.filter(i => i.location === location),
-            `Incidents in ${location}`,
-            ".chart-card .canvas-container",
-            () => {
-              document.querySelector(".chart-card .canvas-container").innerHTML =
-                `<canvas id="locationChart"></canvas>`;
-              locationChart = renderLocationChart();
-            }
-          );
-        },
+        showIncidentList(
+          incidents.filter(i => i.location === location),
+          `Incidents in ${location}`,
+          ".chart-card .canvas-container",
+          () => {
+            document.querySelector(".chart-card .canvas-container").innerHTML =
+              `<canvas id="locationChart"></canvas>`;
+            locationChart = renderLocationChart();
+          }
+        );
+      },
 
-        scales: {
-          x: {
-            type: 'linear',
-            min: 0,
-            max: 6,
-            ticks: {
-              stepSize: 1,
-              callback: v => locationLabels[v - 1] || ''
-            },
-            grid: { display: false }
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(200,200,255,0.1)"
           },
-          y: {
-            min: 10,
-            max: 50,
-            title: {
-              display: true,
-              text: 'Number of Incidents'
-            }
+          ticks: {
+            
+            font: { size: 12 }
+          },
+          title: {
+            display: true,
+            text: "Number of Incidents",
+            font: { size: 13, weight: '600' }
           }
         },
-        plugins: { legend: { display: false } }
+        y: {
+          grid: { display: false },
+          ticks: {
+            
+            font: { size: 13, weight: '600' }
+          }
+        }
+      },
+
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#dab464",
+          padding: 10,
+          cornerRadius: 8,
+          titleFont: { size: 14, weight: 'bold' },
+          bodyFont: { size: 13 },
+          callbacks: {
+            label: function(context) {
+              return `${context.raw} incidents`;
+            }
+          }
+        }
       }
-    });
-  }
+    }
+  });
+}
 
   let locationChart = renderLocationChart();
 
