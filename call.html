@@ -6,17 +6,17 @@
     <title>Experience NXT | Enterprise Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus Jakarta Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="call.css">
 
     <style>
-        /* ── Globe panel overrides ── */
+        /* ── amChart Hero Panel ── */
         .map-panel {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             background: #0a0b0f;
             padding: 0 !important;
-            height: 560px;
+            height: 300px;
         }
 
         .map-panel .panel-header {
@@ -32,26 +32,83 @@
             letter-spacing: 1px;
         }
 
-        #wave-canvas {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
+        #introchart {
+            width: 100%;
+            height: 300px;
+            background: #0a0b0f;
         }
 
-        #globe-container {
+        /* Nav overlay buttons on top of chart */
+        .chart-nav-overlay {
             position: absolute;
-            right: 4%; top: 50%;
-            transform: translateY(-50%);
-            width: 42%; height: 90%;
-            z-index: 10;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            display: flex;
+            gap: 10px;
         }
 
-        #globe-chart { width: 100%; height: 100%; }
+        .chart-nav-overlay a {
+            color: #fff;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background 0.2s;
+        }
 
-        #clock-canvas {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none; z-index: 20;
+        .chart-nav-overlay a:hover {
+            background: rgba(91,184,245,0.35);
+        }
+
+        /* SR/INC toggle on chart */
+        .chart-toggle-overlay {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            z-index: 999;
+        }
+
+        .chart-toggle-overlay .switch {
+            display: inline-block;
+            position: relative;
+        }
+
+        .chart-toggle-overlay .switch input { opacity:0; width:0; height:0; }
+
+        .chart-toggle-overlay .slider {
+            display: inline-block;
+            width: 48px; height: 26px;
+            background: #dc3545;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chart-toggle-overlay .slider:before {
+            content: "";
+            position: absolute;
+            width: 20px; height: 20px;
+            left: 3px; top: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .chart-toggle-overlay input:checked + .slider { background: #2196F3; }
+        .chart-toggle-overlay input:checked + .slider:before { transform: translateX(22px); }
+
+        .chart-toggle-overlay h5 {
+            color: #fff;
+            font-size: 0.7rem;
+            margin: 3px 0 0;
+            text-align: center;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -96,25 +153,18 @@
                     </span>
                     <span class="fnav-text">Agent</span>
                 </li>
-                 <li class="fnav-item" data-app="causal" onclick="window.location.href='index.html'">
-    
-    <span class="fnav-icon causal">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
-             stroke="currentColor" stroke-width="2" 
-             stroke-linecap="round" stroke-linejoin="round">
-             
-            <!-- Flow / cause-effect style icon -->
-            <circle cx="6" cy="12" r="2"/>
-            <circle cx="18" cy="6" r="2"/>
-            <circle cx="18" cy="18" r="2"/>
-            <line x1="8" y1="12" x2="16" y2="6"/>
-            <line x1="8" y1="12" x2="16" y2="18"/>
-        </svg>
-    </span>
-
-    <span class="fnav-text">Causal Analysis</span>
-
-</li>
+                <li class="fnav-item" data-app="causal" onclick="window.location.href='index.html'">
+                    <span class="fnav-icon causal">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="6" cy="12" r="2"/>
+                            <circle cx="18" cy="6" r="2"/>
+                            <circle cx="18" cy="18" r="2"/>
+                            <line x1="8" y1="12" x2="16" y2="6"/>
+                            <line x1="8" y1="12" x2="16" y2="18"/>
+                        </svg>
+                    </span>
+                    <span class="fnav-text">Causal Analysis</span>
+                </li>
             </ul>
         </div>
     </div>
@@ -139,20 +189,20 @@
 
     <main class="dashboard-container">
 
-        <!-- ══ MAP PANEL — Globe + Waves ══ -->
+        <!-- ══ amChart Hero Panel (replaces old globe/wave) ══ -->
         <section class="panel map-panel">
-            <div class="panel-header">
-                <h4>Global Distribution</h4>
+
+            <!-- SR / INC toggle overlay -->
+            <div class="chart-toggle-overlay">
+                <label class="switch">
+                    <input id="chkInc" type="checkbox" checked onchange="getChart();">
+                    <span class="slider"></span>
+                </label>
+                <h5>SR &nbsp;&nbsp; INC</h5>
             </div>
 
-            <!-- Waves -->
-            <canvas id="wave-canvas"></canvas>
-
-            <!-- Globe -->
-            <div id="globe-container">
-                <div id="globe-chart"></div>
-                <canvas id="clock-canvas"></canvas>
-            </div>
+            <!-- The amChart container — exact same id as first file -->
+            <div id="introchart"></div>
         </section>
 
         <!-- KPI Grid -->
@@ -327,32 +377,552 @@
         </section>
     </main>
 
-    <!-- ══ amCharts 5 ══ -->
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <!-- ══ amCharts 5 Scripts (exact same set as first file) ══ -->
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/themes/Dark.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script type="text/javascript" src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
 
+    <!-- ══ amChart visualization (inlined from amchart.js) ══ -->
     <script>
-        /* ── Floating Nav Toggle ── */
+        var root = am5.Root.new("introchart");
+        root.container.set("minWidth", 400);
+
+        const myTheme = am5.Theme.new(root);
+        myTheme.rule("Label").setAll({ fontSize: 9 });
+        root.setThemes([am5themes_Animated.new(root), am5themes_Dark.new(root), myTheme]);
+
+        var previousSelectedId;
+        var currentIndex = -1;
+        var selectCountryInterval;
+        var colorSet = am5.ColorSet.new(root, {});
+        var continents = ["europe", "asia", "northAmerica", "southAmerica", "oceania", "africa"];
+        var continentNames = { europe: "Europe", asia: "Asia", northAmerica: "North America", southAmerica: "South America", oceania: "Oceania", africa: "Africa" };
+        var lineSeries = {};
+        var radarRangeFills = {};
+        var polygonSeries;
+        var mapChart;
+        var gaugeSeries;
+        var radarGauge;
+        var globeContainer;
+        var categoryAxis;
+
+        var colors = {
+            europe: colorSet.next(), asia: colorSet.next(),
+            northAmerica: colorSet.next(), southAmerica: colorSet.next(),
+            oceania: colorSet.next(), africa: colorSet.next(),
+            antarctica: am5.color(0x444444)
+        };
+
+        var continentsData = [
+            { name: "Europe", id: "europe", count: 12 },
+            { name: "Asia", id: "asia", count: 12 },
+            { name: "North America", id: "northAmerica", count: 12 },
+            { name: "South America", id: "southAmerica", count: 12 },
+            { name: "Oceania", id: "oceania", count: 12 },
+            { name: "Africa", id: "africa", count: 12 }
+        ];
+        var continentStartCategory = {};
+        var continentEndCategory = {};
+
+        makeLineSeriesChart();
+
+        var mainContainer = root.container.children.push(am5.Container.new(root, {
+            height: am5.p100, width: am5.p100, layout: root.horizontalLayout
+        }));
+
+        mainContainer.events.on("boundschanged", function () {
+            var width = mainContainer.width();
+            if (width < 1000) {
+                radarGauge.hide();
+                if (width < 400) { globeContainer.hide(0); }
+                else { if (globeContainer.isHidden()) globeContainer.show(0); }
+            } else {
+                if (radarGauge.isHidden()) radarGauge.show();
+            }
+        });
+
+        var navContainer = mainContainer.children.push(am5.Container.new(root, {
+            height: am5.p100, width: am5.p100, minWidth: 400,
+            centerY: am5.p50, y: am5.p50, layout: root.horizontalLayout
+        }));
+
+        var navChartsContainer = navContainer.children.push(am5.Container.new(root, {
+            height: am5.p100, centerY: am5.p50, y: am5.p50,
+            centerX: am5.p50, x: am5.p50, layout: root.horizontalLayout
+        }));
+
+        var container = mainContainer.children.push(am5.Container.new(root, {
+            height: am5.p100, layout: root.horizontalLayout
+        }));
+
+        // ── Radar Chart (globe ring) ──
+        function makeRadarChart() {
+            globeContainer = container.children.push(am5.Container.new(root, {
+                height: 280, width: 280, marginRight: 100, marginLeft: 50,
+                centerY: am5.p50, y: am5.p50
+            }));
+
+            var chart = globeContainer.children.push(am5radar.RadarChart.new(root, {
+                panX: false, panY: false, innerRadius: 171, radius: 220
+            }));
+
+            chart.radarContainer.children.setIndex(0, am5.Circle.new(root, {
+                radius: 170, fillOpacity: 1, fill: am5.color(0x111111)
+            }));
+            chart.zoomOutButton.set("forceHidden", true);
+
+            var xRenderer = am5radar.AxisRendererCircular.new(root, { strokeOpacity: 0 });
+            xRenderer.labels.template.setAll({ forceHidden: false });
+            xRenderer.grid.template.setAll({ forceHidden: true });
+
+            var yRenderer = am5radar.AxisRendererRadial.new(root, { strokeOpacity: 0 });
+            yRenderer.labels.template.setAll({ forceHidden: true });
+            yRenderer.grid.template.setAll({ forceHidden: true });
+
+            categoryAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                maxDeviation: 0, categoryField: "category", renderer: xRenderer
+            }));
+
+            var valueAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, { renderer: yRenderer }));
+
+            var series = chart.series.push(am5radar.RadarColumnSeries.new(root, {
+                xAxis: categoryAxis, yAxis: valueAxis,
+                stroke: am5.color(0xffffff), fill: am5.color(0xffffff),
+                valueYField: "value", categoryXField: "category"
+            }));
+            series.columns.template.setAll({ fillOpacity: 0.1, strokeOpacity: 0, cornerRadius: 5, tooltipText: "{categoryX}: {valueY}" });
+
+            var radarLineSeries = chart.series.push(am5radar.RadarLineSeries.new(root, {
+                xAxis: categoryAxis, yAxis: valueAxis, valueYField: "value2", categoryXField: "category"
+            }));
+            radarLineSeries.strokes.template.setAll({ forceHidden: true });
+            radarLineSeries.bullets.push(function () {
+                return am5.Bullet.new(root, {
+                    sprite: am5.Circle.new(root, { radius: 4 * Math.random(), fill: radarLineSeries.get("stroke") })
+                });
+            });
+
+            var i = 0;
+            var data = generateRadarData();
+            series.data.setAll(data);
+            radarLineSeries.data.setAll(data);
+            categoryAxis.data.setAll(data);
+            series.appear(2000);
+            radarLineSeries.appear(2000);
+
+            function createRange(id, startCategory, endCategory) {
+                var axisRange = categoryAxis.createAxisRange(categoryAxis.makeDataItem({ above: true }));
+                axisRange.set("category", startCategory);
+                axisRange.set("endCategory", endCategory);
+                var fill = axisRange.get("axisFill");
+                fill.setAll({
+                    toggleKey: "active", cursorOverStyle: "pointer",
+                    fill: chart.get("colors").getIndex(i), stroke: am5.color(0x000000),
+                    strokeOpacity: 0, visible: true, innerRadius: 155, radius: 170, fillOpacity: 0.8
+                });
+                radarRangeFills[id] = fill;
+                i++;
+                continentStartCategory[id] = startCategory;
+                continentEndCategory[id] = endCategory;
+                axisRange.get("grid").set("visible", true);
+                var label = axisRange.get("label");
+                label.setAll({
+                    forceHidden: false, fontSize: 9, fill: am5.color(0xffffff),
+                    textType: "circular", opacity: .8, radius: -62, text: continentNames[id], interactive: false
+                });
+                fill.states.create("hover", { fillOpacity: 1, innerRadius: 148 });
+                fill.events.on("click", function () {
+                    clearInterval(selectCountryInterval);
+                    if (previousSelectedId == id) unselectContinent();
+                    else selectContinent(id);
+                });
+            }
+
+            function generateRadarData() {
+                var c = 0; i = 0;
+                am5.array.each(continentsData, function (obj) {
+                    var first = c; c++;
+                    createRange(obj.id, "Jan-24:" + (first * 12), "Dec-24:" + ((c * 12) - 1));
+                });
+                return [
+                    {"category":"Jan-24:0","value":0.238,"value2":0.613},{"category":"Feb-24:1","value":0.547,"value2":0.573},
+                    {"category":"Mar-24:2","value":0.971,"value2":0.442},{"category":"Apr-24:3","value":0.385,"value2":0.479},
+                    {"category":"May-24:4","value":0.123,"value2":0.427},{"category":"Jun-24:5","value":0.466,"value2":0.506},
+                    {"category":"Jul-24:6","value":0.205,"value2":0.383},{"category":"Aug-24:7","value":0.740,"value2":0.465},
+                    {"category":"Sep-24:8","value":0.681,"value2":0.251},{"category":"Oct-24:9","value":0.102,"value2":0.451},
+                    {"category":"Nov-24:10","value":0.780,"value2":0.662},{"category":"Dec-24:11","value":0.747,"value2":0.331},
+                    {"category":"Jan-24:12","value":0.308,"value2":0.505},{"category":"Feb-24:13","value":0.016,"value2":0.316},
+                    {"category":"Mar-24:14","value":0.756,"value2":0.450},{"category":"Apr-24:15","value":0.448,"value2":0.384},
+                    {"category":"May-24:16","value":0.667,"value2":0.222},{"category":"Jun-24:17","value":0.120,"value2":0.542},
+                    {"category":"Jul-24:18","value":0.029,"value2":0.415},{"category":"Aug-24:19","value":0.295,"value2":0.451},
+                    {"category":"Sep-24:20","value":0.392,"value2":0.671},{"category":"Oct-24:21","value":0.002,"value2":0.407},
+                    {"category":"Nov-24:22","value":0.661,"value2":0.323},{"category":"Dec-24:23","value":0.794,"value2":0.551},
+                    {"category":"Jan-24:24","value":0.177,"value2":0.522},{"category":"Feb-24:25","value":0.969,"value2":0.555},
+                    {"category":"Mar-24:26","value":0.231,"value2":0.600},{"category":"Apr-24:27","value":0.157,"value2":0.229},
+                    {"category":"May-24:28","value":0.715,"value2":0.539},{"category":"Jun-24:29","value":0.007,"value2":0.540},
+                    {"category":"Jul-24:30","value":0.465,"value2":0.647},{"category":"Aug-24:31","value":0.584,"value2":0.453},
+                    {"category":"Sep-24:32","value":0.580,"value2":0.477},{"category":"Oct-24:33","value":0.620,"value2":0.687},
+                    {"category":"Nov-24:34","value":0.924,"value2":0.436},{"category":"Dec-24:35","value":0.128,"value2":0.413},
+                    {"category":"Jan-24:36","value":0.983,"value2":0.250},{"category":"Feb-24:37","value":0.510,"value2":0.380},
+                    {"category":"Mar-24:38","value":0.055,"value2":0.621},{"category":"Apr-24:39","value":0.216,"value2":0.470},
+                    {"category":"May-24:40","value":0.062,"value2":0.347},{"category":"Jun-24:41","value":0.373,"value2":0.321},
+                    {"category":"Jul-24:42","value":0.239,"value2":0.622},{"category":"Aug-24:43","value":0.112,"value2":0.351},
+                    {"category":"Sep-24:44","value":0.176,"value2":0.312},{"category":"Oct-24:45","value":0.209,"value2":0.423},
+                    {"category":"Nov-24:46","value":0.594,"value2":0.214},{"category":"Dec-24:47","value":0.855,"value2":0.201},
+                    {"category":"Jan-24:48","value":0.395,"value2":0.404},{"category":"Feb-24:49","value":0.091,"value2":0.261},
+                    {"category":"Mar-24:50","value":0.355,"value2":0.579},{"category":"Apr-24:51","value":0.913,"value2":0.488},
+                    {"category":"May-24:52","value":0.780,"value2":0.305},{"category":"Jun-24:53","value":0.518,"value2":0.334},
+                    {"category":"Jul-24:54","value":0.739,"value2":0.495},{"category":"Aug-24:55","value":0.410,"value2":0.628},
+                    {"category":"Sep-24:56","value":0.684,"value2":0.541},{"category":"Oct-24:57","value":0.955,"value2":0.393},
+                    {"category":"Nov-24:58","value":0.019,"value2":0.431},{"category":"Dec-24:59","value":0.912,"value2":0.510},
+                    {"category":"Jan-24:60","value":0.249,"value2":0.660},{"category":"Feb-24:61","value":0.533,"value2":0.316},
+                    {"category":"Mar-24:62","value":0.443,"value2":0.590},{"category":"Apr-24:63","value":0.261,"value2":0.219},
+                    {"category":"May-24:64","value":0.032,"value2":0.369},{"category":"Jun-24:65","value":0.380,"value2":0.200},
+                    {"category":"Jul-24:66","value":0.131,"value2":0.347},{"category":"Aug-24:67","value":0.864,"value2":0.258},
+                    {"category":"Sep-24:68","value":0.322,"value2":0.669},{"category":"Oct-24:69","value":0.083,"value2":0.579},
+                    {"category":"Nov-24:70","value":0.420,"value2":0.517},{"category":"Dec-24:71","value":0.078,"value2":0.474}
+                ];
+            }
+        }
+
+        // ── Map Globe ──
+        function makeMapChart() {
+            mapChart = globeContainer.children.push(am5map.MapChart.new(root, {
+                panX: "rotateX", panY: "rotateY", wheelX: "none", wheelY: "none",
+                height: 280, width: 280, centerY: am5.p50, y: am5.p50,
+                projection: am5map.geoOrthographic(),
+                paddingBottom: 0, paddingTop: 0, paddingLeft: 0, paddingRight: 0
+            }));
+
+            mapChart.chartContainer.set("background", am5.Circle.new(root, {
+                themeTags: ["map", "background"],
+                fill: am5.color(0x222222), fillOpacity: 0, radius: 155, dx: 140, dy: 140
+            }));
+
+            var graticuleSeries = mapChart.series.push(am5map.GraticuleSeries.new(root, {}));
+            graticuleSeries.mapLines.template.setAll({
+                stroke: root.interfaceColors.get("alternativeBackground"), strokeOpacity: 0.04
+            });
+
+            polygonSeries = mapChart.series.push(am5map.MapPolygonSeries.new(root, {
+                geoJSON: am5geodata_continentsLow
+            }));
+            polygonSeries.mapPolygons.template.setAll({
+                toggleKey: "active", interactive: true, fillOpacity: 0.7,
+                strokeOpacity: 0, cursorOverStyle: "pointer"
+            });
+            polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) {
+                if (target.dataItem) {
+                    var c = colors[target.dataItem.dataContext.id];
+                    target.set("stroke", c); return c;
+                }
+                return fill;
+            });
+            polygonSeries.mapPolygons.template.states.create("hover", { fillOpacity: 1 });
+            polygonSeries.mapPolygons.template.states.create("active", { fillOpacity: 1 });
+            polygonSeries.mapPolygons.template.states.create("dimm", { fillOpacity: 0.5 });
+
+            var previousPolygon;
+            polygonSeries.mapPolygons.template.on("active", function (active, target) {
+                var id = target.dataItem.get("id");
+                if (id != "antarctica") {
+                    clearInterval(selectCountryInterval);
+                    if (previousPolygon && previousPolygon != target) previousPolygon.set("active", false);
+                    if (target.get("active")) selectContinent(id);
+                    else unselectContinent();
+                    previousPolygon = target;
+                }
+            });
+            mapChart.appear(1000, 1000);
+        }
+
+        function selectContinent(id) {
+            var dataItem = polygonSeries.getDataItemById(id);
+            var target = dataItem.get("mapPolygon");
+            if (target) {
+                var centroid = target.geoCentroid();
+                if (centroid) {
+                    mapChart.animate({ key: "rotationX", to: -centroid.longitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
+                    mapChart.animate({ key: "rotationY", to: -centroid.latitude, duration: 1500, easing: am5.ease.inOut(am5.ease.cubic) });
+                }
+            }
+            am5.array.each(polygonSeries.dataItems, function (di) {
+                if (di.dataContext.id != id) di.get("mapPolygon").states.applyAnimate("dimm");
+                else di.get("mapPolygon").states.applyAnimate("active");
+            });
+            if (previousSelectedId) radarRangeFills[previousSelectedId].set("active", false);
+            categoryAxis.zoomToCategories(continentStartCategory[id], continentEndCategory[id]);
+            currentIndex = continents.indexOf(id);
+            previousSelectedId = id;
+        }
+
+        selectCountryInterval = setInterval(function () {
+            currentIndex++;
+            if (currentIndex >= continents.length) {
+                clearInterval(selectCountryInterval);
+                setTimeout(function () {
+                    var animation = mapChart.animate({ key: "rotationX", to: 0, duration: 3000, easing: am5.ease.cubic });
+                    animation.events.on("stopped", function () {
+                        mapChart.animate({ key: "rotationX", to: 360, from: 0, duration: 30000, loops: Infinity });
+                    });
+                }, 1000);
+                unselectContinent();
+            } else {
+                selectContinent(continents[currentIndex]);
+            }
+        }, 4000);
+
+        // ── Radar Gauge ──
+        function makeRadarGauge() {
+            radarGauge = container.children.push(am5radar.RadarChart.new(root, {
+                width: 250, panX: false, panY: false, wheelX: "none", wheelY: "none",
+                innerRadius: am5.percent(20), startAngle: -90, endAngle: 180,
+                paddingRight: 50, paddingTop: 0, paddingBottom: 0, paddingLeft: 20
+            }));
+            radarGauge.states.create("hidden", { width: 1, opacity: 0.8, visible: true });
+
+            var data1 = [
+                { "category": "Software Issues", "value": 27, "full": 100, "id": "cat1", "settings": { "fill": "#00bbee" } },
+                { "category": "Hardware Issues", "value": 36, "full": 100, "id": "cat2", "settings": { "fill": "#ff9800" } },
+                { "category": "Network Issues", "value": 21, "full": 100, "id": "cat3", "settings": { "fill": "#67dc75" } },
+                { "category": "Access Issues", "value": 36, "full": 100, "id": "cat4", "settings": { "fill": "#914d9f" } },
+                { "category": "Teams & Outlook Issues", "value": 66, "full": 100, "id": "cat5", "settings": { "fill": "#67dcbb" } },
+                { "category": "Other", "value": 70, "full": 100, "id": "cat6", "settings": { "fill": "#67b7dc" } }
+            ];
+
+            var xRenderer = am5radar.AxisRendererCircular.new(root, { minGridDistance: 20 });
+            xRenderer.labels.template.setAll({ radius: 10, opacity: 0.3 });
+            xRenderer.grid.template.setAll({ forceHidden: false });
+
+            var xAxis = radarGauge.xAxes.push(am5xy.ValueAxis.new(root, {
+                renderer: xRenderer, min: 0, max: 100, strictMinMax: true, numberFormat: "#'%'"
+            }));
+
+            var yRenderer = am5radar.AxisRendererRadial.new(root, { minGridDistance: 20 });
+            yRenderer.labels.template.setAll({ forceHidden: true });
+            yRenderer.grid.template.setAll({ forceHidden: true });
+
+            var yAxis = radarGauge.yAxes.push(am5xy.CategoryAxis.new(root, {
+                categoryField: "category", renderer: yRenderer
+            }));
+            yAxis.data.setAll(data1);
+
+            var series1 = radarGauge.series.push(am5radar.RadarColumnSeries.new(root, {
+                xAxis: xAxis, yAxis: yAxis, clustered: false, valueXField: "full",
+                categoryYField: "category", fill: root.interfaceColors.get("alternativeBackground")
+            }));
+            series1.columns.template.setAll({ width: am5.p100, fillOpacity: 0.1, strokeOpacity: 0, cornerRadius: 20 });
+            series1.data.setAll(data1);
+
+            gaugeSeries = radarGauge.series.push(am5radar.RadarColumnSeries.new(root, {
+                xAxis: xAxis, yAxis: yAxis, clustered: false, valueXField: "value", categoryYField: "category"
+            }));
+            gaugeSeries.columns.template.setAll({
+                width: am5.p100, strokeOpacity: 0, cornerRadius: 20,
+                templateField: "settings", cursorOverStyle: "pointer", tooltipText: "{category}:{value}"
+            });
+            gaugeSeries.columns.template.states.create("dimm", { opacity: 0.4 });
+            gaugeSeries.columns.template.events.on("pointerover", function (e) { hoverCountry(e.target.dataItem.dataContext.id, true); });
+            gaugeSeries.columns.template.events.on("pointerout", function (e) { unhoverCountry(e.target.dataItem.dataContext.id); });
+            gaugeSeries.data.setAll(data1);
+            gaugeSeries.appear(1000, 2000);
+        }
+
+        // ── Line Series (sine waves) ──
+        function makeLineSeriesChart() {
+            var lineSeriesChart = root.container.children.push(am5xy.XYChart.new(root, {}));
+            var data = [
+                { year: "1930", cat1: 0, cat2: 0, cat3: 0, cat4: 0, cat5: 0, cat6: 0 },
+                { year: "1934", cat1: 0, cat2: 0, cat3: 0, cat4: 0, cat5: 0, cat6: 0 },
+                { year: "1938", cat1: 1, cat2: 0, cat3: -1, cat4: 1.5, cat5: 1.5, cat6: -2 },
+                { year: "1950", cat1: 3, cat2: -4, cat3: 1, cat4: -3, cat5: -1.5, cat6: 0.5 },
+                { year: "1954", cat1: -1, cat2: 1, cat3: -2, cat4: 4, cat5: .5, cat6: -2.5 },
+                { year: "1958", cat1: 2, cat2: -4, cat3: 3, cat4: -3.5, cat5: -2, cat6: 5 },
+                { year: "1962", cat1: -2, cat2: 4, cat3: -5, cat4: 6, cat5: 1, cat6: -4.5 },
+                { year: "1966", cat1: 2, cat2: -1, cat3: 3, cat4: -3.5, cat5: -2, cat6: 4 },
+                { year: "1970", cat1: -1, cat2: 1.5, cat3: -2.5, cat4: 2, cat5: 0.5, cat6: -2 },
+                { year: "1978", cat1: 4, cat2: 3, cat3: 2, cat4: 4, cat5: 6, cat6: 2 },
+                { year: "1982", cat1: 1, cat2: 2, cat3: 3, cat4: 2, cat5: 1, cat6: 0 }
+            ];
+
+            var xRenderer = am5xy.AxisRendererX.new(root, { inside: true });
+            xRenderer.labels.template.setAll({ forceHidden: false });
+            xRenderer.grid.template.setAll({
+                strokeGradient: am5.LinearGradient.new(root, {
+                    stops: [
+                        { color: am5.color(0xffffff), opacity: 0 },
+                        { color: am5.color(0xffffff), opacity: .1 },
+                        { color: am5.color(0xffffff), opacity: 0 }
+                    ]
+                })
+            });
+
+            var xAxis = lineSeriesChart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                startLocation: 0.6, endLocation: 0.4, categoryField: "year",
+                renderer: xRenderer, tooltip: am5.Tooltip.new(root, {})
+            }));
+            xAxis.data.setAll(data);
+
+            var yRenderer = am5xy.AxisRendererY.new(root, {});
+            yRenderer.labels.template.setAll({ forceHidden: true });
+            yRenderer.grid.template.setAll({ forceHidden: true });
+
+            var yAxis = lineSeriesChart.yAxes.push(am5xy.ValueAxis.new(root, {
+                maxPrecision: 0, strictMinMax: true, min: -9, max: 9, renderer: yRenderer
+            }));
+
+            function createLineSeries(id) {
+                var s = lineSeriesChart.series.push(am5xy.SmoothedXLineSeries.new(root, {
+                    name: id, xAxis: xAxis, yAxis: yAxis, valueYField: id, categoryXField: "year",
+                    tooltip: am5.Tooltip.new(root, { pointerOrientation: "horizontal", labelText: "[bold]{name}[/]\n{categoryX}: {valueY}" }),
+                    opacity: 0.5
+                }));
+                lineSeries[id] = s;
+                s.strokes.template.setAll({
+                    strokeOpacity: 1,
+                    strokeGradient: am5.LinearGradient.new(root, {
+                        rotation: 0,
+                        stops: [
+                            { color: s.get("fill"), opacity: 0.5 }, { color: s.get("fill"), opacity: 0.4 },
+                            { color: s.get("fill"), opacity: .9 }, { color: s.get("fill"), opacity: 0.8 }
+                        ]
+                    })
+                });
+                s.states.create("default", { opacity: 0.6 });
+                s.states.create("highlight", { opacity: 1 });
+                s.states.create("dimm", { opacity: .4 });
+                s.data.setAll(data);
+                s.appear(1000 + Math.random() * 500, Math.random() * 1000);
+            }
+            ["cat1","cat2","cat3","cat4","cat5","cat6"].forEach(createLineSeries);
+        }
+
+        // ── Pie Donut Chart ──
+        function makePieChart(name, index, url, val) {
+            var startAngle = Math.random() * 360;
+            var chart = navChartsContainer.children.push(am5percent.PieChart.new(root, {
+                width: 120, innerRadius: am5.percent(70)
+            }));
+            chart.seriesContainer.children.push(am5.Slice.new(root, {
+                radius: 49, startAngle: 0, arc: 360, innerRadius: 33, fillOpacity: 0.1, fill: am5.color(0xffffff)
+            }));
+            var series = chart.series.push(am5percent.PieSeries.new(root, {
+                valueField: "value", categoryField: "category", startAngle: startAngle, endAngle: startAngle + 360
+            }));
+            series.ticks.template.setAll({ forceHidden: true });
+            series.slices.template.setAll({ templateField: "settings", cornerRadius: 10, strokeOpacity: 0, tooltipText: "{value}", interactive: true });
+            series.labels.template.setAll({ forceHidden: true });
+            var value1 = val, value2 = 0;
+            value2 = Math.max(Math.min(value1 * 4, value2), value1 / 4);
+            series.data.setAll([
+                { value: value1, category: "One", settings: { fill: colorSet.getIndex(index * 2) } },
+                { value: value2, category: "Two", settings: { fill: am5.color(0xffffff), fillOpacity: 0 } }
+            ]);
+            series.appear(500 + Math.random() * 600, Math.random() * 500);
+            chart.seriesContainer.children.push(am5.Label.new(root, {
+                text: name + '\n' + val, fontSize: 12, centerX: am5.p50, centerY: am5.p50
+            }));
+            var link = chart.seriesContainer.children.push(am5.Circle.new(root, {
+                radius: 60, fillOpacity: 0, cursorOverStyle: "pointer", fill: am5.color(0xffffff)
+            }));
+            link.events.on("pointerover", function () {
+                series.animate({ key: "scale", to: 1.2, duration: 300, easing: am5.ease.out(am5.ease.cubic) });
+            });
+            link.events.on("pointerout", function () {
+                series.animate({ key: "scale", to: 1, duration: 300, easing: am5.ease.out(am5.ease.cubic) });
+            });
+        }
+
+        function unselectContinent() {
+            categoryAxis.zoom(0, 1);
+            if (previousSelectedId) {
+                radarRangeFills[previousSelectedId].set("active", false);
+                am5.array.each(polygonSeries.dataItems, function (di) {
+                    di.get("mapPolygon").states.applyAnimate("default");
+                    di.get("mapPolygon").set("active", false);
+                });
+            }
+            previousSelectedId = undefined;
+        }
+
+        function hoverCountry(id, fake) {
+            var s = lineSeries[id];
+            if (s) {
+                s.states.applyAnimate("highlight");
+                am5.array.each(s.dataItems, function (di) {
+                    di.animate({ key: "valueYWorking", to: di.get("valueYWorking") * -1, duration: 700, easing: am5.ease.out(am5.ease.cubic) });
+                });
+                am5.object.each(lineSeries, function (key, ls) { if (ls != s) ls.states.applyAnimate("dimm"); });
+                am5.array.each(gaugeSeries.dataItems, function (di) {
+                    if (di.dataContext.id != id) di.get("graphics").states.applyAnimate("dimm");
+                });
+            }
+        }
+
+        function unhoverCountry(id) {
+            var s = lineSeries[id];
+            if (s) {
+                am5.array.each(s.dataItems, function (di) {
+                    di.animate({ key: "valueYWorking", to: di.get("valueY"), duration: 600, easing: am5.ease.out(am5.ease.cubic) });
+                });
+                am5.object.each(lineSeries, function (key, ls) { ls.states.applyAnimate("default"); });
+                am5.array.each(gaugeSeries.dataItems, function (di) {
+                    if (di.dataContext.id != id) di.get("graphics").states.applyAnimate("default");
+                });
+            }
+        }
+
+        function getQuery(parameterName) {
+            return new URLSearchParams(window.location.search).get(parameterName);
+        }
+
+        function getChart() {
+            var chkIn = document.getElementById('chkInc');
+            location.href = chkIn.checked ? "call.html?mode=inc" : "call.html?mode=sr";
+        }
+
+        // Init
+        var aUrl = getQuery("mode");
+        if (aUrl == "inc") {
+            document.getElementById('chkInc').checked = true;
+            makePieChart("Incidents", 10, "#", 32000);
+        } else {
+            document.getElementById('chkInc').checked = false;
+            makePieChart("SR", 10, "#", 9500);
+        }
+
+        makeRadarGauge();
+        makeRadarChart();
+        makeMapChart();
+    </script>
+
+    <!-- ══ Floating Nav Toggle ══ -->
+    <script>
         (function() {
-            const nav = document.getElementById('floatingNav');
-            const toggle = document.getElementById('fnavToggle');
+            var nav = document.getElementById('floatingNav');
+            var toggle = document.getElementById('fnavToggle');
             toggle.addEventListener('click', function(e) { e.stopPropagation(); nav.classList.toggle('expanded'); });
             document.addEventListener('click', function(e) { if (!nav.contains(e.target)) nav.classList.remove('expanded'); });
             document.querySelectorAll('.fnav-item').forEach(function(item) {
                 item.addEventListener('click', function() {
                     if (item.dataset.app !== 'sentiment') {
-                        document.querySelectorAll('.fnav-item').forEach(i => i.classList.remove('active'));
+                        document.querySelectorAll('.fnav-item').forEach(function(i) { i.classList.remove('active'); });
                         item.classList.add('active');
                     }
                 });
             });
         })();
+    </script>
 
-        /* ── News Ticker ── */
+    <!-- ══ News Ticker ══ -->
+    <script>
         (function() {
-            const newsItems = [
+            var newsItems = [
                 { icon:'purple', iconText:'📋', title:'Teams audio driver patch updated', sub:'impact: -3% new incident' },
                 { icon:'red',    iconText:'🔄', title:'Force windows update',             sub:'impact: -8% new incident' },
                 { icon:'teal',   iconText:'✅', title:'30% Incidents resolved < 1 Days',  sub:'SLA compliance improving' },
@@ -364,207 +934,56 @@
                 { icon:'teal',   iconText:'💡', title:'MTTR improved by 12% this week',  sub:'avg resolution: 8.5 hrs'   },
                 { icon:'blue',   iconText:'👥', title:'Agent onboarding completed x4',   sub:'total active agents: 120'  },
             ];
-            const container = document.getElementById('newsScroll');
-            [...newsItems, ...newsItems].forEach(item => {
-                const div = document.createElement('div');
+            var container = document.getElementById('newsScroll');
+            [...newsItems, ...newsItems].forEach(function(item) {
+                var div = document.createElement('div');
                 div.className = 'news-item';
-                div.innerHTML = `<div class="news-icon ${item.icon}">${item.iconText}</div><div class="news-text"><p>${item.title}</p><strong>${item.sub}</strong></div>`;
+                div.innerHTML = '<div class="news-icon ' + item.icon + '">' + item.iconText + '</div><div class="news-text"><p>' + item.title + '</p><strong>' + item.sub + '</strong></div>';
                 container.appendChild(div);
             });
             container.style.animationDuration = (newsItems.length * 2.2) + 's';
-            container.style.setProperty('--scroll-h', `-${newsItems.length * 52}px`);
+            container.style.setProperty('--scroll-h', '-' + (newsItems.length * 52) + 'px');
         })();
+    </script>
 
-        /* ── Heatmap ── */
+    <!-- ══ Heatmap ══ -->
+    <script>
         (function() {
             function seededRandom(seed) {
-                let s = seed;
+                var s = seed;
                 return function() { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff; };
             }
-            const rand = seededRandom(42);
-            const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
-            const cellsContainer = document.getElementById('heatmapCells');
-            const dayLabelsContainer = document.getElementById('dayLabels');
-            for (let month = 0; month < 12; month++) {
-                for (let day = 0; day < 31; day++) {
-                    const div = document.createElement('div');
+            var rand = seededRandom(42);
+            var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+            var cellsContainer = document.getElementById('heatmapCells');
+            var dayLabelsContainer = document.getElementById('dayLabels');
+            for (var month = 0; month < 12; month++) {
+                for (var day = 0; day < 31; day++) {
+                    var div = document.createElement('div');
                     div.className = 'cell';
                     if (day >= daysInMonth[month]) { div.classList.add('v0'); }
                     else {
-                        const r = rand();
+                        var r = rand();
                         div.classList.add('v' + (r < 0.08 ? 0 : r < 0.25 ? 1 : r < 0.50 ? 2 : r < 0.75 ? 3 : r < 0.92 ? 4 : 5));
                     }
                     cellsContainer.appendChild(div);
                 }
             }
-            for (let d = 1; d <= 31; d++) {
-                const span = document.createElement('span');
+            for (var d = 1; d <= 31; d++) {
+                var span = document.createElement('span');
                 span.textContent = 'Day' + d;
                 dayLabelsContainer.appendChild(span);
             }
             document.querySelectorAll('.toggle-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.toggle-btn').forEach(function(b) { b.classList.remove('active'); });
                     btn.classList.add('active');
                 });
             });
         })();
-
-        /* ── WAVES ── */
-        const wc = document.getElementById('wave-canvas');
-        const wctx = wc.getContext('2d');
-        let wt = 0;
-
-        function resizeWave() { wc.width = wc.offsetWidth; wc.height = wc.offsetHeight; }
-        resizeWave();
-        window.addEventListener('resize', resizeWave);
-
-        function drawWaves() {
-            const W = wc.width, H = wc.height;
-            wctx.clearRect(0, 0, W, H);
-            const midY = H * 0.5;
-            [
-                { amp:90,  freq:0.010, speed:0.55, color:'rgba(91,184,245,0.22)', lw:1.6, phase:0   },
-                { amp:65,  freq:0.016, speed:0.95, color:'rgba(130,100,220,0.28)', lw:1.3, phase:1.2 },
-                { amp:42,  freq:0.023, speed:0.40, color:'rgba(91,184,245,0.15)', lw:1.0, phase:2.5 },
-                { amp:24,  freq:0.037, speed:1.65, color:'rgba(180,140,255,0.12)', lw:0.8, phase:0.8 },
-                { amp:13,  freq:0.054, speed:2.10, color:'rgba(91,184,245,0.09)', lw:0.6, phase:3.3 },
-            ].forEach(w => {
-                wctx.beginPath();
-                wctx.strokeStyle = w.color;
-                wctx.lineWidth = w.lw;
-                for (let x = 0; x <= W; x += 2) {
-                    const y = midY + Math.sin(x * w.freq + wt * w.speed + w.phase) * w.amp;
-                    x === 0 ? wctx.moveTo(x, y) : wctx.lineTo(x, y);
-                }
-                wctx.stroke();
-            });
-            wt += 0.015;
-            requestAnimationFrame(drawWaves);
-        }
-        drawWaves();
-
-        /* ── GLOBE ── */
-        {
-            const root = am5.Root.new("globe-chart");
-            root.setThemes([am5themes_Animated.new(root)]);
-            root._logo.dispose();
-
-            const chart = root.container.children.push(am5map.MapChart.new(root, {
-                panX: "rotateX", panY: "rotateY",
-                projection: am5map.geoOrthographic(),
-                paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0,
-            }));
-
-            const bgSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-            bgSeries.mapPolygons.template.setAll({ fill: am5.color("#0d1220"), fillOpacity: 1, strokeOpacity: 0 });
-            bgSeries.data.push({ geometry: am5map.getGeoRectangle(90, 180, -90, -180) });
-
-            const grat = chart.series.push(am5map.GraticuleSeries.new(root, {}));
-            grat.mapLines.template.setAll({ stroke: am5.color("#5bb8f5"), strokeOpacity: 0.07, strokeWidth: 0.8 });
-
-            const polySeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
-                geoJSON: am5geodata_worldLow, exclude: ["AQ"],
-            }));
-            polySeries.mapPolygons.template.setAll({
-                fill: am5.color("#1e3260"), fillOpacity: 0.7,
-                stroke: am5.color("#3a5090"), strokeWidth: 0.5, strokeOpacity: 0.5,
-                interactive: true,
-            });
-            polySeries.mapPolygons.template.states.create("hover", { fill: am5.color("#5bb8f5"), fillOpacity: 0.6 });
-
-            const europeISO = ["GB","FR","DE","ES","IT","PT","NL","BE","CH","AT","SE","NO","DK","FI","PL","CZ","HU","RO","GR","UA","BY","SK","HR","BG","RS","BA","AL","ME","MK","SI","EE","LV","LT","MD","LU","IE","IS","MT","CY"];
-            const africaISO = ["NG","ZA","EG","ET","CD","TZ","KE","DZ","SD","UG","MZ","GH","CI","CM","MG","AO","NE","BF","ML","MW","ZM","ZW","SN","TD","SO","RW","GN","BJ","TN","BI","SS","TG","SL","LY","CG","CF","MR","ER","NA","GM","BW","GA","LS","GW","GQ","MU","SZ","DJ","KM","CV","ST","SC","LR","MA"];
-            polySeries.events.on("datavalidated", () => {
-                polySeries.dataItems.forEach(di => {
-                    const id = di.get("id");
-                    if (europeISO.includes(id)) di.get("mapPolygon").setAll({ fill: am5.color("#4060cc"), fillOpacity: 0.75 });
-                    else if (africaISO.includes(id)) di.get("mapPolygon").setAll({ fill: am5.color("#a030b0"), fillOpacity: 0.75 });
-                });
-            });
-
-            const ptSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
-            ptSeries.bullets.push(() => am5.Bullet.new(root, {
-                sprite: am5.Circle.new(root, { radius: 4, fill: am5.color("#5bb8f5"), fillOpacity: 0.9, stroke: am5.color("#5bb8f5"), strokeWidth: 1, strokeOpacity: 0.4 }),
-            }));
-            ptSeries.data.setAll([
-                { geometry: { type:"Point", coordinates:[2.35,48.86]  } },
-                { geometry: { type:"Point", coordinates:[-0.12,51.51] } },
-                { geometry: { type:"Point", coordinates:[13.40,52.52] } },
-                { geometry: { type:"Point", coordinates:[28.97,41.01] } },
-                { geometry: { type:"Point", coordinates:[37.61,55.75] } },
-                { geometry: { type:"Point", coordinates:[3.39,6.45]   } },
-                { geometry: { type:"Point", coordinates:[31.25,30.06] } },
-            ]);
-
-            let rotX = 10, rotating = true;
-            chart.set("rotationX", rotX);
-            chart.set("rotationY", 48);
-            chart.chartContainer.events.on("pointerdown", () => { rotating = false; });
-            chart.chartContainer.events.on("pointerup",   () => { rotating = true;  });
-            setInterval(() => { if (rotating) { rotX -= 0.15; chart.set("rotationX", rotX); } }, 30);
-            chart.appear(1000, 100);
-        }
-
-        /* ── CLOCK RING ── */
-        {
-            const cc = document.getElementById('clock-canvas');
-            const cctx = cc.getContext('2d');
-            function resize() { cc.width = cc.offsetWidth; cc.height = cc.offsetHeight; }
-            resize();
-            window.addEventListener('resize', resize);
-
-            const months = ['Jan-24:0','Feb-24:1','Mar-24:2','Apr-24:3','May-24:4','Jun-24:5','Jul-24:6','Aug-24:7','Sep-24:8','Oct-24:9','Nov-24:10','Dec-24:11'];
-
-            function draw() {
-                const CW = cc.width, CH = cc.height;
-                cctx.clearRect(0, 0, CW, CH);
-                const cx = CW * 0.5, cy = CH * 0.5;
-                const R = Math.min(CW, CH) * 0.38;
-
-                const grd = cctx.createRadialGradient(cx, cy, R - 4, cx, cy, R + 22);
-                grd.addColorStop(0, 'rgba(91,184,245,0.55)');
-                grd.addColorStop(1, 'rgba(91,184,245,0)');
-                cctx.beginPath(); cctx.arc(cx, cy, R + 14, 0, Math.PI * 2);
-                cctx.fillStyle = grd; cctx.fill();
-
-                cctx.beginPath(); cctx.arc(cx, cy, R, 0, Math.PI * 2);
-                cctx.strokeStyle = '#5bb8f5'; cctx.lineWidth = 3; cctx.stroke();
-
-                cctx.beginPath(); cctx.arc(cx, cy, R + 44, 0, Math.PI * 2);
-                cctx.strokeStyle = 'rgba(255,255,255,0.06)'; cctx.lineWidth = 30; cctx.stroke();
-
-                months.forEach((label, i) => {
-                    const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
-                    const tr = R + 44;
-                    cctx.beginPath();
-                    cctx.moveTo(cx + Math.cos(angle) * (tr - 13), cy + Math.sin(angle) * (tr - 13));
-                    cctx.lineTo(cx + Math.cos(angle) * (tr + 13), cy + Math.sin(angle) * (tr + 13));
-                    cctx.strokeStyle = 'rgba(255,255,255,0.2)'; cctx.lineWidth = 1; cctx.stroke();
-                    const lx = cx + Math.cos(angle) * (tr + 25);
-                    const ly = cy + Math.sin(angle) * (tr + 25);
-                    cctx.save(); cctx.translate(lx, ly); cctx.rotate(angle + Math.PI / 2);
-                    cctx.fillStyle = 'rgba(255,255,255,0.42)'; cctx.font = '9px monospace';
-                    cctx.textAlign = 'center'; cctx.fillText(label, 0, 0); cctx.restore();
-                });
-
-                const t = Date.now() / 1000;
-                [0.3, 1.1, 2.4, 3.8, 4.9].forEach((a, i) => {
-                    const dx = cx + Math.cos(a) * (R + 44);
-                    const dy = cy + Math.sin(a) * (R + 44);
-                    const pulse = Math.sin(t * 2 + i) * 0.5 + 0.5;
-                    cctx.beginPath(); cctx.arc(dx, dy, 3.5, 0, Math.PI * 2);
-                    cctx.fillStyle = '#5bb8f5'; cctx.fill();
-                    cctx.beginPath(); cctx.arc(dx, dy, 3.5 + pulse * 5, 0, Math.PI * 2);
-                    cctx.strokeStyle = `rgba(91,184,245,${0.4 - pulse * 0.35})`; cctx.lineWidth = 1; cctx.stroke();
-                });
-                requestAnimationFrame(draw);
-            }
-            draw();
-        }
     </script>
 
-    <!-- ══ MODAL 1: SLA Target ══ -->
+    <!-- ══ MODAL: SLA Target ══ -->
     <div id="slaModal" class="modal-overlay" onclick="closeSLAModal(event)">
         <div class="modal-box modal-sla">
             <div class="modal-header">
@@ -580,7 +999,7 @@
         </div>
     </div>
 
-    <!-- ══ MODAL 2: SLA Analysis ══ -->
+    <!-- ══ MODAL: SLA Analysis ══ -->
     <div id="analysisModal" class="modal-overlay" onclick="closeAnalysisModal(event)">
         <div class="modal-box modal-analysis">
             <button class="modal-close analysis-close" onclick="document.getElementById('analysisModal').style.display='none'">×</button>
@@ -620,9 +1039,7 @@
         .modal-table td { padding:9px 10px; border-bottom:1px solid #f1f5f9; color:#334155; white-space:nowrap; vertical-align:middle; }
         .modal-table tr:hover td { background:#f8fafc; }
         .modal-table tr.row-highlight td { background:#f87171; color:#fff; }
-        .modal-table tr.row-highlight:hover td { background:#ef4444; }
         .monitor-link { color:#4F46E5; font-weight:500; cursor:pointer; }
-        .monitor-link:hover { text-decoration:underline; }
         .progress-wrap { display:flex; align-items:center; gap:8px; }
         .progress-bar { height:22px; border-radius:4px; display:flex; align-items:center; padding:0 8px; font-weight:700; font-size:0.75rem; color:#fff; min-width:60px; }
         .progress-bar.green { background:#22c55e; } .progress-bar.red { background:#ef4444; }
@@ -632,20 +1049,20 @@
     </style>
 
     <script>
-        const slaData = [
+        var slaData = [
             { monitor:'Prod_INC-CRITICAL-ResponseTime-900Sec',     sla:'SLA 01', group:'2,testing_1,testing_2', goal:99, achieved:85,  status:'Failed'  },
             { monitor:'Prod_INC-CRITICAL-ResolutionTime-15000Sec', sla:'SLA 02', group:'2,testing_1,testing_2', goal:99, achieved:100, status:'Success' },
             { monitor:'Prod_INC-HIGH-ResponseTime-1800Sec',        sla:'SLA 03', group:'2,testing_1,testing_2', goal:98, achieved:99,  status:'Success' },
             { monitor:'Prod_INC-HIGH-ResolutionTime-35000Sec',     sla:'SLA 04', group:'2,testing_1,testing_2', goal:98, achieved:95,  status:'Failed'  },
-            { monitor:'Prod_INC-MEDIUM-ResponseTime-3200Sec',      sla:'SLA 05', group:'-',                      goal:96, achieved:97,  status:'Success' },
-            { monitor:'Prod_INC-MEDIUM-ResolutionTime-65000Sec',   sla:'SLA 06', group:'testing_1,testing_2',   goal:96, achieved:95,  status:'Failed'  },
-            { monitor:'Prod_INC-LOW-ResponseTime-3200Sec',         sla:'SLA 07', group:'testing_1,testing_2',   goal:95, achieved:98,  status:'Success' },
-            { monitor:'Prod_INC-LOW-ResolutionTime-65000Sec',      sla:'SLA 08', group:'-',                      goal:95, achieved:95,  status:'Success' },
-            { monitor:'Prod_SR-CRITICAL-ResolutionTime-15000Sec',  sla:'SLA 09', group:'-',                      goal:98, achieved:100, status:'Success' },
-            { monitor:'Prod_SR-CRITICAL-ResolutionTime-15000Sec',  sla:'SLA 10', group:'-',                      goal:98, achieved:100, status:'Success' },
+            { monitor:'Prod_INC-MEDIUM-ResponseTime-3200Sec',      sla:'SLA 05', group:'-',                     goal:96, achieved:97,  status:'Success' },
+            { monitor:'Prod_INC-MEDIUM-ResolutionTime-65000Sec',   sla:'SLA 06', group:'testing_1,testing_2',  goal:96, achieved:95,  status:'Failed'  },
+            { monitor:'Prod_INC-LOW-ResponseTime-3200Sec',         sla:'SLA 07', group:'testing_1,testing_2',  goal:95, achieved:98,  status:'Success' },
+            { monitor:'Prod_INC-LOW-ResolutionTime-65000Sec',      sla:'SLA 08', group:'-',                     goal:95, achieved:95,  status:'Success' },
+            { monitor:'Prod_SR-CRITICAL-ResolutionTime-15000Sec',  sla:'SLA 09', group:'-',                     goal:98, achieved:100, status:'Success' },
+            { monitor:'Prod_SR-CRITICAL-ResolutionTime-15000Sec',  sla:'SLA 10', group:'-',                     goal:98, achieved:100, status:'Success' },
         ];
 
-        const analysisRows = [
+        var analysisRows = [
             { closeDate:'2025-02-10', yrMonth:'2025-02', day:'Monday',    queType:'Incident',        team:'Support',    tower:'Cloud',    region:'US-East',       finalClass:'Resolved', resource:'John Doe',      shift:'Day',   resslaTarget:'4 hours',  resSLAMet:'Yes', count:5,  ticketsWO:2, metWO:2, closeWeek:'2025-02-08', priority:'High',     slaType:'Standard', ticket:'INC0012345', backlog:0, highlight:false },
             { closeDate:'2025-02-11', yrMonth:'2025-02', day:'Tuesday',   queType:'Service Request', team:'Operations', tower:'Network',  region:'Europe',        finalClass:'Closed',   resource:'Jane Smith',    shift:'Night', resslaTarget:'8 hours',  resSLAMet:'No',  count:3,  ticketsWO:1, metWO:1, closeWeek:'2025-02-09', priority:'Medium',   slaType:'Premium',  ticket:'SR0012346',  backlog:1, highlight:true  },
             { closeDate:'2025-02-12', yrMonth:'2025-02', day:'Wednesday', queType:'Incident',        team:'Support',    tower:'Cloud',    region:'APAC',          finalClass:'Resolved', resource:'Michael Lee',   shift:'Day',   resslaTarget:'4 hours',  resSLAMet:'Yes', count:7,  ticketsWO:3, metWO:3, closeWeek:'2025-02-10', priority:'Critical', slaType:'Standard', ticket:'INC0012347', backlog:0, highlight:false },
@@ -656,23 +1073,18 @@
             { closeDate:'2025-02-17', yrMonth:'2025-02', day:'Monday',    queType:'Service Request', team:'Support',    tower:'Cloud',    region:'US-East',       finalClass:'Closed',   resource:'Sophia Harris', shift:'Night', resslaTarget:'6 hours',  resSLAMet:'No',  count:5,  ticketsWO:2, metWO:3, closeWeek:'2025-02-16', priority:'Critical', slaType:'Standard', ticket:'SR0012352',  backlog:1, highlight:true  },
             { closeDate:'2025-02-18', yrMonth:'2025-02', day:'Tuesday',   queType:'Incident',        team:'Support',    tower:'Network',  region:'EMEA',          finalClass:'Resolved', resource:'John Doe',      shift:'Day',   resslaTarget:'4 hours',  resSLAMet:'Yes', count:2,  ticketsWO:1, metWO:1, closeWeek:'2025-02-17', priority:'Medium',   slaType:'Standard', ticket:'INC0012353', backlog:0, highlight:false },
             { closeDate:'2025-02-19', yrMonth:'2025-02', day:'Wednesday', queType:'Service Request', team:'Operations', tower:'Network',  region:'South America', finalClass:'Closed',   resource:'Olivia Green',  shift:'Night', resslaTarget:'6 hours',  resSLAMet:'Yes', count:4,  ticketsWO:2, metWO:2, closeWeek:'2025-02-18', priority:'High',     slaType:'Premium',  ticket:'SR0012354',  backlog:0, highlight:false },
-            { closeDate:'2025-02-20', yrMonth:'2025-02', day:'Thursday',  queType:'Incident',        team:'Support',    tower:'Cloud',    region:'US-West',       finalClass:'Resolved', resource:'Emma Williams', shift:'Day',   resslaTarget:'6 hours',  resSLAMet:'No',  count:6,  ticketsWO:3, metWO:1, closeWeek:'2025-02-19', priority:'Low',      slaType:'Premium',  ticket:'SR0012355',  backlog:2, highlight:true  },
-            { closeDate:'2025-02-21', yrMonth:'2025-02', day:'Friday',    queType:'Service Request', team:'Support',    tower:'Security', region:'APAC',          finalClass:'Closed',   resource:'James Black',   shift:'Night', resslaTarget:'4 hours',  resSLAMet:'Yes', count:7,  ticketsWO:3, metWO:4, closeWeek:'2025-02-20', priority:'High',     slaType:'Standard', ticket:'SR0012356',  backlog:0, highlight:false },
-            { closeDate:'2025-02-22', yrMonth:'2025-02', day:'Saturday',  queType:'Incident',        team:'Support',    tower:'Cloud',    region:'Europe',        finalClass:'Resolved', resource:'Michael Lee',   shift:'Day',   resslaTarget:'4 hours',  resSLAMet:'Yes', count:8,  ticketsWO:4, metWO:4, closeWeek:'2025-02-21', priority:'Critical', slaType:'Standard', ticket:'INC0012357', backlog:0, highlight:false },
-            { closeDate:'2025-02-23', yrMonth:'2025-02', day:'Monday',    queType:'Service Request', team:'Support',    tower:'Cloud',    region:'US-East',       finalClass:'Closed',   resource:'Olivia Green',  shift:'Night', resslaTarget:'6 hours',  resSLAMet:'No',  count:3,  ticketsWO:2, metWO:2, closeWeek:'2025-02-22', priority:'Medium',   slaType:'Premium',  ticket:'SR0012358',  backlog:2, highlight:true  },
-            { closeDate:'2025-02-24', yrMonth:'2025-02', day:'Monday',    queType:'Incident',        team:'Support',    tower:'Network',  region:'EMEA',          finalClass:'Resolved', resource:'James Black',   shift:'Day',   resslaTarget:'4 hours',  resSLAMet:'Yes', count:6,  ticketsWO:3, metWO:3, closeWeek:'2025-02-23', priority:'Low',      slaType:'Standard', ticket:'INC0012359', backlog:0, highlight:false },
         ];
 
         function buildSLATable() {
-            const tbody = document.getElementById('slaTableBody');
+            var tbody = document.getElementById('slaTableBody');
             tbody.innerHTML = '';
-            slaData.forEach(row => {
-                const isGreen = row.status === 'Success';
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td><span class="monitor-link">${row.monitor}</span></td><td>${row.sla}</td><td>${row.group}</td><td>${row.goal}</td>
-                    <td><div class="progress-wrap"><div class="progress-bar ${isGreen?'green':'red'}" style="width:${Math.round(row.achieved/100*180)}px;">${row.achieved}%</div></div></td>
-                    <td class="${isGreen?'status-success':'status-failed'}">${row.status}</td>
-                    <td><button class="view-report-btn" onclick="openAnalysis('${row.sla}','${row.monitor}')">View Report</button></td>`;
+            slaData.forEach(function(row) {
+                var isGreen = row.status === 'Success';
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td><span class="monitor-link">' + row.monitor + '</span></td><td>' + row.sla + '</td><td>' + row.group + '</td><td>' + row.goal + '</td>' +
+                    '<td><div class="progress-wrap"><div class="progress-bar ' + (isGreen?'green':'red') + '" style="width:' + Math.round(row.achieved/100*180) + 'px;">' + row.achieved + '%</div></div></td>' +
+                    '<td class="' + (isGreen?'status-success':'status-failed') + '">' + row.status + '</td>' +
+                    '<td><button class="view-report-btn" onclick="openAnalysis(\'' + row.sla + '\',\'' + row.monitor + '\')">View Report</button></td>';
                 tbody.appendChild(tr);
             });
         }
@@ -682,16 +1094,16 @@
 
         function openAnalysis(slaName, monitorName) {
             document.getElementById('analysisSub').textContent = slaName + ' : ' + monitorName;
-            const tbody = document.getElementById('analysisTableBody');
+            var tbody = document.getElementById('analysisTableBody');
             tbody.innerHTML = '';
-            analysisRows.forEach(row => {
-                const tr = document.createElement('tr');
+            analysisRows.forEach(function(row) {
+                var tr = document.createElement('tr');
                 if (row.highlight) tr.classList.add('row-highlight');
-                tr.innerHTML = `<td>${row.closeDate}</td><td>${row.yrMonth}</td><td>${row.day}</td><td>${row.queType}</td>
-                    <td>${row.team}</td><td>${row.tower}</td><td>${row.region}</td><td>${row.finalClass}</td>
-                    <td>${row.resource}</td><td>${row.shift}</td><td>${row.resslaTarget}</td><td>${row.resSLAMet}</td>
-                    <td>${row.count}</td><td>${row.ticketsWO}</td><td>${row.metWO}</td><td>${row.closeWeek}</td>
-                    <td>${row.priority}</td><td>${row.slaType}</td><td>${row.ticket}</td><td>${row.backlog}</td>`;
+                tr.innerHTML = '<td>' + row.closeDate + '</td><td>' + row.yrMonth + '</td><td>' + row.day + '</td><td>' + row.queType + '</td>' +
+                    '<td>' + row.team + '</td><td>' + row.tower + '</td><td>' + row.region + '</td><td>' + row.finalClass + '</td>' +
+                    '<td>' + row.resource + '</td><td>' + row.shift + '</td><td>' + row.resslaTarget + '</td><td>' + row.resSLAMet + '</td>' +
+                    '<td>' + row.count + '</td><td>' + row.ticketsWO + '</td><td>' + row.metWO + '</td><td>' + row.closeWeek + '</td>' +
+                    '<td>' + row.priority + '</td><td>' + row.slaType + '</td><td>' + row.ticket + '</td><td>' + row.backlog + '</td>';
                 tbody.appendChild(tr);
             });
             document.getElementById('analysisModal').style.display = 'flex';
@@ -700,7 +1112,7 @@
         function closeAnalysisModal(e) { if (e.target === document.getElementById('analysisModal')) document.getElementById('analysisModal').style.display = 'none'; }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const slaCard = document.querySelector('.grid-card.color-blue');
+            var slaCard = document.querySelector('.grid-card.color-blue');
             if (slaCard) { slaCard.style.cursor = 'pointer'; slaCard.addEventListener('click', openSLAModal); }
         });
 
